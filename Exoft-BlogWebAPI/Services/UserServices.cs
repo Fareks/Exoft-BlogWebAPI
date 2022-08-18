@@ -10,7 +10,6 @@ namespace Exoft_BlogWebAPI.Services
         {
             dbContext = _db;
         }
-        [HttpDelete]
         public void DeleteById(int id)
         {
             if (GetById(id) != null)
@@ -31,15 +30,15 @@ namespace Exoft_BlogWebAPI.Services
             return (dbContext.Users.Find(id));
         }
 
-        public void Post(User newUser)
+        public void Post(User newItem)
         {
-            dbContext.Users.Add(newUser);
+            dbContext.Users.Add(newItem);
             dbContext.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(User Item)
         {
-            dbContext.Update(user);
+            dbContext.Update(Item);
             dbContext.SaveChanges();
         }
     }

@@ -7,9 +7,9 @@ namespace Exoft_BlogWebAPI.Services
     {
         public IEnumerable<T> GetAll();
         public T GetById(int id);    
-        public void Update(User user);
+        public void Update(T item);
         public void DeleteById(int id);
-        public void Post(User newUser);
+        public void Post(T newItem);
 
     }
 }

@@ -10,6 +10,6 @@ namespace Exoft_BlogWebAPI.Models
         public DateTime Created { get; set; }
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
