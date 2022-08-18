@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Services
 {
-    public interface IUserServices
+    public interface ICRUDService<T>
     {
-        public IEnumerable<User> GetAll();
-        public User GetById(int id);    
+        public IEnumerable<T> GetAll();
+        public T GetById(int id);    
         public void Update(User user);
         public void DeleteById(int id);
-        public void PostUser(User newUser);
+        public void Post(User newUser);
 
     }
 }

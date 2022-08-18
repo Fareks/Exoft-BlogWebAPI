@@ -9,10 +9,10 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        IUserServices userService;
+        ICRUDService<User> userService;
        
 
-        public UserController(IUserServices _userService)
+        public UserController(ICRUDService<User> _userService)
         {
             userService = _userService;
         }
@@ -27,7 +27,7 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost]
         public IActionResult AddUser([FromBody] User user)
         {
-            userService.PostUser(user);
+            userService.Post(user);
             return Ok(user);
         }
 

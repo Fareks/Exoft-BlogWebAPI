@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Services
 {
-    public class UserServices : IUserServices
+    public class UserServices : ICRUDService<User>
     {
         DBContext dbContext;
         public UserServices(DBContext _db)
@@ -31,7 +31,7 @@ namespace Exoft_BlogWebAPI.Services
             return (dbContext.Users.Find(id));
         }
 
-        public void PostUser(User newUser)
+        public void Post(User newUser)
         {
             dbContext.Users.Add(newUser);
             dbContext.SaveChanges();

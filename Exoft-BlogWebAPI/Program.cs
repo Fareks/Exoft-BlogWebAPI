@@ -1,5 +1,6 @@
 
 using Exoft_BlogWebAPI;
+using Exoft_BlogWebAPI.Models;
 using Exoft_BlogWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<DBContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserServices,UserServices>();
+builder.Services.AddScoped<ICRUDService<User>,UserServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
