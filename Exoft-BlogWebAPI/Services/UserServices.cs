@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Services
 {
-    public class UserServices : IUserServices
+    public class UserServices : ICRUDService<User>
     {
         DBContext dbContext;
         public UserServices(DBContext _db)
         {
             dbContext = _db;
         }
-        [HttpDelete]
         public void DeleteById(int id)
         {
             if (GetById(id) != null)
@@ -31,15 +30,15 @@ namespace Exoft_BlogWebAPI.Services
             return (dbContext.Users.Find(id));
         }
 
-        public void PostUser(User newUser)
+        public void Post(User newItem)
         {
-            dbContext.Users.Add(newUser);
+            dbContext.Users.Add(newItem);
             dbContext.SaveChanges();
         }
 
-        public void Update(User user)
+        public void Update(User Item)
         {
-            dbContext.Update(user);
+            dbContext.Update(Item);
             dbContext.SaveChanges();
         }
     }
