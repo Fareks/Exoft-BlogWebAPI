@@ -1,4 +1,5 @@
 ﻿using Exoft_BlogWebAPI.Models;
+using Exoft_BlogWebAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,33 +9,50 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        DBContext dbContext;
+        IUserServices userService;
        
 
-        public UserController(DBContext _db)
+        public UserController(IUserServices _userService)
         {
-            dbContext = _db;
-
+            userService = _userService;
         }
 
-        [HttpGet]
+
+        [HttpGet("/users")]
         public IActionResult GetUsers()
         {
-            var a = dbContext.Users.Include(u => u.Blog.ToList().First());
-            return Ok(a);
+            return Ok(userService.GetAll());
         }
 
         [HttpPost]
         public IActionResult AddUser([FromBody] User user)
         {
-            
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
-            return Ok(dbContext.Users);
+            userService.PostUser(user);
+            return Ok(user);
         }
 
-        //[HttpPut]
-        //public IActionResult AddBlogToUser()
-        
+        [HttpPut]
+        public IActionResult AddBlogToUser(User user)
+        {
+            userService.Update(user);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteUser(int userId)
+        {
+            if (userService.GetById(userId) != null)
+            {
+                userService.DeleteById(userId);
+                return Ok();
+            } else
+            {
+                return BadRequest("User not found.");
+            }
+            
+           
+        }
+
+
     }
 }

@@ -2,10 +2,8 @@
 
 namespace Exoft_BlogWebAPI.Models
 {
-    public class Blog
+    public class Blog : BaseEntity
     {
-        public int Id { get; set; }
-        public string Author { get; set; }
         public string TextContent { get; set; }
         public string LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; }
