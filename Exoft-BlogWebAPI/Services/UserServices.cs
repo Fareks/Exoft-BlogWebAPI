@@ -10,7 +10,7 @@ namespace Exoft_BlogWebAPI.Services
         {
             dbContext = _db;
         }
-        public void DeleteById(int id)
+        public void DeleteById(Guid id)
         {
             if (GetById(id) != null)
             {
@@ -25,7 +25,7 @@ namespace Exoft_BlogWebAPI.Services
             return dbContext.Users;
         }
 
-        public User GetById(int id)
+        public User GetById(Guid id)
         {
             return (dbContext.Users.Find(id));
         }

@@ -39,7 +39,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(int userId)
+        public IActionResult DeleteUser(Guid userId)
         {
             if (userService.GetById(userId) != null)
             {
