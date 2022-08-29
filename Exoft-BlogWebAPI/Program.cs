@@ -1,9 +1,9 @@
 
 using Exoft_BlogWebAPI;
-using Exoft_BlogWebAPI.Models;
-using Exoft_BlogWebAPI.Services;
+using DataLayer.Models;
+using Business_Logic.Services;
 using Microsoft.EntityFrameworkCore;
-
+using DataLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ builder.Services.AddDbContext<DBContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICRUDService<User>,UserServices>();
-builder.Services.AddScoped<ICRUDService<Blog>, BlogServices>();
+builder.Services.AddScoped<ICRUDService<Post>, PostServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

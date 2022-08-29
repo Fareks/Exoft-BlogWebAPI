@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exoft-BlogWebAPI", "Exoft-BlogWebAPI\Exoft-BlogWebAPI.csproj", "{34BA1631-FA2D-4C61-9B39-DEE87DCBEBF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exoft-BlogWebAPI", "Exoft-BlogWebAPI\Exoft-BlogWebAPI.csproj", "{34BA1631-FA2D-4C61-9B39-DEE87DCBEBF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business Logic", "Business Logic\Business Logic.csproj", "{7B576ECD-934A-45B5-A053-8486262F14B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{DD2E1AFF-8AF2-4D5F-825B-89853CED5B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{34BA1631-FA2D-4C61-9B39-DEE87DCBEBF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34BA1631-FA2D-4C61-9B39-DEE87DCBEBF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34BA1631-FA2D-4C61-9B39-DEE87DCBEBF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B576ECD-934A-45B5-A053-8486262F14B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B576ECD-934A-45B5-A053-8486262F14B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B576ECD-934A-45B5-A053-8486262F14B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B576ECD-934A-45B5-A053-8486262F14B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2E1AFF-8AF2-4D5F-825B-89853CED5B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2E1AFF-8AF2-4D5F-825B-89853CED5B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2E1AFF-8AF2-4D5F-825B-89853CED5B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2E1AFF-8AF2-4D5F-825B-89853CED5B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

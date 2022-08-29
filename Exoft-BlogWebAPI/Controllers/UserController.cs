@@ -1,5 +1,5 @@
-﻿using Exoft_BlogWebAPI.Models;
-using Exoft_BlogWebAPI.Services;
+﻿using DataLayer.Models;
+using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,12 +34,13 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPut]
         public IActionResult AddBlogToUser(User user)
         {
+
             userService.Update(user);
             return Ok();
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(int userId)
+        public IActionResult DeleteUser(Guid userId)
         {
             if (userService.GetById(userId) != null)
             {

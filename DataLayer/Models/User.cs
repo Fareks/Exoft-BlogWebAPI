@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Exoft_BlogWebAPI.Models
+namespace DataLayer.Models
 {
     public class User : BaseEntity
     {
         public string Name { get; set; }
-        public ICollection<Blog>? Blog { get; set; }
+        public ICollection<Post>? Post { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
 
     }
 }
