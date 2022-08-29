@@ -1,7 +1,8 @@
-﻿using Exoft_BlogWebAPI.Models;
+﻿using DataLayer;
+using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Exoft_BlogWebAPI.Services
+namespace Business_Logic.Services
 {
     public class UserServices : ICRUDService<User>
     {

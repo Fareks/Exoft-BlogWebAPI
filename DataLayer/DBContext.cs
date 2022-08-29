@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Exoft_BlogWebAPI.Models;
-using Exoft_BlogWebAPI.ModelConfiguration;
+using DataLayer.Models;
+using DataLayer.ModelConfiguration;
 
-namespace Exoft_BlogWebAPI
+namespace DataLayer
 {
     public class DBContext : DbContext
     {
@@ -12,7 +12,7 @@ namespace Exoft_BlogWebAPI
             base.OnModelCreating(builder);
         }
         public DBContext(DbContextOptions<DBContext> options) : base(options)
-        {
+        { 
             
         }
         public DbSet<Post> Posts { get; set; }

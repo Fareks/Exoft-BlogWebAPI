@@ -1,8 +1,8 @@
-﻿using Exoft_BlogWebAPI.Models;
+﻿using DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Exoft_BlogWebAPI.ModelConfiguration
+namespace DataLayer.ModelConfiguration
 {
     public class PostConfiguration : IEntityTypeConfiguration<Post>
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Exoft_BlogWebAPI.Migrations
+namespace DataLayer.Migrations
 {
     public partial class fluent_api_test : Migration
     {

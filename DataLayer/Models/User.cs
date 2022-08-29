@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Exoft_BlogWebAPI.Models
+namespace DataLayer.Models
 {
     public class User : BaseEntity
     {

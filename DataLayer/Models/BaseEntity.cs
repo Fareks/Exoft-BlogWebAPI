@@ -1,4 +1,4 @@
-﻿namespace Exoft_BlogWebAPI.Models
+﻿namespace DataLayer.Models
 {
     public class BaseEntity
     {

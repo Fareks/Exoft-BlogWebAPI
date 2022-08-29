@@ -1,5 +1,5 @@
-﻿using Exoft_BlogWebAPI.Models;
-using Exoft_BlogWebAPI.Services;
+﻿using DataLayer.Models;
+using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Controllers
@@ -17,35 +17,35 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
 
-            [HttpGet("/blogs")]
+            [HttpGet("/posts")]
             public IActionResult GetBlogs()
             {
                 return Ok(postService.GetAll());
             }
 
-            [HttpGet("/blogs/{id}")]
-            public IActionResult GetBlogById(Guid id)
+            [HttpGet("/posts/{id}")]
+            public IActionResult GetPostById(Guid id)
             {
                 return Ok(postService.GetById(id));
             }
 
 
         [HttpPost]
-            public IActionResult AddBlog([FromBody] Post post)
+            public IActionResult AddPost([FromBody] Post post)
             {
                 postService.Post(post);
                 return Ok(post);
             }
 
             [HttpPut]
-            public IActionResult UpdateBlog(Post post)
+            public IActionResult UpdatePost(Post post)
             {
                 postService.Update(post);
                 return Ok();
             }
 
             [HttpDelete]
-            public IActionResult DeleteUser(Guid postId)
+            public IActionResult DeletePost(Guid postId)
             {
                 if (postService.GetById(postId) != null)
                 {
@@ -54,7 +54,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 }
                 else
                 {
-                    return BadRequest("Blog not found.");
+                    return BadRequest("Post not found.");
                 }
 
 

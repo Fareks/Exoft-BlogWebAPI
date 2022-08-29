@@ -1,9 +1,9 @@
 
 using Exoft_BlogWebAPI;
-using Exoft_BlogWebAPI.Models;
-using Exoft_BlogWebAPI.Services;
+using DataLayer.Models;
+using Business_Logic.Services;
 using Microsoft.EntityFrameworkCore;
-
+using DataLayer;
 
 var builder = WebApplication.CreateBuilder(args);
 
