@@ -2,6 +2,8 @@
 using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Business_Logic.DTO;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -9,25 +11,29 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        ICRUDService<User> userService;
+        ICRUDService<User> _userService;
+        IMapper _mapper; 
        
 
-        public UserController(ICRUDService<User> _userService)
+        public UserController(ICRUDService<User> userService, IMapper mapper)
         {
-            userService = _userService;
-        }
+            _userService = userService;
+            _mapper = mapper;
+        }   
 
 
         [HttpGet("/users")]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            return Ok(userService.GetAll());
+            var users = _userService.GetAll();
+            var usersDto = _mapper.Map<ICollection<UserDTO>>(users);
+            return Ok(usersDto);
         }
 
         [HttpPost]
         public IActionResult AddUser([FromBody] User user)
         {
-            userService.Post(user);
+            _userService.Post(user);
             return Ok(user);
         }
 
@@ -35,16 +41,16 @@ namespace Exoft_BlogWebAPI.Controllers
         public IActionResult AddBlogToUser(User user)
         {
 
-            userService.Update(user);
+            _userService.Update(user);
             return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteUser(Guid userId)
         {
-            if (userService.GetById(userId) != null)
+            if (_userService.GetById(userId) != null)
             {
-                userService.DeleteById(userId);
+                _userService.DeleteById(userId);
                 return Ok();
             } else
             {

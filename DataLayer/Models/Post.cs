@@ -5,7 +5,7 @@ namespace DataLayer.Models
     public class Post : BaseEntity
     {
         public string TextContent { get; set; }
-        public string LikeSnapshot { get; set; }
+        public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; } = false;
         public DateTime Created { get; set; }
 
