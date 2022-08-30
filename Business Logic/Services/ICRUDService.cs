@@ -5,11 +5,11 @@ namespace Business_Logic.Services
 {
     public interface ICRUDService<T>
     {
-        public IEnumerable<T> GetAll();
-        public T GetById(Guid id);    
-        public void Update(T item);
-        public void DeleteById(Guid id);
-        public void Post(T newItem);
+        public Task<IEnumerable<T>> GetAll();
+        public Task<T> GetById(Guid id);    
+        public Task Update(T item);
+        public Task DeleteById(Guid id);
+        public Task Post(T newItem);
 
     }
 }
