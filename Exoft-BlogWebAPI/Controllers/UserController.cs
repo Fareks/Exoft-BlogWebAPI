@@ -25,7 +25,7 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpGet("/users")]
         public async Task<IActionResult> GetUsers()
         {
-            var users = _userService.GetAll();
+            var users = await _userService.GetAll();
             var usersDto = _mapper.Map<ICollection<UserDTO>>(users);
             return Ok(usersDto);
         }
