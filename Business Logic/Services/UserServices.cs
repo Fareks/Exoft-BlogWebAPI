@@ -7,8 +7,8 @@ namespace Business_Logic.Services
 {
     public class UserServices : ICRUDService<User>
     {
-        DBContext dbContext;
-        public UserServices(DBContext _db)
+        AppDbContext dbContext;
+        public UserServices(AppDbContext _db)
         {
             dbContext = _db;
         }

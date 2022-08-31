@@ -7,9 +7,9 @@ namespace Business_Logic.Services
 {
     public class PostServices : ICRUDService<Post>
     {
-        DBContext dbContext;
+        AppDbContext dbContext;
 
-        public PostServices(DBContext _db)
+        public PostServices(AppDbContext _db)
         {
             dbContext = _db;
         }

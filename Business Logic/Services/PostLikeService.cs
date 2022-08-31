@@ -11,9 +11,9 @@ namespace Business_Logic.Services
 {
     internal class PostLikeService : ICRUDService<PostLike>
     {
-        DBContext dbContext;
+        AppDbContext dbContext;
 
-        public PostLikeService(DBContext _db)
+        public PostLikeService(AppDbContext _db)
         {
             dbContext = _db;
         }
