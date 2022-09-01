@@ -8,10 +8,10 @@ namespace Exoft_BlogWebAPI.Controllers
         [Route("[controller]")]
         public class PostController : ControllerBase
         {
-            ICRUDService<Post> postService;
+            IService<Post> postService;
 
 
-            public PostController(ICRUDService<Post> _serviceService)
+            public PostController(IService<Post> _serviceService)
             {
                 postService = _serviceService;
             }

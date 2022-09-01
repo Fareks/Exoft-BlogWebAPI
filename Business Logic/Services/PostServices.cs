@@ -1,44 +1,46 @@
 ﻿using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Business_Logic.Services
 {
-    public class PostServices : ICRUDService<Post>
+    public class PostServices : IService<Post>
     {
-        DBContext dbContext;
+        AppDbContext dbContext;
 
-        public PostServices(DBContext _db)
+        public PostServices(AppDbContext _db)
         {
             dbContext = _db;
         }
-        public IEnumerable<Post> GetAll()
+        public async Task<IEnumerable<Post>> GetAll()
         {
-            return dbContext.Posts;
+            var posts = await dbContext.Posts.ToListAsync();
+            return posts;
         }
-        public Post GetById(Guid id)
+        public async Task<Post> GetById(Guid id)
         {
-            return (dbContext.Posts.Find(id));
+            var post = await dbContext.Posts.SingleOrDefaultAsync(p => p.Id == id);
+            return (post);
         }
-        public void Update(Post post)
+        public async Task Update(Post post)
         {
-
             dbContext.Update(post);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
-        public void DeleteById(Guid id)
+        public async Task DeleteById(Guid id)
         {
             if (GetById(id) != null)
             {
-                dbContext.Posts.Remove(GetById(id));
-                dbContext.SaveChanges();
+                dbContext.Posts.Remove(await GetById(id));
+                await dbContext.SaveChangesAsync();
             }
         }
-        public void Post(Post newPost)
+        public async Task Post(Post newPost)
         {
-            dbContext.Posts.Add(newPost);
-            dbContext.SaveChanges();
+           await dbContext.Posts.AddAsync(newPost);
+           await dbContext.SaveChangesAsync();
         }
+
     }
 }

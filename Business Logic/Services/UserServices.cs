@@ -1,46 +1,49 @@
 ﻿using DataLayer;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business_Logic.Services
 {
-    public class UserServices : ICRUDService<User>
+    public class UserServices : IService<User>
     {
-        DBContext dbContext;
-        public UserServices(DBContext _db)
+        AppDbContext dbContext;
+        public UserServices(AppDbContext _db)
         {
             dbContext = _db;
         }
-        public void DeleteById(Guid id)
+        public async Task DeleteById(Guid id)
         {
             if (GetById(id) != null)
             {
-                dbContext.Users.Remove(GetById(id));
-                dbContext.SaveChanges();
+                dbContext.Users.Remove(await GetById(id));
+                await dbContext.SaveChangesAsync();
             }
                
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return dbContext.Users;
+            var users = await dbContext.Users.ToListAsync();
+            return users;
         }
 
-        public User GetById(Guid id)
+        public async Task<User> GetById(Guid id)
         {
-            return (dbContext.Users.Find(id));
+            var user  = await dbContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+            return (user);
         }
 
-        public void Post(User newItem)
+        public async Task Post(User newItem)
         {
-            dbContext.Users.Add(newItem);
-            dbContext.SaveChanges();
+           dbContext.Users.AddAsync(newItem);
+           await dbContext.SaveChangesAsync();
         }
 
-        public void Update(User Item)
+        public async Task Update(User Item)
         {
             dbContext.Update(Item);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
     }
 }
