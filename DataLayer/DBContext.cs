@@ -4,20 +4,21 @@ using DataLayer.ModelConfiguration;
 
 namespace DataLayer
 {
-    public class DBContext : DbContext
+    public class AppDbContext : DbContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserConfiguration());
             base.OnModelCreating(builder);
         }
-        public DBContext(DbContextOptions<DBContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         { 
             
         }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Comment> Comment { get; set; }
         public DbSet<PostLike> PostLike { get; set; }
-
+        public DbSet<CommentLike> CommentLike { get; set; }
     }
 }

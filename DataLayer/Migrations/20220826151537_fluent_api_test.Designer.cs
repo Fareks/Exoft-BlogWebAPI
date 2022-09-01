@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
-    [DbContext(typeof(DBContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20220826151537_fluent_api_test")]
     partial class fluent_api_test
     {

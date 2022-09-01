@@ -1,5 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,39 +9,55 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.Services
 {
-    internal class PostLikeService : ICRUDService<PostLike>
+    internal class PostLikeService : IService<PostLike>
     {
-        DBContext dbContext;
+        AppDbContext dbContext;
 
-        public PostLikeService(DBContext _db)
+        public PostLikeService(AppDbContext _db)
         {
             dbContext = _db;
         }
-        public IEnumerable<PostLike> GetAll()
+        public async Task<IEnumerable<PostLike>> GetAll()
         {
-            return dbContext.PostLike;
+            return await dbContext.PostLike.ToListAsync();
         }
-        public PostLike GetById(Guid id)
+        public async Task<PostLike> GetById(Guid id)
         {
-            return (dbContext.PostLike.Find(id));
+            var postLike = await dbContext.PostLike.SingleOrDefaultAsync(x => x.Id == id);
+            return (postLike);
         }
-        public void Update(PostLike post)
+        //public void Update(PostLike post)
+        //{
+        //    dbContext.Update(post);
+        //    dbContext.SaveChanges();
+        //}
+        //public void DeleteById(Guid id)
+        //{
+        //    if (GetById(id) != null)
+        //    {
+        //        dbContext.PostLike.Remove(GetById(id));
+        //        dbContext.SaveChanges();
+        //    }
+        //}
+        //public void Post(PostLike new_postLike)
+        //{
+        //    dbContext.PostLike.Add(new_postLike);
+        //    dbContext.SaveChanges();
+        //}
+
+        Task IService<PostLike>.Update(PostLike item)
         {
-            dbContext.Update(post);
-            dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
-        public void DeleteById(Guid id)
+
+        Task IService<PostLike>.DeleteById(Guid id)
         {
-            if (GetById(id) != null)
-            {
-                dbContext.PostLike.Remove(GetById(id));
-                dbContext.SaveChanges();
-            }
+            throw new NotImplementedException();
         }
-        public void Post(PostLike new_postLike)
+
+        Task IService<PostLike>.Post(PostLike newItem)
         {
-            dbContext.PostLike.Add(new_postLike);
-            dbContext.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }
