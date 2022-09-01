@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Business_Logic.Services
 {
-    public class UserServices : ICRUDService<User>
+    public class UserServices : IService<User>
     {
         AppDbContext dbContext;
         public UserServices(AppDbContext _db)

@@ -11,11 +11,11 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        ICRUDService<User> _userService;
+        IService<User> _userService;
         IMapper _mapper; 
        
 
-        public UserController(ICRUDService<User> userService, IMapper mapper)
+        public UserController(IService<User> userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;

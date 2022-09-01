@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.Services
 {
-    internal class PostLikeService : ICRUDService<PostLike>
+    internal class PostLikeService : IService<PostLike>
     {
         AppDbContext dbContext;
 
@@ -45,17 +45,17 @@ namespace Business_Logic.Services
         //    dbContext.SaveChanges();
         //}
 
-        Task ICRUDService<PostLike>.Update(PostLike item)
+        Task IService<PostLike>.Update(PostLike item)
         {
             throw new NotImplementedException();
         }
 
-        Task ICRUDService<PostLike>.DeleteById(Guid id)
+        Task IService<PostLike>.DeleteById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        Task ICRUDService<PostLike>.Post(PostLike newItem)
+        Task IService<PostLike>.Post(PostLike newItem)
         {
             throw new NotImplementedException();
         }

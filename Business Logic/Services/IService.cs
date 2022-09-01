@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Business_Logic.Services
 {
-    public interface ICRUDService<T>
+    public interface IService<T>
     {
         public Task<IEnumerable<T>> GetAll();
         public Task<T> GetById(Guid id);    
