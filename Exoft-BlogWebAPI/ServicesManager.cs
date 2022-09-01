@@ -1,4 +1,6 @@
 ﻿using Business_Logic.Services;
+using Business_Logic.Services.PostServices;
+using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using DataLayer.Repositories;
 namespace Exoft_BlogWebAPI

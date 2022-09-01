@@ -9,7 +9,6 @@ namespace Business_Logic.DTO
 {
     public class UserDTO : BaseDTO
     {
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -19,10 +18,32 @@ namespace Business_Logic.DTO
 
         public string Email { get; set; }
         public string Password { get; set; }
+        public ICollection<PostDTO>? Post { get; set; }
+        public ICollection<CommentDTO>? Comments { get; set; }
+        public ICollection<PostLikeDTO>? postLikes { get; set; }
+        public ICollection<CommentLikeDTO>? commentLikes { get; set; }
+    }
+    public class UserReadDTO
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        public string Email { get; set; }
     }
 
-    public class UserCreateDTO : BaseDTO
+    public class  UserUpdateDTO
     {
+        public string FirstName { get; set; }
 
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+    public class UserCreateDTO
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
