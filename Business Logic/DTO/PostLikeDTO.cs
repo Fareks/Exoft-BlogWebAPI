@@ -14,4 +14,14 @@ namespace Business_Logic.DTO
         public Guid UserId { get; set; }
         public UserDTO User { get; set; }
     }
+    public class PostLikeReadDTO
+    {
+        public Guid PostId { get; set; }
+        public Guid UserId { get; set; }
+    }
+    public class PostLikeCreateDTO : BaseCreateDTO
+    {
+        public Guid PostId { get; set; }
+        public Guid UserId { get; set; }
+    }
 }

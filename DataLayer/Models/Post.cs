@@ -4,10 +4,10 @@ namespace DataLayer.Models
 {
     public class Post : BaseEntity
     {
+        public string Title { get; set; }
         public string TextContent { get; set; }
         public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; } = false;
-        public DateTime Created { get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }

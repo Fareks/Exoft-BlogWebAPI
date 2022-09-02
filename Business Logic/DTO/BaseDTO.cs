@@ -14,4 +14,16 @@ namespace Business_Logic.DTO
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
     }
+
+    public class BaseUpdateDTO
+    {
+        public Guid Id { get; set; }
+        public Guid UpdatedBy { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
+    }
+    public class BaseCreateDTO
+    {
+        public Guid CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
 }

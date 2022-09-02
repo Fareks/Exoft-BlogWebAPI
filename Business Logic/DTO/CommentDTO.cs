@@ -13,8 +13,28 @@ namespace Business_Logic.DTO
     {
         public string CommentContent { get; set; }
         public int LikeSnapshot { get; set; }
+        public Guid UserId { get; set; }
         public UserDTO User { get; set; }
         public Guid PostId { get; set; }
         public PostDTO Post { get; set; }
+    }
+    public class CommentReadDTO
+    { 
+        public Guid Id { get; set; }
+        public string CommentContent { get; set; }
+        public int LikeSnapshot { get; set; }
+        public Guid UserId { get; set; }
+        public UserReadDTO User { get; set; }
+    }
+    public class CommentUpdateDTO : BaseUpdateDTO
+    {
+        public string CommentContent { get; set; }
+        public int LikeSnapshot { get; set; }
+    }
+    public class CommentCreateDTO : BaseCreateDTO
+    {
+        public string CommentContent { get; set; }
+        public Guid UserId { get; set; }
+        public Guid PostId { get; set; }
     }
 }
