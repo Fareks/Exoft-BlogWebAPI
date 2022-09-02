@@ -13,6 +13,6 @@ namespace Business_Logic.Services.PostServices
         public Task<PostDTO> GetById(Guid id);
         public Task Update(PostUpdateDTO item);
         public Task DeleteById(Guid id);
-        public Task Post(PostCreateDTO newItem);
+        public Task Create(PostCreateDTO newItem);
     }
 }

@@ -36,7 +36,7 @@ namespace Business_Logic.Services.PostServices
             return postDTO;
         }
 
-        public async Task Post(PostCreateDTO newItem)
+        public async Task Create(PostCreateDTO newItem)
         {
             var post = _mapper.Map<Post>(newItem);
             await _postRepository.Post(post);

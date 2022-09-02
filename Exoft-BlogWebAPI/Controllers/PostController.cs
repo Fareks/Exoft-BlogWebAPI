@@ -1,6 +1,8 @@
 ﻿using DataLayer.Models;
 using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
+using Business_Logic.Services.PostServices;
+using Business_Logic.DTO;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -8,48 +10,48 @@ namespace Exoft_BlogWebAPI.Controllers
         [Route("[controller]")]
         public class PostController : ControllerBase
         {
-            IService<Post> postService;
+            IPostService _postService;
 
 
-            public PostController(IService<Post> _serviceService)
+            public PostController(IPostService postService)
             {
-                postService = _serviceService;
+                _postService = postService;
             }
 
 
             [HttpGet("/posts")]
-            public IActionResult GetBlogs()
+            public async Task<IActionResult> GetBlogs()
             {
-                return Ok(postService.GetAll());
+                return Ok(await _postService.GetAll());
             }
 
             [HttpGet("/posts/{id}")]
             public IActionResult GetPostById(Guid id)
             {
-                return Ok(postService.GetById(id));
+                return Ok(_postService.GetById(id));
             }
 
 
         [HttpPost]
-            public IActionResult AddPost([FromBody] Post post)
+            public IActionResult AddPost(PostCreateDTO post)
             {
-                postService.Post(post);
+                _postService.Create(post);
                 return Ok(post);
             }
 
             [HttpPut]
-            public IActionResult UpdatePost(Post post)
+            public IActionResult UpdatePost(PostUpdateDTO post)
             {
-                postService.Update(post);
+                _postService.Update(post);
                 return Ok();
             }
 
             [HttpDelete]
             public IActionResult DeletePost(Guid postId)
             {
-                if (postService.GetById(postId) != null)
+                if (_postService.GetById(postId) != null)
                 {
-                    postService.DeleteById(postId);
+                    _postService.DeleteById(postId);
                     return Ok();
                 }
                 else

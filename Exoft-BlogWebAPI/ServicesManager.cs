@@ -9,8 +9,8 @@ namespace Exoft_BlogWebAPI
     {
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddTransient<IService<User>, UserServices>();
-            services.AddTransient<IService<Post>, PostServices>();
+            services.AddTransient<IUserService, UserServices>();
+            services.AddTransient<IPostService, PostServices>();
             //services.AddTransient<IService<Comment>,CommentServices>();
             //services.AddTransient<IService<PostLike>, PostLikeServices>();
             //services.AddTransient<IService<CommentLike>, CommentLikeServices>();

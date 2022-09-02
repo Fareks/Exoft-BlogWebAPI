@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Business_Logic.DTO;
+using Business_Logic.Services.UserServices;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -11,11 +12,11 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        IService<User> _userService;
+        IUserService _userService;
         IMapper _mapper; 
        
 
-        public UserController(IService<User> userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
@@ -26,19 +27,18 @@ namespace Exoft_BlogWebAPI.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAll();
-            var usersDto = _mapper.Map<ICollection<UserDTO>>(users);
-            return Ok(usersDto);
+            return Ok(users);
         }
 
         [HttpPost]
-        public IActionResult AddUser([FromBody] User user)
+        public IActionResult AddUser(UserCreateDTO user)
         {
             _userService.Post(user);
             return Ok(user);
         }
 
         [HttpPut]
-        public IActionResult AddBlogToUser(User user)
+        public IActionResult UpdateUser(UserUpdateDTO user)
         {
 
             _userService.Update(user);

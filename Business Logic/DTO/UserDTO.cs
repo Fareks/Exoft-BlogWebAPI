@@ -31,7 +31,7 @@ namespace Business_Logic.DTO
         public string Email { get; set; }
     }
 
-    public class  UserUpdateDTO
+    public class  UserUpdateDTO : BaseUpdateDTO
     {
         public string FirstName { get; set; }
 
@@ -39,7 +39,7 @@ namespace Business_Logic.DTO
         public string Email { get; set; }
         public string Password { get; set; }
     }
-    public class UserCreateDTO
+    public class UserCreateDTO : BaseCreateDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

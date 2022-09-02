@@ -18,14 +18,14 @@ namespace Business_Logic.DTO
         public ICollection<CommentDTO>? Comments { get; set; }
         public ICollection<PostLikeDTO>? PostLikes { get; set; }
     }
-    public class PostUpdateDTO
+    public class PostUpdateDTO : BaseUpdateDTO
     {
         public string Title { get; set; }
         public string TextContent { get; set; }
         public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; }
     }
-    public class PostCreateDTO
+    public class PostCreateDTO : BaseCreateDTO
     {
         public string Title { get; set; }
         public string TextContent { get; set; }

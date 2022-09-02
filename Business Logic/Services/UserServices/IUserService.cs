@@ -11,7 +11,7 @@ namespace Business_Logic.Services.UserServices
     {
         public Task<IEnumerable<UserDTO>> GetAll();
         public Task<UserDTO> GetById(Guid id);
-        public Task Update(PostUpdateDTO item);
+        public Task Update(UserUpdateDTO item);
         public Task DeleteById(Guid id);
         public Task Post(UserCreateDTO newItem);
     }
