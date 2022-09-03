@@ -39,6 +39,7 @@ namespace Business_Logic.Services.PostServices
 
         public async Task Create(PostCreateDTO newItem)
         {
+            newItem.CreatedDate = DateTime.UtcNow;
             var post = _mapper.Map<Post>(newItem);
             await _postRepository.Post(post);
             await _postRepository.Save();

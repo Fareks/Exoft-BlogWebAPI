@@ -39,6 +39,7 @@ namespace DataLayer.Profiles
 
             CreateMap<CommentLike,CommentLikeDTO>().ReverseMap();
             CreateMap<CommentLike, CommentLikeCreateDTO>().ReverseMap();
+            CreateMap<CommentLike, CommentLikeReadDTO>().ReverseMap();
         }
     }
 }

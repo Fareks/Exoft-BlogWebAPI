@@ -9,7 +9,7 @@ using Business_Logic.Services.UserServices;
 namespace Exoft_BlogWebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         IUserService _userService;

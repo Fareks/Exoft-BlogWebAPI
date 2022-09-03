@@ -7,8 +7,8 @@ using Business_Logic.DTO;
 namespace Exoft_BlogWebAPI.Controllers
 {
         [ApiController]
-        [Route("[controller]")]
-        public class PostController : ControllerBase
+    [Route("api/[controller]")]
+    public class PostController : ControllerBase
         {
             IPostService _postService;
 

@@ -39,6 +39,7 @@ namespace Business_Logic.Services.UserServices
 
         public async Task Post(UserCreateDTO newItem)
         {
+            newItem.CreatedDate = DateTime.UtcNow;
             var user = _mapper.Map<User>(newItem);
             await _userRepository.Post(user);
             await _userRepository.Save();

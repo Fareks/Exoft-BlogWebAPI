@@ -33,7 +33,7 @@ namespace Business_Logic.Services.CommentServices
             return commentsDTO;
         }
 
-        public async Task<CommentReadDTO> GetById(Guid id)
+        public async Task<CommentReadDTO> GetByIdAsync(Guid id)
         {
             var comment = await _comRepository.GetByIdAsync(id);
             var commentDTO = _mapper.Map<CommentReadDTO>(comment);
@@ -42,6 +42,7 @@ namespace Business_Logic.Services.CommentServices
 
         public async Task Post(CommentCreateDTO newItem)
         {
+            newItem.CreatedDate = DateTime.UtcNow;
             var comment = _mapper.Map<Comment>(newItem);
             await _comRepository.Post(comment);
             await _comRepository.Save();

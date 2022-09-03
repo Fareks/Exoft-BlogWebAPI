@@ -1,5 +1,7 @@
 ﻿using Business_Logic.Services;
+using Business_Logic.Services.CommentLikeServices;
 using Business_Logic.Services.CommentServices;
+using Business_Logic.Services.PostLikesServices;
 using Business_Logic.Services.PostServices;
 using Business_Logic.Services.UserServices;
 using DataLayer.Models;
@@ -13,8 +15,8 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<IUserService, UserServices>();
             services.AddTransient<IPostService, PostServices>();
             services.AddTransient<ICommentService, CommentServices>();
-            //services.AddTransient<IService<PostLike>, PostLikeServices>();
-            //services.AddTransient<IService<CommentLike>, CommentLikeServices>();
+            services.AddTransient<IPostLikeService, PostLikeServices>();
+            services.AddTransient<ICommentLikeService, CommentLikeServices>();
         }
         public static void AddRepositories(this IServiceCollection services)
         {
