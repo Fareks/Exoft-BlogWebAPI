@@ -19,13 +19,14 @@ namespace Business_Logic.Services.PostServices
         }
         public async Task DeleteById(Guid id)
         {
-            await _postRepository.Delete(id);
+            await _postRepository.DeleteById(id);
             await _postRepository.Save();
         }
 
         public async Task<IEnumerable<PostDTO>> GetAll()
         {
             var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetAllAsync());
+            await _postRepository.Save();
             return posts;
         }
 
@@ -40,12 +41,16 @@ namespace Business_Logic.Services.PostServices
         {
             var post = _mapper.Map<Post>(newItem);
             await _postRepository.Post(post);
+            await _postRepository.Save();
         }
 
-        public async Task Update(PostUpdateDTO item)
+        public async Task Update(PostUpdateDTO postUpdateDTO)
         {
-            var post = _mapper.Map<Post>(item);
-            await _postRepository.Update(post);
+            var post = await _postRepository.GetByIdAsync(postUpdateDTO.Id);
+            var updatedPost = _mapper.Map(postUpdateDTO, post);
+            updatedPost.UpdateDate = DateTime.UtcNow;
+            await _postRepository.Update(updatedPost);
+            await _postRepository.Save();
         }
     }
 }

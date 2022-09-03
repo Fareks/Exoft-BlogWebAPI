@@ -17,18 +17,17 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteById(Guid id)
         {
             var comment = await _dbcontext.Comment.SingleOrDefaultAsync(u => u.Id == id);
-            if (comment != null)
-            {
-                _dbcontext.Comment.Remove(comment);
-            }
+            _dbcontext.Comment.Remove(comment);
         }
 
         public async Task<ICollection<Comment>> GetAllAsync()
         {
-            var comment = await _dbcontext.Comment.Include(c => c.User).ToListAsync();
+            var comment = await _dbcontext.Comment
+                .Include(c => c.User)
+                .ToListAsync();
             return comment;
         }
 

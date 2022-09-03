@@ -14,7 +14,7 @@ namespace DataLayer.Repositories
         public Task<ICollection<T>> GetAllAsync();
         public Task Post(T item);
         public Task Update(T item);
-        public Task Delete(Guid id);
+        public Task DeleteById(Guid id);
         public Task Save();
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.Services.CommentServices
 {
-    public interface ICommentServices
+    public interface ICommentService
     {
-        public Task<IEnumerable<CommentReadDTO>> GetAll();
+        public Task<IEnumerable<CommentReadDTO>> GetAllAsync();
         public Task<CommentReadDTO> GetById(Guid id);
         public Task Update(CommentUpdateDTO item);
         public Task DeleteById(Guid id);

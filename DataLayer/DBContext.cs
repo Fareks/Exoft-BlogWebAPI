@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataLayer.Models;
 using DataLayer.ModelConfiguration;
-
+using Microsoft.AspNetCore.Identity;
 namespace DataLayer
 {
     public class AppDbContext : DbContext

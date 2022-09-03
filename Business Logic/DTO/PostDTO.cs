@@ -14,7 +14,6 @@ namespace Business_Logic.DTO
         public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; }
         public Guid UserId { get; set; }
-        public UserDTO? User { get; set; }
         public ICollection<CommentDTO>? Comments { get; set; }
         public ICollection<PostLikeDTO>? PostLikes { get; set; }
     }

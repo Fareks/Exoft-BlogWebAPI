@@ -15,7 +15,7 @@ namespace DataLayer.Models
         [MaxLength(20)]
         [MinLength(5)]
         public string Password { get; set; }
-        public string Role { get; set; }
+        public string Role { get; set; } = "user";
         public ICollection<Post>? Post { get; set; }
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<PostLike>? postLikes { get; set; }

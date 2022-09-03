@@ -19,7 +19,8 @@ namespace Business_Logic.Services.UserServices
         }
         public async Task DeleteById(Guid id)
         {
-            await _userRepository.Delete(id);
+            
+            await _userRepository.DeleteById(id);
             await _userRepository.Save();
         }
 
@@ -40,12 +41,16 @@ namespace Business_Logic.Services.UserServices
         {
             var user = _mapper.Map<User>(newItem);
             await _userRepository.Post(user);
+            await _userRepository.Save();
         }
 
-        public async Task Update(UserUpdateDTO item)
+        public async Task Update(UserUpdateDTO userUpdateDTO)
         {
-            var user = _mapper.Map<User>(item);
-            await _userRepository.Update(user);
+            var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
+            var updatedUser = _mapper.Map(userUpdateDTO, user);
+            updatedUser.UpdateDate = DateTime.UtcNow;
+            await _userRepository.Update(updatedUser);
+            await _userRepository.Save();
         }
     }
 }
