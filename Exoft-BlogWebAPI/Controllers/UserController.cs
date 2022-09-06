@@ -9,7 +9,7 @@ using Business_Logic.Services.UserServices;
 namespace Exoft_BlogWebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         IUserService _userService;
@@ -30,34 +30,40 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(users);
         }
 
-        [HttpPost]
-        public IActionResult AddUser(UserCreateDTO user)
+        [HttpGet("/users/{id}")]
+        public async Task<IActionResult> GetUser(Guid id)
         {
-            _userService.Post(user);
+            var user = await _userService.GetById(id);
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser(UserCreateDTO user)
+        {
+            await _userService.Post(user);
             return Ok(user);
         }
 
         [HttpPut]
-        public IActionResult UpdateUser(UserUpdateDTO user)
+        public async Task<IActionResult> UpdateUser(UserUpdateDTO user)
         {
 
-            _userService.Update(user);
+            await _userService.Update(user);
             return Ok();
         }
 
         [HttpDelete]
-        public IActionResult DeleteUser(Guid userId)
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
-            if (_userService.GetById(userId) != null)
+            try
             {
-                _userService.DeleteById(userId);
+                await _userService.DeleteById(userId);
                 return Ok();
-            } else
+            } 
+            catch (Exception ex)
             {
-                return BadRequest("User not found.");
+                return BadRequest(ex.Message);
             }
-            
-           
         }
 
 

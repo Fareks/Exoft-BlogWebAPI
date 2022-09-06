@@ -10,16 +10,17 @@ namespace Business_Logic.Services.UserServices
 {
     public class UserServices : IUserService
     {
-        IRepository<User> _userRepository;
+        IUserRepository _userRepository;
         IMapper _mapper;
-        public UserServices(IRepository<User> repo, IMapper mapper)
+        public UserServices(IUserRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _userRepository = repo;
         }
         public async Task DeleteById(Guid id)
         {
-            await _userRepository.Delete(id);
+            
+            await _userRepository.DeleteById(id);
             await _userRepository.Save();
         }
 
@@ -38,14 +39,19 @@ namespace Business_Logic.Services.UserServices
 
         public async Task Post(UserCreateDTO newItem)
         {
+            newItem.CreatedDate = DateTime.UtcNow;
             var user = _mapper.Map<User>(newItem);
             await _userRepository.Post(user);
+            await _userRepository.Save();
         }
 
-        public async Task Update(UserUpdateDTO item)
+        public async Task Update(UserUpdateDTO userUpdateDTO)
         {
-            var user = _mapper.Map<User>(item);
-            await _userRepository.Update(user);
+            var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
+            var updatedUser = _mapper.Map(userUpdateDTO, user);
+            updatedUser.UpdateDate = DateTime.UtcNow;
+            await _userRepository.Update(updatedUser);
+            await _userRepository.Save();
         }
     }
 }

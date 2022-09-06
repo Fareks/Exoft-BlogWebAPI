@@ -7,8 +7,8 @@ using Business_Logic.DTO;
 namespace Exoft_BlogWebAPI.Controllers
 {
         [ApiController]
-        [Route("[controller]")]
-        public class PostController : ControllerBase
+    [Route("api/[controller]")]
+    public class PostController : ControllerBase
         {
             IPostService _postService;
 
@@ -26,37 +26,38 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpGet("/posts/{id}")]
-            public IActionResult GetPostById(Guid id)
+            public async Task<IActionResult> GetPostById(Guid id)
             {
-                return Ok(_postService.GetById(id));
+                return Ok(await _postService.GetById(id));
             }
 
 
-        [HttpPost]
-            public IActionResult AddPost(PostCreateDTO post)
+            [HttpPost]
+            public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
-                _postService.Create(post);
+                
+                await _postService.Create(post);
                 return Ok(post);
             }
 
             [HttpPut]
-            public IActionResult UpdatePost(PostUpdateDTO post)
+            public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
             {
-                _postService.Update(post);
+                await _postService.Update(post);
                 return Ok();
             }
 
             [HttpDelete]
             public IActionResult DeletePost(Guid postId)
             {
-                if (_postService.GetById(postId) != null)
+                try
                 {
-                    _postService.DeleteById(postId);
+                _postService.DeleteById(postId);
                     return Ok();
                 }
-                else
+                catch (Exception ex)
                 {
-                    return BadRequest("Post not found.");
+                    return BadRequest(ex.Message);
                 }
 
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         AppDbContext _dbcontext;
 
@@ -17,13 +17,9 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task Delete(Guid id)
-        {
-            var user = await _dbcontext.Users.SingleOrDefaultAsync(u => u.Id == id);
-            if (user != null)
-            {
-                _dbcontext.Users.Remove(user);
-            }
+        public async Task DeleteById(Guid id)
+        {   
+               _dbcontext.Users.Remove(await _dbcontext.Users.FindAsync(id));
         }
 
         public async Task<ICollection<User>> GetAllAsync()
@@ -41,6 +37,15 @@ namespace DataLayer.Repositories
                 .Include(u => u.commentLikes)
                 .Include(u => u.postLikes)
                 .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
+
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            var user = await _dbcontext.Users
+                .Include(u => u.commentLikes)
+                .Include(u => u.postLikes)
+                .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Email == email);
             return user;
         }
 

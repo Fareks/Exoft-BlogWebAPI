@@ -17,7 +17,7 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteById(Guid id)
         {
             var post = await _dbcontext.Posts.SingleOrDefaultAsync(u => u.Id == id);
             if (post != null)

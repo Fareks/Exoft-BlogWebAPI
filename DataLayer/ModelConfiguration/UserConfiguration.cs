@@ -15,6 +15,7 @@ namespace DataLayer.ModelConfiguration
                    .WithOne(p => p.User)
                    .HasForeignKey(p => p.UserId)
                    .OnDelete(DeleteBehavior.NoAction);
+            builder.HasIndex(U => U.Email).IsUnique();
         }
     }
 }
