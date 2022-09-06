@@ -23,7 +23,7 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.DeleteById(id);
             await _userRepository.Save();
         }
-
+        
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
             var users = _mapper.Map<List<UserDTO>>(await _userRepository.GetAllAsync());

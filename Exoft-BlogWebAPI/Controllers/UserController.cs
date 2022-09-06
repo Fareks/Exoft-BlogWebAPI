@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Business_Logic.DTO;
 using Business_Logic.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -24,6 +25,7 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
         [HttpGet("/users")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAll();
@@ -53,6 +55,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
             try
