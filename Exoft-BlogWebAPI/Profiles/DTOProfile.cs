@@ -22,6 +22,7 @@ namespace DataLayer.Profiles
             CreateMap<User, UserCreateDTO>().ReverseMap();
             CreateMap<User, UserUpdateDTO>().ReverseMap();
             CreateMap<User, UserReadDTO>().ReverseMap();
+            CreateMap<User, UserLoginDTO>().ReverseMap();
 
             CreateMap<Post, PostDTO>().ReverseMap();
             CreateMap<Post, PostUpdateDTO>().ReverseMap();

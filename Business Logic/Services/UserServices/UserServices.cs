@@ -10,9 +10,9 @@ namespace Business_Logic.Services.UserServices
 {
     public class UserServices : IUserService
     {
-        IRepository<User> _userRepository;
+        IUserRepository _userRepository;
         IMapper _mapper;
-        public UserServices(IRepository<User> repo, IMapper mapper)
+        public UserServices(IUserRepository repo, IMapper mapper)
         {
             _mapper = mapper;
             _userRepository = repo;
