@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//todo: add autorize and rules for put\delete to all models-controllers!
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -19,6 +19,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("db1")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+
 
 //swager with Authentication
 builder.Services.AddSwaggerGen(options =>

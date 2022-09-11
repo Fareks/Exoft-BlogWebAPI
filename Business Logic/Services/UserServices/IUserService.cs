@@ -9,10 +9,13 @@ namespace Business_Logic.Services.UserServices
 {
     public interface IUserService
     {
-        public Task<IEnumerable<UserDTO>> GetAll();
-        public Task<UserDTO> GetById(Guid id);
-        public Task Update(UserUpdateDTO item);
-        public Task DeleteById(Guid id);
-        public Task Post(UserCreateDTO newItem);
+        public Task<bool> BanUserByIdAsync(Guid id);
+        public Task<IEnumerable<UserDTO>> GetAllAsync();
+        public Task<UserDTO> GetByIdAsync(Guid id);
+        public Task UpdateAsync(UserUpdateDTO item);
+        public Task DeleteByIdAsync(Guid id);
+        public Task PostAsync(UserCreateDTO newItem);
+        public Task<UserDTO> GetUserByEmailAsync(string email);
+        public Task ChangeRole(Guid id, int role);
     }
 }
