@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Business_Logic.DTO
@@ -20,7 +21,7 @@ namespace Business_Logic.DTO
 
         public string Email { get; set; }
         public string Password { get; set; }
-
+        [JsonIgnore]
         public string RefreshToken { get; set; } = string.Empty;
         public DateTime? TokenCreated { get; set; }
         public DateTime? TokenExpires { get; set; }

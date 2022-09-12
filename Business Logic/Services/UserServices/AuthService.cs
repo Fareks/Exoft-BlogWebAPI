@@ -61,13 +61,9 @@ namespace Business_Logic.Services.UserServices
         }
         public async Task<Guid> GetMyId()
         {
-            if (_contextAccessor != null)
-            {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
                 var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user.Id;
-            }
-            else return null;
         }
         public async Task<string> CreateToken(UserDTO userDTO)
         {
