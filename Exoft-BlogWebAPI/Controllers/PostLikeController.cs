@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business_Logic.DTO;
 using Business_Logic.Services.PostLikesServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Controllers
@@ -32,14 +33,14 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<IActionResult> AddPostLike(PostLikeCreateDTO postLikeDTO)
         {
             await _postLikeService.Post(postLikeDTO);
             return Ok(postLikeDTO);
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize]
         public async Task<IActionResult> DeletePostLike(Guid postLikeId)
         {
             try

@@ -14,5 +14,6 @@ namespace Business_Logic.Services.PostServices
         public Task Update(PostUpdateDTO item);
         public Task DeleteById(Guid id);
         public Task Create(PostCreateDTO newItem);
+        public Task ValidatePost(Guid postId, bool isValid);
     }
 }

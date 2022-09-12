@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business_Logic.DTO;
+using Business_Logic.Services.UserServices;
 using DataLayer;
 using DataLayer.Models;
 using DataLayer.Repositories;
@@ -12,10 +13,12 @@ namespace Business_Logic.Services.PostServices
     {
         IRepository<Post> _postRepository;
         IMapper _mapper;
-        public PostServices(IRepository<Post> repo, IMapper mapper)
+        IAuthService _authService;
+        public PostServices(IRepository<Post> repo, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;
             _postRepository = repo;
+            _authService = authService;
         }
         public async Task DeleteById(Guid id)
         {
@@ -26,7 +29,6 @@ namespace Business_Logic.Services.PostServices
         public async Task<IEnumerable<PostDTO>> GetAll()
         {
             var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetAllAsync());
-            await _postRepository.Save();
             return posts;
         }
 
@@ -39,8 +41,8 @@ namespace Business_Logic.Services.PostServices
 
         public async Task Create(PostCreateDTO newItem)
         {
-            newItem.CreatedDate = DateTime.UtcNow;
             var post = _mapper.Map<Post>(newItem);
+            post.UserId = await _authService.GetMyId();
             await _postRepository.Post(post);
             await _postRepository.Save();
         }
@@ -49,9 +51,14 @@ namespace Business_Logic.Services.PostServices
         {
             var post = await _postRepository.GetByIdAsync(postUpdateDTO.Id);
             var updatedPost = _mapper.Map(postUpdateDTO, post);
-            updatedPost.UpdateDate = DateTime.UtcNow;
             await _postRepository.Update(updatedPost);
             await _postRepository.Save();
+        }
+        public async Task ValidatePost(Guid postId, bool isValid)
+        {
+            var post =  await _postRepository.GetByIdAsync(postId);
+            post.VerifyStatus = isValid;
+            await  _postRepository.Save();
         }
     }
 }

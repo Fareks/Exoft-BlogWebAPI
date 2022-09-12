@@ -65,6 +65,10 @@ namespace Business_Logic.Services.UserServices
                 var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user.Id;
         }
+        public async Task<bool> isAuthor(Guid authorId)
+        {
+            return (await GetMyId() ==  authorId);
+        }
         public async Task<string> CreateToken(UserDTO userDTO)
         {
             var user = await _userRepository.GetByIdAsync(userDTO.Id);

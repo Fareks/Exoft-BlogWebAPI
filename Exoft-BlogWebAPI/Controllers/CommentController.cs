@@ -1,5 +1,7 @@
 ﻿using Business_Logic.DTO;
 using Business_Logic.Services.CommentServices;
+using Business_Logic.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Controllers
@@ -8,16 +10,18 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class CommentController : ControllerBase
     {
-        ICommentService _comService;
-        public CommentController(ICommentService comService)
+        ICommentService _commentService;
+        IAuthService _authService;
+        public CommentController(ICommentService commentService, IAuthService authService)
         {
-            _comService = comService;
+            _commentService = commentService;
+            _authService = authService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllById()
         {
-            var comments = await _comService.GetAllAsync();
+            var comments = await _commentService.GetAllAsync();
             return Ok(comments);
         }
 
@@ -26,7 +30,7 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             try
             {
-                var comment = await _comService.GetByIdAsync(id);
+                var comment = await _commentService.GetByIdAsync(id);
                 return Ok(comment);
             }
             catch (Exception ex)
@@ -35,12 +39,12 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost,Authorize]
         public async Task<IActionResult> AddComment(CommentCreateDTO newComment)
         {
             try
             {
-                await _comService.Post(newComment);
+                await _commentService.Post(newComment);
                 return Ok();
             }
             catch (Exception ex) 
@@ -48,13 +52,21 @@ namespace Exoft_BlogWebAPI.Controllers
                 return BadRequest(ex.Message); 
             }
         }
-        [HttpDelete]
+        [HttpDelete, Authorize]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             try
             {
-                await _comService.DeleteById(id);
-                return Ok();
+                //проблема: забагато раз достуковуюсь до бд
+                var comment = await _commentService.GetByIdAsync(id);
+                if (await _authService.isAuthor(comment.UserId))
+                {
+                    await _commentService.DeleteById(id);
+                    return Ok();
+                }else
+                {
+                    return BadRequest("Can`t Delete Comment");
+                }
             }
             catch (Exception ex)
             {

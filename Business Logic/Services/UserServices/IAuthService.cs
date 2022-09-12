@@ -20,6 +20,7 @@ namespace Business_Logic.Services.UserServices
         public Task<string> CreateToken(UserDTO userDTO);
         public Task SetRefreshToken(RefreshToken newRefreshToken, UserDTO userDTO);
         public RefreshToken GenerateRefreshToken();
+        public Task<bool> isAuthor(Guid authorId);
 
     }
 }

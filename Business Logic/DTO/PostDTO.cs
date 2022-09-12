@@ -23,12 +23,13 @@ namespace Business_Logic.DTO
         public string TextContent { get; set; }
         public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; }
+        public Guid UserId { get; set; }
     }
     public class PostCreateDTO : BaseCreateDTO
     {
         public string Title { get; set; }
         public string TextContent { get; set; }
-        public Guid UserId { get; set; }
+        //public Guid UserId { get; set; }
     }
     public class PostReadDTO
     {
