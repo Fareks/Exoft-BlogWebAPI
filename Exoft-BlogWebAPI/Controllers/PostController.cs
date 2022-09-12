@@ -39,7 +39,7 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpPost, Authorize]
-        //required return dto with id. (CreateDTO does not contain id)
+        //required return dto with id. 
         public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
                 try
@@ -56,7 +56,7 @@ namespace Exoft_BlogWebAPI.Controllers
             [HttpPut, Authorize]
             public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
             {
-                if (await _authService.GetMyId() == post.UserId)
+                if (await _authService.isAuthor(post.UserId))
                 {
                     var response = await _postService.Update(post);
                     return Ok(response);
