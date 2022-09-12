@@ -11,6 +11,8 @@ namespace Business_Logic.Services.PostLikesServices
     {
         public Task<IEnumerable<PostLikeReadDTO>> GetAllAsync();
         public Task<PostLikeReadDTO> GetByIdAsync(Guid id);
+
+        //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
         public Task Post(PostLikeCreateDTO newItem);
     }

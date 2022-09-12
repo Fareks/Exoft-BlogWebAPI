@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Business_Logic.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Business_Logic.DTO
@@ -14,10 +16,18 @@ namespace Business_Logic.DTO
         public string LastName { get; set; }
 
         public string FullName { get { return (FirstName +" "+ LastName); } set { } }
-        public string Role { get; set; }
+        public Roles Role { get; set; } = Roles.User;
+        //public string Role { get; set; } = "User";
 
         public string Email { get; set; }
         public string Password { get; set; }
+        [JsonIgnore]
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime? TokenCreated { get; set; }
+        public DateTime? TokenExpires { get; set; }
+
+        public bool IsBanned { get; set; }
+
         public ICollection<PostDTO>? Post { get; set; }
         public ICollection<CommentDTO>? Comments { get; set; }
         public ICollection<PostLikeDTO>? postLikes { get; set; }
@@ -38,6 +48,7 @@ namespace Business_Logic.DTO
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Roles Role { get; set; }
     }
     public class UserCreateDTO : BaseCreateDTO
     {

@@ -12,46 +12,45 @@ namespace Business_Logic.Services.CommentServices
 {
     public class CommentServices : ICommentService
     {
-        IRepository<Comment> _comRepository;
+        IRepository<Comment> _commentRepository;
         IMapper _mapper;
 
         public CommentServices(IRepository<Comment> comRepository, IMapper mapper)
         {
-            _comRepository = comRepository;
+            _commentRepository = comRepository;
             _mapper = mapper;
         }
         public async Task DeleteById(Guid id)
         {
-            await _comRepository.DeleteById(id);
-            await _comRepository.Save();    
+            await _commentRepository.DeleteById(id);
+            await _commentRepository.Save();    
         }
 
         public async Task<IEnumerable<CommentReadDTO>> GetAllAsync()
         {
-            var comments = await _comRepository.GetAllAsync();
+            var comments = await _commentRepository.GetAllAsync();
             var commentsDTO = _mapper.Map<List<CommentReadDTO>>(comments);
             return commentsDTO;
         }
 
         public async Task<CommentReadDTO> GetByIdAsync(Guid id)
         {
-            var comment = await _comRepository.GetByIdAsync(id);
+            var comment = await _commentRepository.GetByIdAsync(id);
             var commentDTO = _mapper.Map<CommentReadDTO>(comment);
             return commentDTO;
         }
 
         public async Task Post(CommentCreateDTO newItem)
         {
-            newItem.CreatedDate = DateTime.UtcNow;
             var comment = _mapper.Map<Comment>(newItem);
-            await _comRepository.Post(comment);
-            await _comRepository.Save();
+            await _commentRepository.Post(comment);
+            await _commentRepository.Save();
         }
 
         public async Task Update(CommentUpdateDTO item)
         {
             item.UpdateDate = new DateTimeOffset(DateTime.UtcNow);
-            await _comRepository.Update(_mapper.Map<Comment>(item));
+            await _commentRepository.Update(_mapper.Map<Comment>(item));
         }
     }
 }

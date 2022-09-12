@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business_Logic.DTO;
+using Business_Logic.Enums;
 using DataLayer;
 using DataLayer.Models;
 using DataLayer.Repositories;
@@ -17,27 +18,27 @@ namespace Business_Logic.Services.UserServices
             _mapper = mapper;
             _userRepository = repo;
         }
-        public async Task DeleteById(Guid id)
+        public async Task DeleteByIdAsync(Guid id)
         {
             
             await _userRepository.DeleteById(id);
             await _userRepository.Save();
         }
-
-        public async Task<IEnumerable<UserDTO>> GetAll()
+        
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
             var users = _mapper.Map<List<UserDTO>>(await _userRepository.GetAllAsync());
             return users;
         }
 
-        public async Task<UserDTO> GetById(Guid id)
+        public async Task<UserDTO> GetByIdAsync(Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
             var userDTO = _mapper.Map<UserDTO>(user);
             return userDTO;
         }
 
-        public async Task Post(UserCreateDTO newItem)
+        public async Task PostAsync(UserCreateDTO newItem)
         {
             newItem.CreatedDate = DateTime.UtcNow;
             var user = _mapper.Map<User>(newItem);
@@ -45,7 +46,7 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Save();
         }
 
-        public async Task Update(UserUpdateDTO userUpdateDTO)
+        public async Task UpdateAsync(UserUpdateDTO userUpdateDTO)
         {
             var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
             var updatedUser = _mapper.Map(userUpdateDTO, user);
@@ -53,5 +54,25 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Update(updatedUser);
             await _userRepository.Save();
         }
+        public async Task<UserDTO> GetUserByEmailAsync(string email)
+        {
+            var user = await _userRepository.GetByEmailAsync(email);
+            var userDTO = _mapper.Map<UserDTO>(user);
+            return userDTO;
+        }
+        public async Task<bool> BanUserByIdAsync(Guid id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            user.IsBanned = true;
+            await _userRepository.Save();
+            return user.IsBanned;
+        }
+        public async Task ChangeRole(Guid id, int role)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            user.Role = (Roles)role;
+            await _userRepository.Save();
+        }
+
     }
 }

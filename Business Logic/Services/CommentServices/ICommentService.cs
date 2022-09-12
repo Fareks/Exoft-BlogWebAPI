@@ -12,6 +12,8 @@ namespace Business_Logic.Services.CommentServices
         public Task<IEnumerable<CommentReadDTO>> GetAllAsync();
         public Task<CommentReadDTO> GetByIdAsync(Guid id);
         public Task Update(CommentUpdateDTO item);
+
+        //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
         public Task Post(CommentCreateDTO newItem);
     }

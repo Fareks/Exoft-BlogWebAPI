@@ -12,29 +12,29 @@ namespace Business_Logic.Services.CommentLikeServices
 {
     public class CommentLikeServices : ICommentLikeService
     {
-        IRepository<CommentLike> _commLikeRepository;
+        IRepository<CommentLike> _commentLikeRepository;
         IMapper _mapper;
 
         public CommentLikeServices(IRepository<CommentLike> commLikeRepository, IMapper mapper)
         {
             _mapper = mapper;
-            _commLikeRepository = commLikeRepository;
+            _commentLikeRepository = commLikeRepository;
         }
         public async Task DeleteById(Guid id)
         {
-            await _commLikeRepository.DeleteById(id);
-            await _commLikeRepository.Save();
+            await _commentLikeRepository.DeleteById(id);
+            await _commentLikeRepository.Save();
         }
 
         public async Task<IEnumerable<CommentLikeReadDTO>> GetAllAsync()
         {
-            var commentLikes = _mapper.Map<List<CommentLikeReadDTO>>(await _commLikeRepository.GetAllAsync());
+            var commentLikes = _mapper.Map<List<CommentLikeReadDTO>>(await _commentLikeRepository.GetAllAsync());
             return commentLikes;
         }
 
         public async Task<CommentLikeReadDTO> GetByIdAsync(Guid id)
         {
-            var commentLike = await _commLikeRepository.GetByIdAsync(id);
+            var commentLike = await _commentLikeRepository.GetByIdAsync(id);
             var commentLikesDTO = _mapper.Map<CommentLikeReadDTO>(commentLike);
             return commentLikesDTO;
         }
@@ -43,8 +43,8 @@ namespace Business_Logic.Services.CommentLikeServices
         {
             newItem.CreatedDate = DateTime.UtcNow;
             var commentLike = _mapper.Map<CommentLike>(newItem);
-            await _commLikeRepository.Post(commentLike);
-            await _commLikeRepository.Save();
+            await _commentLikeRepository.Post(commentLike);
+            await _commentLikeRepository.Save();
         }
     }
 }
