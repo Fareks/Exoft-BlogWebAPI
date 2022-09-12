@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
+    //need modify LikeSnapshot when db modified
     [ApiController]
     [Route("api/[controller]")]
     public class CommentLikeController : ControllerBase
@@ -39,6 +40,7 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> AddCommentLike(CommentLikeCreateDTO postLikeDTO)
         {
+            //need author validator
             await _commentLikeService.Post(postLikeDTO);
             return Ok(postLikeDTO);
         }

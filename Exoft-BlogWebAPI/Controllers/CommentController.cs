@@ -44,6 +44,7 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             try
             {
+                //need author validator
                 await _commentService.Post(newComment);
                 return Ok();
             }

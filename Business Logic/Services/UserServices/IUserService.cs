@@ -13,6 +13,8 @@ namespace Business_Logic.Services.UserServices
         public Task<IEnumerable<UserDTO>> GetAllAsync();
         public Task<UserDTO> GetByIdAsync(Guid id);
         public Task UpdateAsync(UserUpdateDTO item);
+
+        //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteByIdAsync(Guid id);
         public Task PostAsync(UserCreateDTO newItem);
         public Task<UserDTO> GetUserByEmailAsync(string email);

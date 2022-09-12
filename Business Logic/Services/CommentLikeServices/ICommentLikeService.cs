@@ -11,6 +11,8 @@ namespace Business_Logic.Services.CommentLikeServices
     {
         public Task<IEnumerable<CommentLikeReadDTO>> GetAllAsync();
         public Task<CommentLikeReadDTO> GetByIdAsync(Guid id);
+
+        //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
         public Task Post(CommentLikeCreateDTO newItem);
     }

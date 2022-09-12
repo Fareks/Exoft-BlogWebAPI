@@ -72,7 +72,8 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 try
                 {
-                    var post = await _postService.GetById(postId);
+                //problem:  reach the database too many times
+                var post = await _postService.GetById(postId);
                     if(await _authService.isAuthor(post.UserId))
                         {
                             await _postService.DeleteById(postId);
