@@ -32,15 +32,15 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return Ok(await _postService.GetAllPostsByUserId(userId));
             }
-        [HttpGet("/posts/{id}")]
+            [HttpGet("/posts/{id}")]
             public async Task<IActionResult> GetPostById(Guid id)
             {
                 return Ok(await _postService.GetById(id));
             }
 
             [HttpPost, Authorize]
-        //required return dto with id. 
-        public async Task<IActionResult> AddPost(PostCreateDTO post)
+            //required return dto with id. 
+            public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
                 try
                 {
@@ -51,7 +51,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 {
                     return BadRequest(ex.Message);
                 }
-        }
+            }
 
             [HttpPut, Authorize]
             public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
@@ -88,9 +88,9 @@ namespace Exoft_BlogWebAPI.Controllers
                     return BadRequest(ex.Message);
                 }
             }
-        [HttpPut("/admin/validate-post"), Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ValidatePost(Guid postId, bool setIsValid)
-        {
+            [HttpPut("/admin/validate-post"), Authorize(Roles = "Admin")]
+            public async Task<IActionResult> ValidatePost(Guid postId, bool setIsValid)
+            {
             try
             {
                 await _postService.ValidatePost(postId, setIsValid);
@@ -100,6 +100,6 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return BadRequest(new { Response = $"Can`t validate post." });
             }
-        }
+            }
         }
 }

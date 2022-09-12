@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business_Logic.DTO;
 using Business_Logic.Services.CommentLikeServices;
+using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +13,13 @@ namespace Exoft_BlogWebAPI.Controllers
     {
         ICommentLikeService _commentLikeService;
         IMapper _mapper;
+        IAuthService _authService;
 
-        public CommentLikeController(ICommentLikeService commLikeService, IMapper mapper)
+        public CommentLikeController(ICommentLikeService commLikeService, IMapper mapper, IAuthService authService)
         {
             _commentLikeService = commLikeService;
             _mapper = mapper;
+            _authService = authService;
         }
 
         [HttpGet("/comment_likes")]
@@ -45,8 +48,18 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             try
             {
-                await _commentLikeService.DeleteById(postLikeId);
-                return Ok();
+                //Too many base calls! Move the validator and entity extraction into each service method!
+                var postLike = await _commentLikeService.GetByIdAsync(postLikeId);
+                if (await _authService.isAuthor(postLike.UserId))
+                {
+                    await _commentLikeService.DeleteById(postLikeId);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Can`t delete post like.");
+                }
+                
             }
             catch (Exception ex)
             {
