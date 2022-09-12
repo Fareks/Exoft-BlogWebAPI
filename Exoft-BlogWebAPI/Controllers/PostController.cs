@@ -23,12 +23,16 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
             [HttpGet("/posts")]
-            public async Task<IActionResult> GetBlogs()
+            public async Task<IActionResult> GetPosts()
             {
                 return Ok(await _postService.GetAll());
             }
-
-            [HttpGet("/posts/{id}")]
+            [HttpGet("/posts-by-user-id/{userId}")]
+            public async Task<IActionResult> GetPosts(Guid userId)
+            {
+                return Ok(await _postService.GetAllPostsByUserId(userId));
+            }
+        [HttpGet("/posts/{id}")]
             public async Task<IActionResult> GetPostById(Guid id)
             {
                 return Ok(await _postService.GetById(id));
@@ -40,8 +44,8 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 try
                 {
-                    await _postService.Create(post);
-                    return Ok(post);
+                    var response = await _postService.Create(post);
+                    return Ok(response);
                 } 
                 catch (Exception ex)
                 {
@@ -54,8 +58,8 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 if (await _authService.GetMyId() == post.UserId)
                 {
-                    await _postService.Update(post);
-                    return Ok(post);
+                    var response = await _postService.Update(post);
+                    return Ok(response);
                 } else
                 {
                     return BadRequest("Can`t Update Post.");
@@ -72,10 +76,10 @@ namespace Exoft_BlogWebAPI.Controllers
                     if(await _authService.isAuthor(post.UserId))
                         {
                             await _postService.DeleteById(postId);
-                            return Ok();
+                            return Ok(new {Status="Post deleted!", PostId=postId });
                         } else
                         {
-                            return BadRequest("Can`t delete user");
+                            return BadRequest($"Can`t delete post by id: {postId}");
                         }
                     
                 }
