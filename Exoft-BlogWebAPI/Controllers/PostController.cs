@@ -28,7 +28,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Ok(await _postService.GetAll());
             }
             [HttpGet("/posts-by-user-id/{userId}")]
-            public async Task<IActionResult> GetPosts(Guid userId)
+            public async Task<IActionResult> GetPostsByUserId(Guid userId)
             {
                 return Ok(await _postService.GetAllPostsByUserId(userId));
             }
