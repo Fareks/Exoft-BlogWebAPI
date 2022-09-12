@@ -30,21 +30,21 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("/comment_likes/{id}")]
-        public async Task<IActionResult> GetPostLike(Guid id)
+        public async Task<IActionResult> GetCommentLike(Guid id)
         {
             var user = await _commentLikeService.GetByIdAsync(id);
             return Ok(user);
         }
 
         [HttpPost, Authorize]
-        public async Task<IActionResult> AddPostLike(CommentLikeCreateDTO postLikeDTO)
+        public async Task<IActionResult> AddCommentLike(CommentLikeCreateDTO postLikeDTO)
         {
             await _commentLikeService.Post(postLikeDTO);
             return Ok(postLikeDTO);
         }
 
         [HttpDelete, Authorize]
-        public async Task<IActionResult> DeletePostLike(Guid postLikeId)
+        public async Task<IActionResult> DeleteCommentLike(Guid postLikeId)
         {
             try
             {
