@@ -57,7 +57,7 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             try
             {
-                //проблема: забагато раз достуковуюсь до бд
+                //problem:  reach the database too many times
                 var comment = await _commentService.GetByIdAsync(id);
                 if (await _authService.isAuthor(comment.UserId))
                 {

@@ -35,8 +35,8 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpPost, Authorize]
-            //необхідне повернення дто з id. (CreateDTO не містить id)
-            public async Task<IActionResult> AddPost(PostCreateDTO post)
+        //required return dto with id. (CreateDTO does not contain id)
+        public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
                 try
                 {
