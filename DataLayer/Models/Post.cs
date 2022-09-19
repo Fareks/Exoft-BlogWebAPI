@@ -7,7 +7,7 @@ namespace DataLayer.Models
         public string Title { get; set; }
         public string TextContent { get; set; }
         public int LikeSnapshot { get; set; }
-        public bool VerifyStatus { get; set; } = false;
+        public bool VerifyStatus { get; set; } 
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
