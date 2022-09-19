@@ -1,5 +1,6 @@
 ﻿using Business_Logic.DTO.BaseDTOs;
 using Business_Logic.DTO.PostDTOs;
+using Business_Logic.DTO.UserDTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

@@ -60,7 +60,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.CommentLike", b =>
@@ -93,7 +93,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentLike");
+                    b.ToTable("CommentLike", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.Post", b =>
@@ -135,7 +135,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.PostLike", b =>
@@ -168,7 +168,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostLike");
+                    b.ToTable("PostLike", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.User", b =>
@@ -233,7 +233,7 @@ namespace DataLayer.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.Comment", b =>
