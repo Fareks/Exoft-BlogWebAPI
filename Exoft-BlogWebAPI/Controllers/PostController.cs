@@ -12,8 +12,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class PostController : ControllerBase
         {
-            IPostService _postService;
-            IAuthService _authService;
+            readonly IPostService _postService;
+            readonly IAuthService _authService;
 
             public PostController(IPostService postService, IAuthService authService)
             {

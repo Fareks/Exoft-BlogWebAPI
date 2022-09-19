@@ -10,8 +10,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class CommentController : ControllerBase
     {
-        ICommentService _commentService;
-        IAuthService _authService;
+        readonly ICommentService _commentService;
+        readonly IAuthService _authService;
         public CommentController(ICommentService commentService, IAuthService authService)
         {
             _commentService = commentService;

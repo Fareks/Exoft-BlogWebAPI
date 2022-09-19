@@ -12,8 +12,8 @@ namespace Business_Logic.Services.CommentLikeServices
 {
     public class CommentLikeServices : ICommentLikeService
     {
-        IRepository<CommentLike> _commentLikeRepository;
-        IMapper _mapper;
+        readonly IRepository<CommentLike> _commentLikeRepository;
+        readonly IMapper _mapper;
 
         public CommentLikeServices(IRepository<CommentLike> commLikeRepository, IMapper mapper)
         {

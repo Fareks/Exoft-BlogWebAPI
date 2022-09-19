@@ -12,8 +12,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class PostLikeController : ControllerBase
     {
-        IPostLikeService _postLikeService;
-        IMapper _mapper;
+        readonly IPostLikeService _postLikeService;
+        readonly IMapper _mapper;
 
         public PostLikeController(IPostLikeService postLikeService, IMapper mapper)
         {

@@ -16,10 +16,10 @@ namespace Business_Logic.Services.UserServices
 {
     public class AuthService : IAuthService
     {
-        IUserRepository _userRepository;
-        IMapper _mapper;
-        IConfiguration _configuration;
-        IHttpContextAccessor _contextAccessor;
+        readonly IUserRepository _userRepository;
+        readonly IMapper _mapper;
+        readonly IConfiguration _configuration;
+        readonly IHttpContextAccessor _contextAccessor;
 
         public AuthService(IHttpContextAccessor contextAccessor,IConfiguration configuration,IUserRepository userRepository, IMapper mapper)
         {

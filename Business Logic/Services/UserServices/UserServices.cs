@@ -11,8 +11,8 @@ namespace Business_Logic.Services.UserServices
 {
     public class UserServices : IUserService
     {
-        IUserRepository _userRepository;
-        IMapper _mapper;
+        readonly IUserRepository _userRepository;
+        readonly IMapper _mapper;
         public UserServices(IUserRepository repo, IMapper mapper)
         {
             _mapper = mapper;

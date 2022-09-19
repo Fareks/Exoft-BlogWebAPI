@@ -11,9 +11,9 @@ namespace Business_Logic.Services.PostServices
 {
     public class PostServices : IPostService
     {
-        IPostRepository _postRepository;
-        IMapper _mapper;
-        IAuthService _authService;
+        readonly IPostRepository _postRepository;
+        readonly IMapper _mapper;
+        readonly IAuthService _authService;
         public PostServices(IPostRepository repo, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;

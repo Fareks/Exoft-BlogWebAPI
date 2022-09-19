@@ -12,8 +12,8 @@ namespace Business_Logic.Services.PostLikesServices
 {
     public class PostLikeServices : IPostLikeService
     {
-        IRepository<PostLike> _postLikeRepository;
-        IMapper _mapper;
+        readonly IRepository<PostLike> _postLikeRepository;
+        readonly IMapper _mapper;
 
         public PostLikeServices(IRepository<PostLike> postLikeRepository, IMapper mapper)
         {

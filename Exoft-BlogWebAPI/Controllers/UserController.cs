@@ -14,9 +14,9 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        IUserService _userService;
-        IAuthService _authService;
-        IMapper _mapper; 
+        readonly IUserService _userService;
+        readonly IAuthService _authService;
+        readonly IMapper _mapper; 
        
 
         public UserController(IUserService userService, IMapper mapper, IAuthService authService)

@@ -12,9 +12,9 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class CommentLikeController : ControllerBase
     {
-        ICommentLikeService _commentLikeService;
-        IMapper _mapper;
-        IAuthService _authService;
+        readonly ICommentLikeService _commentLikeService;
+        readonly IMapper _mapper;
+        readonly IAuthService _authService;
 
         public CommentLikeController(ICommentLikeService commLikeService, IMapper mapper, IAuthService authService)
         {

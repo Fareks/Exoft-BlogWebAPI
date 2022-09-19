@@ -11,9 +11,10 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("/api/[controller]")]
     public class AuthController : Controller
     {
-        IConfiguration _configuration;
-        IAuthService _authService;
-        IUserService _userService;
+
+        readonly IConfiguration _configuration;
+        readonly IAuthService _authService;
+        readonly IUserService _userService;
         
 
         public AuthController(IUserService userService, IConfiguration configuration, IAuthService authService)
