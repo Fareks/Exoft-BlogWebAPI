@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Enums;
 using DataLayer;
 using DataLayer.Models;

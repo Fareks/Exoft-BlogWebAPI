@@ -2,9 +2,9 @@
 using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Business_Logic.Services.PostServices;
-using Business_Logic.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Business_Logic.Services.UserServices;
+using Business_Logic.DTO.PostDTOs;
 
 namespace Exoft_BlogWebAPI.Controllers
 {

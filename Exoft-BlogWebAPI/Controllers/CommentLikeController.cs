@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.CommentLikeDTOs;
 using Business_Logic.Services.CommentLikeServices;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;

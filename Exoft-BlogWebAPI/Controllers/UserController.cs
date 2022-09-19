@@ -3,10 +3,10 @@ using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Business_Logic.DTO;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Business_Logic.Enums;
+using Business_Logic.DTO.UserDTOs;
 
 namespace Exoft_BlogWebAPI.Controllers
 {

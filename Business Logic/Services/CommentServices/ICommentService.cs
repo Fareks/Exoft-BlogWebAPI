@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.CommentDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

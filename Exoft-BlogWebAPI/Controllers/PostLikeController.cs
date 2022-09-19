@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.PostLikeDTOs;
 using Business_Logic.Services.PostLikesServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using DataLayer.Models;
-using Business_Logic.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business_Logic.DTO.BaseDTOs;
+using Business_Logic.DTO.CommentDTOs;
+using Business_Logic.DTO.CommentLikeDTOs;
+using Business_Logic.DTO.PostDTOs;
+using Business_Logic.DTO.PostLikeDTOs;
+using Business_Logic.DTO.UserDTOs;
 
 namespace DataLayer.Profiles
 {

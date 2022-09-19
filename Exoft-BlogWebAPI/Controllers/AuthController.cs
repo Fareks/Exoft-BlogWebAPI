@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Authorization;

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.CommentLikeDTOs;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using System;

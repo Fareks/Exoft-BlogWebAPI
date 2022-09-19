@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.CommentDTOs;
 using Business_Logic.Services.CommentServices;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;

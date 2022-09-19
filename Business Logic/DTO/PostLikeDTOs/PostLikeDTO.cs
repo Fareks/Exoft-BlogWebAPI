@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Business_Logic.DTO.BaseDTOs;
+using Business_Logic.DTO.PostDTOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business_Logic.DTO
+namespace Business_Logic.DTO.PostLikeDTOs
 {
     public class PostLikeDTO : BaseDTO
     {
@@ -13,15 +15,5 @@ namespace Business_Logic.DTO
         public PostDTO Post { get; set; }
         public Guid UserId { get; set; }
         public UserDTO User { get; set; }
-    }
-    public class PostLikeReadDTO
-    {
-        public Guid PostId { get; set; }
-        public Guid UserId { get; set; }
-    }
-    public class PostLikeCreateDTO : BaseCreateDTO
-    {
-        public Guid PostId { get; set; }
-        public Guid UserId { get; set; }
     }
 }

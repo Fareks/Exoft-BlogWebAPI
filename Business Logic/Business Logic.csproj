@@ -22,4 +22,8 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\NewFolder\" />
+  </ItemGroup>
+
 </Project>

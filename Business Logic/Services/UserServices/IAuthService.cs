@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.UserDTOs;
 using DataLayer.Models;
 using System;
 using System.Collections.Generic;

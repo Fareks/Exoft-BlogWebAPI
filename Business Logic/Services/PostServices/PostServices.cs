@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.PostDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer;
 using DataLayer.Models;
