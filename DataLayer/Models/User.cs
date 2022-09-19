@@ -16,8 +16,7 @@ namespace DataLayer.Models
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte [] PasswordSalt { get; set; }
-        public Roles Role { get; set; } = Roles.User;
-        //public string Role { get; set; } = "User";
+        public Roles Role { get; set; }
         public string RefreshToken { get; set; } = string.Empty;
         public DateTime? TokenCreated { get; set; }
         public DateTime? TokenExpires { get; set; }
