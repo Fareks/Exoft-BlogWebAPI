@@ -23,7 +23,7 @@ namespace Exoft_BlogWebAPI.Controllers
             _authService = authService;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> registerUser(UserCreateDTO userDTO)
+        public async Task<IActionResult> RegisterUser(UserCreateDTO userDTO)
         {
             if (await _authService.EmailIsExist(userDTO.Email))
             {
@@ -37,7 +37,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> loginUser(UserLoginDTO userDTO)
+        public async Task<IActionResult> LoginUser(UserLoginDTO userDTO)
         {
             
             var user = await _authService.LoginUser(userDTO);
@@ -53,7 +53,6 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             var currentUser = await _authService.GetMe();
             return Ok(currentUser);
-            
         }
 
         [HttpPost("refresh-token")]

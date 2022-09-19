@@ -43,24 +43,24 @@ namespace Business_Logic.Services.PostServices
             var posts = await _postRepository.GetAllByUserId(userId);
             return (_mapper.Map<List<PostDTO>>(posts));
         }
-        public async Task<PostDTO> Create(PostCreateDTO newItem)
+        public async Task<PostCreateDTO> Create(PostCreateDTO newItem)
         {
             var post = _mapper.Map<Post>(newItem);
             post.UserId = await _authService.GetMyId();
             await _postRepository.Post(post);
             await _postRepository.Save();
 
-            return (_mapper.Map<PostDTO>(post));
+            return (newItem);
         }
 
-        public async Task<PostDTO> Update(PostUpdateDTO postUpdateDTO)
+        public async Task<PostUpdateDTO> Update(PostUpdateDTO postUpdateDTO)
         {
             var post = await _postRepository.GetByIdAsync(postUpdateDTO.Id);
             var updatedPost = _mapper.Map(postUpdateDTO, post);
             await _postRepository.Update(updatedPost);
             await _postRepository.Save();
 
-            return (_mapper.Map<PostDTO>(post));
+            return (postUpdateDTO);
         }
         public async Task ValidatePost(Guid postId, bool isValid)
         {

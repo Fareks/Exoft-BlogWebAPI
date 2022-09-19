@@ -12,11 +12,11 @@ namespace Business_Logic.Services.PostServices
         public Task<IEnumerable<PostDTO>> GetAll();
         public Task<PostDTO> GetById(Guid id);
         public Task<IEnumerable<PostDTO>> GetAllPostsByUserId(Guid userId);
-        public Task<PostDTO> Update(PostUpdateDTO item);
+        public Task<PostUpdateDTO> Update(PostUpdateDTO item);
 
         //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
-        public Task<PostDTO> Create(PostCreateDTO newItem);
+        public Task<PostCreateDTO> Create(PostCreateDTO newItem);
         public Task ValidatePost(Guid postId, bool isValid);
     }
 }

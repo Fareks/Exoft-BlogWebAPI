@@ -51,6 +51,7 @@ namespace DataLayer.Repositories
 
         public async Task Update(Comment comment)
         {
+            comment.UpdateDate = DateTimeOffset.UtcNow;
             _dbcontext.Comment.Update(comment);
         }
     }

@@ -41,7 +41,7 @@ namespace Exoft_BlogWebAPI.Controllers
         public async Task<IActionResult> AddCommentLike(CommentLikeCreateDTO postLikeDTO)
         {
             //need author validator
-            await _commentLikeService.Post(postLikeDTO);
+            await _commentLikeService.CreateCommentLike(postLikeDTO);
             return Ok(postLikeDTO);
         }
 
@@ -52,7 +52,7 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 //Too many base calls! Move the validator and entity extraction into each service method!
                 var postLike = await _commentLikeService.GetByIdAsync(postLikeId);
-                if (await _authService.isAuthor(postLike.UserId))
+                if (await _authService.IsAuthor(postLike.UserId))
                 {
                     await _commentLikeService.DeleteById(postLikeId);
                     return Ok();

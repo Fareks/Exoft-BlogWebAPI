@@ -28,7 +28,6 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
         [HttpGet("/admin/users")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAllAsync();

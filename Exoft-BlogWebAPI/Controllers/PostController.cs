@@ -56,7 +56,7 @@ namespace Exoft_BlogWebAPI.Controllers
             [HttpPut, Authorize]
             public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
             {
-                if (await _authService.isAuthor(post.UserId))
+                if (await _authService.IsAuthor(post.UserId))
                 {
                     var response = await _postService.Update(post);
                     return Ok(response);
@@ -74,7 +74,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 {
                 //problem:  reach the database too many times
                 var post = await _postService.GetById(postId);
-                    if(await _authService.isAuthor(post.UserId))
+                    if(await _authService.IsAuthor(post.UserId))
                         {
                             await _postService.DeleteById(postId);
                             return Ok(new {Status="Post deleted!", PostId=postId });

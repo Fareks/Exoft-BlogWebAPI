@@ -49,8 +49,8 @@ namespace Business_Logic.Services.CommentServices
 
         public async Task Update(CommentUpdateDTO item)
         {
-            item.UpdateDate = new DateTimeOffset(DateTime.UtcNow);
             await _commentRepository.Update(_mapper.Map<Comment>(item));
+            await _commentRepository.Save();
         }
     }
 }

@@ -39,10 +39,10 @@ namespace Business_Logic.Services.CommentLikeServices
             return commentLikesDTO;
         }
 
-        public async Task Post(CommentLikeCreateDTO newItem)
+        public async Task CreateCommentLike(CommentLikeCreateDTO newItem)
         {
-            newItem.CreatedDate = DateTime.UtcNow;
             var commentLike = _mapper.Map<CommentLike>(newItem);
+            commentLike.CreatedDate = DateTime.UtcNow;
             await _commentLikeRepository.Post(commentLike);
             await _commentLikeRepository.Save();
         }

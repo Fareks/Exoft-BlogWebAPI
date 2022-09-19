@@ -25,7 +25,7 @@ namespace DataLayer.Models
 
         public ICollection<Post>? Post { get; set; }
         public ICollection<Comment>? Comments { get; set; }
-        public ICollection<PostLike>? postLikes { get; set; }
-        public ICollection<CommentLike>? commentLikes { get; set; }
+        public ICollection<PostLike>? PostLikes { get; set; }
+        public ICollection<CommentLike>? CommentLikes { get; set; }
     }
 }

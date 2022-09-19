@@ -60,7 +60,7 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 //problem:  reach the database too many times
                 var comment = await _commentService.GetByIdAsync(id);
-                if (await _authService.isAuthor(comment.UserId))
+                if (await _authService.IsAuthor(comment.UserId))
                 {
                     await _commentService.DeleteById(id);
                     return Ok();

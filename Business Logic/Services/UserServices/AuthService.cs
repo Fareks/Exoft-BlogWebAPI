@@ -49,12 +49,12 @@ namespace Business_Logic.Services.UserServices
             }
             else return null;   
         }
-        public async Task<UserDTO> GetMe()
+        public async Task<UserReadDTO> GetMe()
         {
             if (_contextAccessor != null)
             {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user;
             }
             else return null;
@@ -65,7 +65,7 @@ namespace Business_Logic.Services.UserServices
                 var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user.Id;
         }
-        public async Task<bool> isAuthor(Guid authorId)
+        public async Task<bool> IsAuthor(Guid authorId)
         {
             return (await GetMyId() ==  authorId);
         }
