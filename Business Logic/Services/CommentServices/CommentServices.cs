@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Business_Logic.DTO.CommentDTOs;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

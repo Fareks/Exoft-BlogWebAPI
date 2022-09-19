@@ -3,7 +3,7 @@ using Business_Logic.DTO.PostDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +11,10 @@ namespace Business_Logic.Services.PostServices
 {
     public class PostServices : IPostService
     {
-        IRepository<Post> _postRepository;
+        IPostRepository _postRepository;
         IMapper _mapper;
         IAuthService _authService;
-        public PostServices(IRepository<Post> repo, IMapper mapper, IAuthService authService)
+        public PostServices(IPostRepository repo, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;
             _postRepository = repo;
@@ -40,9 +40,8 @@ namespace Business_Logic.Services.PostServices
         }
         public async Task<IEnumerable<PostDTO>> GetAllPostsByUserId(Guid userId)
         {
-            var posts = await _postRepository.GetAllAsync();
-            var postsByUserId = posts.Where(p => p.UserId == userId);
-            return (_mapper.Map<List<PostDTO>>(postsByUserId));
+            var posts = await _postRepository.GetAllByUserId(userId);
+            return (_mapper.Map<List<PostDTO>>(posts));
         }
         public async Task<PostDTO> Create(PostCreateDTO newItem)
         {

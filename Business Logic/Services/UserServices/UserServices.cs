@@ -3,7 +3,7 @@ using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Enums;
 using DataLayer;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
