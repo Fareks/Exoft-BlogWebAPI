@@ -12,6 +12,8 @@ using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 //todo: add autorize and rules for put\delete to all models-controllers!
+//like snapshot in post and comment
+
 // Add services to the container.
 
 builder.Services.AddControllers();
