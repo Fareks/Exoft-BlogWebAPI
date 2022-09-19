@@ -19,7 +19,7 @@ namespace Business_Logic.DTO.UserDTOs
 
         public string LastName { get; set; }
 
-        public string FullName { get { return FirstName + " " + LastName; } set { } }
+        public string FullName  => FirstName + " " + LastName;
         public Roles Role { get; set; } = Roles.User;
         //public string Role { get; set; } = "User";
 
