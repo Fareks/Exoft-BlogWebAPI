@@ -42,7 +42,6 @@ namespace Business_Logic.Services.CommentLikeServices
         public async Task CreateCommentLike(CommentLikeCreateDTO newItem)
         {
             var commentLike = _mapper.Map<CommentLike>(newItem);
-            commentLike.CreatedDate = DateTime.UtcNow;
             await _commentLikeRepository.Post(commentLike);
             await _commentLikeRepository.Save();
         }
