@@ -2,13 +2,16 @@
 using DataLayer.Models;
 using DataLayer.ModelConfiguration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace DataLayer
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, AppRole, Guid>
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
             base.OnModelCreating(builder);
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

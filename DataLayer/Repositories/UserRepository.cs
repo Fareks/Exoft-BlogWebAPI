@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,8 @@ namespace DataLayer.Repositories
         public async Task<ICollection<User>> GetAllAsync()
         {
             var users = await _dbcontext.Users
-                .Include(u => u.commentLikes)
-                .Include(u => u.postLikes)
+                .Include(u => u.CommentLikes)
+                .Include(u => u.PostLikes)
                 .Include(u => u.Comments).ToListAsync();
             return users;
         }
@@ -34,8 +35,8 @@ namespace DataLayer.Repositories
         public async Task<User> GetByIdAsync(Guid id)
         {
             var user = await _dbcontext.Users
-                .Include(u => u.commentLikes)
-                .Include(u => u.postLikes)
+                .Include(u => u.CommentLikes)
+                .Include(u => u.PostLikes)
                 .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Id == id);
             return user;
         }
@@ -43,8 +44,8 @@ namespace DataLayer.Repositories
         public async Task<User> GetByEmailAsync(string email)
         {
             var user = await _dbcontext.Users
-                .Include(u => u.commentLikes)
-                .Include(u => u.postLikes)
+                .Include(u => u.CommentLikes)
+                .Include(u => u.PostLikes)
                 .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Email == email);
             return user;
         }

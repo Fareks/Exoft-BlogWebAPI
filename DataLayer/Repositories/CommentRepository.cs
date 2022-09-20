@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace DataLayer.Repositories
 
         public async Task Update(Comment comment)
         {
+            comment.UpdateDate = DateTimeOffset.UtcNow;
             _dbcontext.Comment.Update(comment);
         }
     }

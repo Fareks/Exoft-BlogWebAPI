@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer.Repositories
+namespace DataLayer.Repositories.Interfaces
 {
     public interface IRepository<T>
     {
@@ -17,6 +17,7 @@ namespace DataLayer.Repositories
 
         //Must accept entities!
         public Task DeleteById(Guid id);
+
         public Task Save();
     }
 }

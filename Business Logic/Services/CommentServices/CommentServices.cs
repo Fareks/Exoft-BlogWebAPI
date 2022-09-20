@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.CommentDTOs;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace Business_Logic.Services.CommentServices
 {
     public class CommentServices : ICommentService
     {
-        IRepository<Comment> _commentRepository;
-        IMapper _mapper;
+        readonly IRepository<Comment> _commentRepository;
+        readonly IMapper _mapper;
 
         public CommentServices(IRepository<Comment> comRepository, IMapper mapper)
         {
@@ -49,8 +49,8 @@ namespace Business_Logic.Services.CommentServices
 
         public async Task Update(CommentUpdateDTO item)
         {
-            item.UpdateDate = new DateTimeOffset(DateTime.UtcNow);
             await _commentRepository.Update(_mapper.Map<Comment>(item));
+            await _commentRepository.Save();
         }
     }
 }

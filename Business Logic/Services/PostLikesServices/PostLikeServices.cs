@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.PostLikeDTOs;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace Business_Logic.Services.PostLikesServices
 {
     public class PostLikeServices : IPostLikeService
     {
-        IRepository<PostLike> _postLikeRepository;
-        IMapper _mapper;
+        readonly IRepository<PostLike> _postLikeRepository;
+        readonly IMapper _mapper;
 
         public PostLikeServices(IRepository<PostLike> postLikeRepository, IMapper mapper)
         {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.PostDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +11,10 @@ namespace Business_Logic.Services.PostServices
 {
     public class PostServices : IPostService
     {
-        IRepository<Post> _postRepository;
-        IMapper _mapper;
-        IAuthService _authService;
-        public PostServices(IRepository<Post> repo, IMapper mapper, IAuthService authService)
+        readonly IPostRepository _postRepository;
+        readonly IMapper _mapper;
+        readonly IAuthService _authService;
+        public PostServices(IPostRepository repo, IMapper mapper, IAuthService authService)
         {
             _mapper = mapper;
             _postRepository = repo;
@@ -40,28 +40,27 @@ namespace Business_Logic.Services.PostServices
         }
         public async Task<IEnumerable<PostDTO>> GetAllPostsByUserId(Guid userId)
         {
-            var posts = await _postRepository.GetAllAsync();
-            var postsByUserId = posts.Where(p => p.UserId == userId);
-            return (_mapper.Map<List<PostDTO>>(postsByUserId));
+            var posts = await _postRepository.GetAllByUserId(userId);
+            return (_mapper.Map<List<PostDTO>>(posts));
         }
-        public async Task<PostDTO> Create(PostCreateDTO newItem)
+        public async Task<PostCreateDTO> Create(PostCreateDTO newItem)
         {
             var post = _mapper.Map<Post>(newItem);
             post.UserId = await _authService.GetMyId();
             await _postRepository.Post(post);
             await _postRepository.Save();
 
-            return (_mapper.Map<PostDTO>(post));
+            return (newItem);
         }
 
-        public async Task<PostDTO> Update(PostUpdateDTO postUpdateDTO)
+        public async Task<PostUpdateDTO> Update(PostUpdateDTO postUpdateDTO)
         {
             var post = await _postRepository.GetByIdAsync(postUpdateDTO.Id);
             var updatedPost = _mapper.Map(postUpdateDTO, post);
             await _postRepository.Update(updatedPost);
             await _postRepository.Save();
 
-            return (_mapper.Map<PostDTO>(post));
+            return (postUpdateDTO);
         }
         public async Task ValidatePost(Guid postId, bool isValid)
         {

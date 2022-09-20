@@ -3,10 +3,10 @@ using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Business_Logic.DTO;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Business_Logic.Enums;
+using Business_Logic.DTO.UserDTOs;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -14,9 +14,9 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        IUserService _userService;
-        IAuthService _authService;
-        IMapper _mapper; 
+        readonly IUserService _userService;
+        readonly IAuthService _authService;
+        readonly IMapper _mapper; 
        
 
         public UserController(IUserService userService, IMapper mapper, IAuthService authService)
@@ -27,8 +27,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
 
-        [HttpGet("/admin/users")]
-        [Authorize(Roles = "Admin")]
+        [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAllAsync();

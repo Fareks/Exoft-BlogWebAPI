@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.CommentLikeDTOs;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace Business_Logic.Services.CommentLikeServices
 {
     public class CommentLikeServices : ICommentLikeService
     {
-        IRepository<CommentLike> _commentLikeRepository;
-        IMapper _mapper;
+        readonly IRepository<CommentLike> _commentLikeRepository;
+        readonly IMapper _mapper;
 
         public CommentLikeServices(IRepository<CommentLike> commLikeRepository, IMapper mapper)
         {
@@ -39,9 +39,8 @@ namespace Business_Logic.Services.CommentLikeServices
             return commentLikesDTO;
         }
 
-        public async Task Post(CommentLikeCreateDTO newItem)
+        public async Task CreateCommentLike(CommentLikeCreateDTO newItem)
         {
-            newItem.CreatedDate = DateTime.UtcNow;
             var commentLike = _mapper.Map<CommentLike>(newItem);
             await _commentLikeRepository.Post(commentLike);
             await _commentLikeRepository.Save();

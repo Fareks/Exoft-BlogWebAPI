@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Enums;
 using DataLayer;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +11,8 @@ namespace Business_Logic.Services.UserServices
 {
     public class UserServices : IUserService
     {
-        IUserRepository _userRepository;
-        IMapper _mapper;
+        readonly IUserRepository _userRepository;
+        readonly IMapper _mapper;
         public UserServices(IUserRepository repo, IMapper mapper)
         {
             _mapper = mapper;
@@ -25,16 +25,16 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Save();
         }
         
-        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        public async Task<IEnumerable<UserReadDTO>> GetAllAsync()
         {
-            var users = _mapper.Map<List<UserDTO>>(await _userRepository.GetAllAsync());
+            var users = _mapper.Map<List<UserReadDTO>>(await _userRepository.GetAllAsync());
             return users;
         }
 
-        public async Task<UserDTO> GetByIdAsync(Guid id)
+        public async Task<UserReadDTO> GetByIdAsync(Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            var userDTO = _mapper.Map<UserDTO>(user);
+            var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
 
@@ -50,14 +50,13 @@ namespace Business_Logic.Services.UserServices
         {
             var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
             var updatedUser = _mapper.Map(userUpdateDTO, user);
-            updatedUser.UpdateDate = DateTime.UtcNow;
             await _userRepository.Update(updatedUser);
             await _userRepository.Save();
         }
-        public async Task<UserDTO> GetUserByEmailAsync(string email)
+        public async Task<UserReadDTO> GetUserByEmailAsync(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            var userDTO = _mapper.Map<UserDTO>(user);
+            var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
         public async Task<bool> BanUserByIdAsync(Guid id)

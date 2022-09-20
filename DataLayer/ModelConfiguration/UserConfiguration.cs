@@ -16,6 +16,9 @@ namespace DataLayer.ModelConfiguration
                    .HasForeignKey(p => p.UserId)
                    .OnDelete(DeleteBehavior.NoAction);
             builder.HasIndex(U => U.Email).IsUnique();
+            builder.Property(u => u.FirstName).HasMaxLength(30);
+            builder.Property(u => u.LastName).HasMaxLength(30);
+            builder.Property(u => u.Email).HasMaxLength(40);
         }
     }
 }

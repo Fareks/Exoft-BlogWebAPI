@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.PostLikeDTOs;
 using Business_Logic.Services.PostLikesServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +12,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class PostLikeController : ControllerBase
     {
-        IPostLikeService _postLikeService;
-        IMapper _mapper;
+        readonly IPostLikeService _postLikeService;
+        readonly IMapper _mapper;
 
         public PostLikeController(IPostLikeService postLikeService, IMapper mapper)
         {
@@ -35,7 +35,7 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddPostLike(PostLikeCreateDTO postLikeDTO)
         {
             //need author validator
@@ -43,7 +43,7 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(postLikeDTO);
         }
 
-        [HttpDelete, Authorize]
+        [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeletePostLike(Guid postLikeId)
         {
             try

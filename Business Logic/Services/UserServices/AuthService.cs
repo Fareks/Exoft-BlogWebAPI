@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.UserDTOs;
 using DataLayer.Models;
-using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,15 +17,19 @@ namespace Business_Logic.Services.UserServices
 {
     public class AuthService : IAuthService
     {
-        IUserRepository _userRepository;
-        IMapper _mapper;
-        IConfiguration _configuration;
-        IHttpContextAccessor _contextAccessor;
+        readonly IUserRepository _userRepository;
+        readonly IMapper _mapper;
+        readonly IHttpContextAccessor _contextAccessor;
+        readonly UserManager<User> _userManager;
+        readonly SignInManager<User> _signInManager;
+        readonly ITokenService _tokenService;
 
-        public AuthService(IHttpContextAccessor contextAccessor,IConfiguration configuration,IUserRepository userRepository, IMapper mapper)
+        public AuthService(IHttpContextAccessor contextAccessor,IConfiguration configuration, IUserRepository userRepository, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
         {
+            _tokenService = tokenService;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _contextAccessor = contextAccessor;
-            _configuration = configuration;
             _userRepository = userRepository;
             _mapper = mapper;
         }
@@ -33,28 +38,32 @@ namespace Business_Logic.Services.UserServices
         {
 
             var newUser = _mapper.Map<User>(userCreateDTO);
-            CreatePasswordHash(userCreateDTO.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            newUser.PasswordHash = passwordHash;
-            newUser.PasswordSalt = passwordSalt;
-            await _userRepository.Post(newUser);
+            var result = await _userManager.CreateAsync(newUser, userCreateDTO.Password);
+            //await _userRepository.Post(newUser);
             await _userRepository.Save();
+
         }
         public async Task<string> LoginUser(UserLoginDTO userLoginDTO)
         {
-            var targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
-            if (targetUser != null && VerifyPasswordHash(userLoginDTO.Password, targetUser.PasswordHash, targetUser.PasswordSalt))
+            User targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
+            if (targetUser != null)
             {
-                var token =await CreateToken(_mapper.Map<UserDTO>(targetUser));
-                return token;
+                var result = await _signInManager.CanSignInAsync(targetUser);
+                if (result)
+                {
+                    var token = await _tokenService.CreateToken(_mapper.Map<UserReadDTO>(targetUser));
+                    return token;
+                }
+                else return null;
             }
             else return null;   
         }
-        public async Task<UserDTO> GetMe()
+        public async Task<UserReadDTO> GetMe()
         {
             if (_contextAccessor != null)
             {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user;
             }
             else return null;
@@ -62,82 +71,33 @@ namespace Business_Logic.Services.UserServices
         public async Task<Guid> GetMyId()
         {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user.Id;
         }
-        public async Task<bool> isAuthor(Guid authorId)
+        public async Task<bool> IsAuthor(Guid authorId)
         {
             return (await GetMyId() ==  authorId);
         }
-        public async Task<string> CreateToken(UserDTO userDTO)
-        {
-            var user = await _userRepository.GetByIdAsync(userDTO.Id);
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim(ClaimTypes.Name, user.FirstName)
-            };
-
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: creds);
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            var refreshToken = GenerateRefreshToken();
-            await SetRefreshToken(refreshToken, userDTO);
-
-            return jwt;
-        }
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
-        public RefreshToken GenerateRefreshToken()
-        {
-            var refreshToken = new RefreshToken
-            {
-                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.Now.AddDays(7),
-                Created = DateTime.Now
-            };
-            return refreshToken;
-        }
-        public async Task SetRefreshToken (RefreshToken newRefreshToken, UserDTO userDTO)
-        {
-            var user = await _userRepository.GetByIdAsync(userDTO.Id);
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = newRefreshToken.Expires
-            };
-            _contextAccessor.HttpContext.Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
-            user.RefreshToken = newRefreshToken.Token;
-            user.TokenCreated = newRefreshToken.Created;
-            user.TokenExpires = newRefreshToken.Expires;
-            await _userRepository.Save();
-        }
+        
         public async Task<bool> EmailIsExist(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            return (user != null ? true : false);
+            return (user != null);
+        }
+
+
+        public async Task<string> CreateToken(UserReadDTO userDTO)
+        {
+            var result = await _tokenService.CreateToken(userDTO);
+            return result;
+        }
+        public RefreshToken GenerateRefreshToken()
+        {
+            return _tokenService.GenerateRefreshToken();
+        }
+        public async Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO)
+        {
+            await _tokenService.SetRefreshToken(newRefreshToken, userDTO);
         }
     }
 }

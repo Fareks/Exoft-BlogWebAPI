@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Business_Logic.DTO;
+using Business_Logic.DTO.CommentLikeDTOs;
 using Business_Logic.Services.CommentLikeServices;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
@@ -12,9 +12,9 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class CommentLikeController : ControllerBase
     {
-        ICommentLikeService _commentLikeService;
-        IMapper _mapper;
-        IAuthService _authService;
+        readonly ICommentLikeService _commentLikeService;
+        readonly IMapper _mapper;
+        readonly IAuthService _authService;
 
         public CommentLikeController(ICommentLikeService commLikeService, IMapper mapper, IAuthService authService)
         {
@@ -37,22 +37,22 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddCommentLike(CommentLikeCreateDTO postLikeDTO)
         {
             //need author validator
-            await _commentLikeService.Post(postLikeDTO);
+            await _commentLikeService.CreateCommentLike(postLikeDTO);
             return Ok(postLikeDTO);
         }
 
-        [HttpDelete, Authorize]
+        [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteCommentLike(Guid postLikeId)
         {
             try
             {
                 //Too many base calls! Move the validator and entity extraction into each service method!
                 var postLike = await _commentLikeService.GetByIdAsync(postLikeId);
-                if (await _authService.isAuthor(postLike.UserId))
+                if (await _authService.IsAuthor(postLike.UserId))
                 {
                     await _commentLikeService.DeleteById(postLikeId);
                     return Ok();

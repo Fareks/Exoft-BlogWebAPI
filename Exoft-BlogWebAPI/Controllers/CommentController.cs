@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.CommentDTOs;
 using Business_Logic.Services.CommentServices;
 using Business_Logic.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
@@ -10,8 +10,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class CommentController : ControllerBase
     {
-        ICommentService _commentService;
-        IAuthService _authService;
+        readonly ICommentService _commentService;
+        readonly IAuthService _authService;
         public CommentController(ICommentService commentService, IAuthService authService)
         {
             _commentService = commentService;
@@ -39,7 +39,7 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpPost,Authorize]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddComment(CommentCreateDTO newComment)
         {
             try
@@ -53,14 +53,14 @@ namespace Exoft_BlogWebAPI.Controllers
                 return BadRequest(ex.Message); 
             }
         }
-        [HttpDelete, Authorize]
+        [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             try
             {
                 //problem:  reach the database too many times
                 var comment = await _commentService.GetByIdAsync(id);
-                if (await _authService.isAuthor(comment.UserId))
+                if (await _authService.IsAuthor(comment.UserId))
                 {
                     await _commentService.DeleteById(id);
                     return Ok();

@@ -1,4 +1,4 @@
-﻿using Business_Logic.DTO;
+﻿using Business_Logic.DTO.CommentLikeDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,6 @@ namespace Business_Logic.Services.CommentLikeServices
 
         //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
-        public Task Post(CommentLikeCreateDTO newItem);
+        public Task CreateCommentLike(CommentLikeCreateDTO newItem);
     }
 }

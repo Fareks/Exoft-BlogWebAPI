@@ -6,6 +6,8 @@ using Business_Logic.Services.PostServices;
 using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using DataLayer.Repositories;
+using DataLayer.Repositories.Interfaces;
+
 namespace Exoft_BlogWebAPI
 {
     public static class ServicesManager
@@ -18,11 +20,13 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<IPostLikeService, PostLikeServices>();
             services.AddTransient<ICommentLikeService, CommentLikeServices>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
         }
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IRepository<Post>, PostRepository>();
+            services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IRepository<PostLike>, PostLikeRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
             services.AddTransient<IRepository<CommentLike>, CommentLikeRepository>();

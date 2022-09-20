@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using DataLayer.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class PostRepository : IRepository<Post>
+    public class PostRepository : IPostRepository
     {
         AppDbContext _dbcontext;
 
@@ -38,6 +39,11 @@ namespace DataLayer.Repositories
                 .Include(p => p.PostLikes).Include(p => p.User).SingleOrDefaultAsync(u => u.Id == id);
             return post;
         }
+        public async Task<List<Post>> GetAllByUserId (Guid userId)
+        {
+            var posts = _dbcontext.Posts.Where(p => p.UserId == userId);
+            return posts.ToList();
+        }
 
         public async Task Post(Post post)
         {
@@ -52,6 +58,15 @@ namespace DataLayer.Repositories
         public async Task Update(Post post)
         {
             _dbcontext.Posts.Update(post);
+        }
+        public async Task UpdateLikeSnapshot(Guid id)
+        {
+            var post = _dbcontext.Posts.SingleOrDefault(p => p.UserId == id);
+            if (post != null)
+            {
+               post.LikeSnapshot = post.PostLikes.Count;
+            }
+            
         }
     }
 }

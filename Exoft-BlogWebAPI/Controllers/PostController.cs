@@ -2,9 +2,9 @@
 using Business_Logic.Services;
 using Microsoft.AspNetCore.Mvc;
 using Business_Logic.Services.PostServices;
-using Business_Logic.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Business_Logic.Services.UserServices;
+using Business_Logic.DTO.PostDTOs;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
@@ -12,8 +12,8 @@ namespace Exoft_BlogWebAPI.Controllers
     [Route("api/[controller]")]
     public class PostController : ControllerBase
         {
-            IPostService _postService;
-            IAuthService _authService;
+            readonly IPostService _postService;
+            readonly IAuthService _authService;
 
             public PostController(IPostService postService, IAuthService authService)
             {
@@ -38,7 +38,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Ok(await _postService.GetById(id));
             }
 
-            [HttpPost, Authorize]
+            [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
             //required return dto with id. 
             public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
@@ -53,10 +53,10 @@ namespace Exoft_BlogWebAPI.Controllers
                 }
             }
 
-            [HttpPut, Authorize]
+            [HttpPut, Authorize(AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
             {
-                if (await _authService.isAuthor(post.UserId))
+                if (await _authService.IsAuthor(post.UserId))
                 {
                     var response = await _postService.Update(post);
                     return Ok(response);
@@ -67,14 +67,14 @@ namespace Exoft_BlogWebAPI.Controllers
                 
             }
 
-            [HttpDelete, Authorize]
+            [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> DeletePost(Guid postId)
             {
                 try
                 {
                 //problem:  reach the database too many times
                 var post = await _postService.GetById(postId);
-                    if(await _authService.isAuthor(post.UserId))
+                    if(await _authService.IsAuthor(post.UserId))
                         {
                             await _postService.DeleteById(postId);
                             return Ok(new {Status="Post deleted!", PostId=postId });
