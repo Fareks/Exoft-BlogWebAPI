@@ -20,6 +20,8 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<IPostLikeService, PostLikeServices>();
             services.AddTransient<ICommentLikeService, CommentLikeServices>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
         }
         public static void AddRepositories(this IServiceCollection services)
         {
