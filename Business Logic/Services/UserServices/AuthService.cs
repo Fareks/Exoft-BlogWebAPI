@@ -82,7 +82,7 @@ namespace Business_Logic.Services.UserServices
         public async Task<bool> EmailIsExist(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            return (user != null ? true : false);
+            return (user != null);
         }
 
 
