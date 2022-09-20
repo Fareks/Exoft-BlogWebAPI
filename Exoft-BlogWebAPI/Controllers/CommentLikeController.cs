@@ -37,7 +37,7 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddCommentLike(CommentLikeCreateDTO postLikeDTO)
         {
             //need author validator
@@ -45,7 +45,7 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(postLikeDTO);
         }
 
-        [HttpDelete, Authorize]
+        [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteCommentLike(Guid postLikeId)
         {
             try

@@ -38,7 +38,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Ok(await _postService.GetById(id));
             }
 
-            [HttpPost, Authorize]
+            [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
             //required return dto with id. 
             public async Task<IActionResult> AddPost(PostCreateDTO post)
             {
@@ -53,7 +53,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 }
             }
 
-            [HttpPut, Authorize]
+            [HttpPut, Authorize(AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
             {
                 if (await _authService.IsAuthor(post.UserId))
@@ -67,7 +67,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 
             }
 
-            [HttpDelete, Authorize]
+            [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> DeletePost(Guid postId)
             {
                 try

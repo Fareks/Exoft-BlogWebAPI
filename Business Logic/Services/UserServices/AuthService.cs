@@ -4,6 +4,7 @@ using DataLayer.Models;
 using DataLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,9 +21,13 @@ namespace Business_Logic.Services.UserServices
         readonly IMapper _mapper;
         readonly IConfiguration _configuration;
         readonly IHttpContextAccessor _contextAccessor;
+        readonly UserManager<User> _userManager;
+        readonly SignInManager<User> _signInManager;
 
-        public AuthService(IHttpContextAccessor contextAccessor,IConfiguration configuration,IUserRepository userRepository, IMapper mapper)
+        public AuthService(IHttpContextAccessor contextAccessor,IConfiguration configuration, IUserRepository userRepository, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _contextAccessor = contextAccessor;
             _configuration = configuration;
             _userRepository = userRepository;
@@ -33,19 +38,23 @@ namespace Business_Logic.Services.UserServices
         {
 
             var newUser = _mapper.Map<User>(userCreateDTO);
-            CreatePasswordHash(userCreateDTO.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            newUser.PasswordHash = passwordHash;
-            newUser.PasswordSalt = passwordSalt;
-            await _userRepository.Post(newUser);
+            var result = await _userManager.CreateAsync(newUser, userCreateDTO.Password);
+            //await _userRepository.Post(newUser);
             await _userRepository.Save();
+
         }
         public async Task<string> LoginUser(UserLoginDTO userLoginDTO)
         {
-            var targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
-            if (targetUser != null && VerifyPasswordHash(userLoginDTO.Password, targetUser.PasswordHash, targetUser.PasswordSalt))
+            User targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
+            if (targetUser != null)
             {
-                var token =await CreateToken(_mapper.Map<UserReadDTO>(targetUser));
-                return token;
+                var result = await _signInManager.CanSignInAsync(targetUser);
+                if (result)
+                {
+                    var token = await CreateToken(_mapper.Map<UserReadDTO>(targetUser));
+                    return token;
+                }
+                else return null;
             }
             else return null;   
         }
@@ -93,23 +102,23 @@ namespace Business_Logic.Services.UserServices
 
             return jwt;
         }
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
+        //public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        //{
+        //    using (var hmac = new HMACSHA512())
+        //    {
+        //        passwordSalt = hmac.Key;
+        //        passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        //    }
+        //}
 
-        public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
+        //public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        //{
+        //    using (var hmac = new HMACSHA512(passwordSalt))
+        //    {
+        //        var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        //        return computedHash.SequenceEqual(passwordHash);
+        //    }
+        //}
         public RefreshToken GenerateRefreshToken()
         {
             var refreshToken = new RefreshToken

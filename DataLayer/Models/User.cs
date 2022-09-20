@@ -1,17 +1,18 @@
 ﻿using Business_Logic.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Models
 {
-    public class User : BaseEntity
+    public class User : IdentityUser<Guid>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte [] PasswordSalt { get; set; }
+        //public byte[] PasswordHash { get; set; }
+        //public byte [] PasswordSalt { get; set; }
         public Roles Role { get; set; }
         public string RefreshToken { get; set; } = string.Empty;
         public DateTime? TokenCreated { get; set; }

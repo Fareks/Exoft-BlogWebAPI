@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Identity;
+using Business_Logic.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 //todo: add autorize and rules for put\delete to all models-controllers!
@@ -50,6 +52,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+builder.Services.AddIdentity<User, AppRole >()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequiredUniqueChars = 0;
+});
+
 
 //repos
 builder.Services.AddRepositories();

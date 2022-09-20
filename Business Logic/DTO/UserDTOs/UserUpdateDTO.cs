@@ -5,6 +5,7 @@ namespace Business_Logic.DTO.UserDTOs
 {
     public class UserUpdateDTO : BaseUpdateDTO
     {
+        public string UserName { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

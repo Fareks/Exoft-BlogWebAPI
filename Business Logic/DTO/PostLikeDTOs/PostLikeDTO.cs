@@ -12,9 +12,8 @@ namespace Business_Logic.DTO.PostLikeDTOs
 {
     public class PostLikeDTO : BaseDTO
     {
+        //should to replace all ref to likeReadDTO
         public Guid PostId { get; set; }
-        public PostDTO Post { get; set; }
         public Guid UserId { get; set; }
-        public UserReadDTO User { get; set; }
     }
 }

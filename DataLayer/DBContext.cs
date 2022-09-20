@@ -2,9 +2,11 @@
 using DataLayer.Models;
 using DataLayer.ModelConfiguration;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace DataLayer
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, AppRole, Guid>
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {

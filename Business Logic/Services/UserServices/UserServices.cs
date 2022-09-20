@@ -50,7 +50,6 @@ namespace Business_Logic.Services.UserServices
         {
             var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
             var updatedUser = _mapper.Map(userUpdateDTO, user);
-            updatedUser.UpdateDate = DateTime.UtcNow;
             await _userRepository.Update(updatedUser);
             await _userRepository.Save();
         }

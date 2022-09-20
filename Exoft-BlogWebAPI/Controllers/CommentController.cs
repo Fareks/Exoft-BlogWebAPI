@@ -39,7 +39,7 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpPost,Authorize]
+        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> AddComment(CommentCreateDTO newComment)
         {
             try
@@ -53,7 +53,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 return BadRequest(ex.Message); 
             }
         }
-        [HttpDelete, Authorize]
+        [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             try
