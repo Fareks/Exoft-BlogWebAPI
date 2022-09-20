@@ -16,7 +16,7 @@ namespace Business_Logic.DTO.CommentDTOs
         public string CommentContent { get; set; }
         public int LikeSnapshot { get; set; }
         public Guid UserId { get; set; }
-        public UserDTO User { get; set; }
+        public UserReadDTO User { get; set; }
         public Guid PostId { get; set; }
         public PostDTO Post { get; set; }
     }

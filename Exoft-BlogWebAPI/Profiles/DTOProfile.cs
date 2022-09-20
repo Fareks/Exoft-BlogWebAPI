@@ -23,7 +23,7 @@ namespace DataLayer.Profiles
             CreateMap<BaseEntity, BaseCreateDTO>().ReverseMap();
 
 
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserReadDTO>().ReverseMap();
             CreateMap<User, UserCreateDTO>().ReverseMap();
             CreateMap<User, UserUpdateDTO>().ReverseMap();
             CreateMap<User, UserReadDTO>().ReverseMap();

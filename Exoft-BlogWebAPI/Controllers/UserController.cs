@@ -27,7 +27,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
 
-        [HttpGet("/admin/users")]
+        [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userService.GetAllAsync();

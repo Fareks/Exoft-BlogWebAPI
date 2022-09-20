@@ -15,6 +15,6 @@ namespace Business_Logic.DTO.PostLikeDTOs
         public Guid PostId { get; set; }
         public PostDTO Post { get; set; }
         public Guid UserId { get; set; }
-        public UserDTO User { get; set; }
+        public UserReadDTO User { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace DataLayer
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new CommentConfiguration());
             base.OnModelCreating(builder);
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

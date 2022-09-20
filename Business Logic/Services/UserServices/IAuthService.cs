@@ -17,8 +17,8 @@ namespace Business_Logic.Services.UserServices
         public Task<Guid> GetMyId();
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
         public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
-        public Task<string> CreateToken(UserDTO userDTO);
-        public Task SetRefreshToken(RefreshToken newRefreshToken, UserDTO userDTO);
+        public Task<string> CreateToken(UserReadDTO userDTO);
+        public Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO);
         public RefreshToken GenerateRefreshToken();
         public Task<bool> IsAuthor(Guid authorId);
 

@@ -8,8 +8,6 @@ namespace DataLayer.Models
         public string TextContent { get; set; }
         public int LikeSnapshot { get; set; }
         public bool VerifyStatus { get; set; } 
-
-        [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
         public User? User { get; set; }
 

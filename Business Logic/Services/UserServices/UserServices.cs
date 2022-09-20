@@ -25,16 +25,16 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Save();
         }
         
-        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        public async Task<IEnumerable<UserReadDTO>> GetAllAsync()
         {
-            var users = _mapper.Map<List<UserDTO>>(await _userRepository.GetAllAsync());
+            var users = _mapper.Map<List<UserReadDTO>>(await _userRepository.GetAllAsync());
             return users;
         }
 
-        public async Task<UserDTO> GetByIdAsync(Guid id)
+        public async Task<UserReadDTO> GetByIdAsync(Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            var userDTO = _mapper.Map<UserDTO>(user);
+            var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
 
@@ -54,10 +54,10 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Update(updatedUser);
             await _userRepository.Save();
         }
-        public async Task<UserDTO> GetUserByEmailAsync(string email)
+        public async Task<UserReadDTO> GetUserByEmailAsync(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            var userDTO = _mapper.Map<UserDTO>(user);
+            var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
         public async Task<bool> BanUserByIdAsync(Guid id)

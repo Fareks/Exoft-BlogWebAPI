@@ -44,7 +44,7 @@ namespace Business_Logic.Services.UserServices
             var targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
             if (targetUser != null && VerifyPasswordHash(userLoginDTO.Password, targetUser.PasswordHash, targetUser.PasswordSalt))
             {
-                var token =await CreateToken(_mapper.Map<UserDTO>(targetUser));
+                var token =await CreateToken(_mapper.Map<UserReadDTO>(targetUser));
                 return token;
             }
             else return null;   
@@ -62,14 +62,14 @@ namespace Business_Logic.Services.UserServices
         public async Task<Guid> GetMyId()
         {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
                 return user.Id;
         }
         public async Task<bool> IsAuthor(Guid authorId)
         {
             return (await GetMyId() ==  authorId);
         }
-        public async Task<string> CreateToken(UserDTO userDTO)
+        public async Task<string> CreateToken(UserReadDTO userDTO)
         {
             var user = await _userRepository.GetByIdAsync(userDTO.Id);
             List<Claim> claims = new List<Claim>
@@ -120,7 +120,7 @@ namespace Business_Logic.Services.UserServices
             };
             return refreshToken;
         }
-        public async Task SetRefreshToken (RefreshToken newRefreshToken, UserDTO userDTO)
+        public async Task SetRefreshToken (RefreshToken newRefreshToken, UserReadDTO userDTO)
         {
             var user = await _userRepository.GetByIdAsync(userDTO.Id);
             var cookieOptions = new CookieOptions

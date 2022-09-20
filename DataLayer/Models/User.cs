@@ -7,12 +7,8 @@ namespace DataLayer.Models
 {
     public class User : BaseEntity
     {
-        [MaxLength(30)]
         public string FirstName { get; set; }
-        [MaxLength(30)]
         public string LastName { get; set; }
-        [MaxLength(60)]
-        [EmailAddress]
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte [] PasswordSalt { get; set; }

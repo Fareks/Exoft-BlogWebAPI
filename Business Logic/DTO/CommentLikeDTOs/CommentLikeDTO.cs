@@ -12,7 +12,7 @@ namespace Business_Logic.DTO.CommentLikeDTOs
     public class CommentLikeDTO : BaseDTO
     {
         public Guid UserId { get; set; }
-        public UserDTO User { get; set; }
+        public UserReadDTO User { get; set; }
         public Guid CommentId { get; set; }
         public CommentDTO Comment { get; set; }
     }
