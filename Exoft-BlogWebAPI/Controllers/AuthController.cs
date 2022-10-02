@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("/api/[controller]")]
     public class AuthController : Controller
@@ -26,7 +27,7 @@ namespace Exoft_BlogWebAPI.Controllers
             _authService = authService;
         }
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser(UserCreateDTO userDTO)
+        public async Task<IActionResult> RegisterUser([FromBody]UserCreateDTO userDTO)
         {
             if (await _authService.EmailIsExist(userDTO.Email))
             {
@@ -48,7 +49,7 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return BadRequest("Wrong user or password");
             } else
-                return Ok(token);
+                return Ok(new { JWT = token });
        
         }
         [HttpGet("Get-Current-User"), Authorize(AuthenticationSchemes = "Bearer")]
