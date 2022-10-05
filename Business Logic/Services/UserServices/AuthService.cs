@@ -52,7 +52,7 @@ namespace Business_Logic.Services.UserServices
                 if (result)
                 {
                     var token = await _tokenService.CreateToken(_mapper.Map<UserReadDTO>(targetUser));
-                    return token;
+                    return (token);
                 }
                 else return null;
             }

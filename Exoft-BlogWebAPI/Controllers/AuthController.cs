@@ -1,4 +1,5 @@
-﻿using Business_Logic.DTO.UserDTOs;
+﻿using Business_Logic.DTO.AuthDTOs;
+using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -43,13 +44,17 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> LoginUser(UserLoginDTO userDTO)
         {
-            
             var token = await _authService.LoginUser(userDTO);
+            var user = await _userService.GetUserByEmailAsync(userDTO.Email);
+            AuthDTO response = new AuthDTO(){
+                Token = token,
+                UserId = user.Id
+            };
             if (token == null)
             {
                 return BadRequest("Wrong user or password");
             } else
-                return Ok(new { JWT = token });
+                return Ok(response);
        
         }
         [HttpGet("Get-Current-User"), Authorize(AuthenticationSchemes = "Bearer")]
