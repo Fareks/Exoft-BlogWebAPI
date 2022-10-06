@@ -63,12 +63,6 @@ namespace Exoft_BlogWebAPI.Controllers
             var currentUser = await _authService.GetMe();
             return Ok(currentUser);
         }
-        [HttpGet("Get-User")]
-        public async Task<IActionResult> GetUser()
-        {
-            var currentUser = await _authService.GetMe();
-            return Ok(currentUser);
-        }
         [HttpPost("Refresh-token")]
         public async Task<IActionResult> RefreshToken(Guid id)
         {
