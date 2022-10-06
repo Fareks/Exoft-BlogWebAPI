@@ -46,9 +46,10 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             var token = await _authService.LoginUser(userDTO);
             var user = await _userService.GetUserByEmailAsync(userDTO.Email);
+            var refreshToken = user?.RefreshToken;
             AuthDTO response = new AuthDTO(){
-                Token = token,
-                UserId = user.Id
+                token = token,
+                userId = user?.Id
             };
             if (token == null)
             {
@@ -85,7 +86,13 @@ namespace Exoft_BlogWebAPI.Controllers
             var newRefreshToken = _authService.GenerateRefreshToken();
             await _authService.SetRefreshToken(newRefreshToken, user);
 
-            return Ok(token);
+            AuthDTO response = new AuthDTO()
+            {
+                token = token,
+                userId = user.Id
+            };
+
+            return Ok(response);
         }
     }
 }
