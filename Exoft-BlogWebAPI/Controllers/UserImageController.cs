@@ -37,11 +37,19 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("user-image")]
         public async Task<IActionResult> GetUserImage (Guid userId)
         {
-            return Ok(_imageService.);
+            var image = await _imageService.GetImage(userId);
+            if(System.IO.File.Exists(image.ImagePath))
+            {
+                byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
+                return File(bytes, "image/png");
+            }
+            return Ok();
+            
         }
+
 
     }
 }

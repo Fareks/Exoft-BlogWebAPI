@@ -4,6 +4,7 @@ using Business_Logic.DTO.CommentLikeDTOs;
 using Business_Logic.DTO.PostDTOs;
 using Business_Logic.DTO.PostLikeDTOs;
 using Business_Logic.Enums;
+using DataLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,8 @@ namespace Business_Logic.DTO.UserDTOs
         public ICollection<CommentDTO>? Comments { get; set; }
         public ICollection<PostLikeDTO>? postLikes { get; set; }
         public ICollection<CommentLikeDTO>? commentLikes { get; set; }
+
+        public Guid UserImageId { get; set; }
+        public UserImage? UserImage { get; set; }
     }
 }

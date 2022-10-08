@@ -10,5 +10,6 @@ namespace DataLayer.Repositories.Interfaces
     public interface IUserImageRepository
     {
         public Task UploadImage(UserImage image);
+        public Task<UserImage> GetImage(Guid UserId);
     }
 }

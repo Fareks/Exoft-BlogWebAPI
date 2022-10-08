@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DataLayer.Models
@@ -15,5 +16,7 @@ namespace DataLayer.Models
         public string ImagePath { get; set; }
         public DateTime UploadDate { get; set; }
         public Guid UserId { get; set; }
+        [JsonIgnore]
+        public User User { get; set; }
     }
 }

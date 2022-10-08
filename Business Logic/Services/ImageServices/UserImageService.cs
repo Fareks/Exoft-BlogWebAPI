@@ -21,11 +21,16 @@ namespace Business_Logic.Services.ImageServices
             _imageRepository = imageRepository;
         }
 
+        public async Task<UserImage> GetImage(Guid userId)
+        {
+            return await _imageRepository.GetImage(userId);
+        }
+
         public  async Task<UserImage> UploadImage(IFormFile file, Guid userId)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             var newFilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + Guid.NewGuid()+ fileInfo.Extension ;
-            var path = Path.Combine("", _hostingEnvironment.ContentRootPath + "Images\\" + newFilename);
+            var path = Path.Combine("", _hostingEnvironment.WebRootPath + @"Images\" + newFilename);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 file.CopyTo(stream);

@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Enums;
+using DataLayer.Models;
 using System.Text.Json.Serialization;
 
 namespace Business_Logic.DTO.UserDTOs
@@ -17,5 +18,7 @@ namespace Business_Logic.DTO.UserDTOs
         public DateTime? TokenExpires { get; set; }
         public Roles Role { get; set; }
         public bool IsBanned { get; set; }
+        public Guid UserImageId { get; set; }
+        public UserImage? UserImage { get; set; }
     }
 }
