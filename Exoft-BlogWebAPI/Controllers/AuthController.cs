@@ -1,4 +1,5 @@
-﻿using Business_Logic.DTO.UserDTOs;
+﻿using Business_Logic.DTO.AuthDTOs;
+using Business_Logic.DTO.UserDTOs;
 using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace Exoft_BlogWebAPI.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("/api/[controller]")]
     public class AuthController : Controller
@@ -26,7 +28,7 @@ namespace Exoft_BlogWebAPI.Controllers
             _authService = authService;
         }
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser(UserCreateDTO userDTO)
+        public async Task<IActionResult> RegisterUser([FromBody]UserCreateDTO userDTO)
         {
             if (await _authService.EmailIsExist(userDTO.Email))
             {
@@ -42,23 +44,22 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> LoginUser(UserLoginDTO userDTO)
         {
-            
             var token = await _authService.LoginUser(userDTO);
+            var user = await _userService.GetUserByEmailAsync(userDTO.Email);
+            var refreshToken = user?.RefreshToken;
+            AuthDTO response = new AuthDTO(){
+                token = token,
+                userId = user?.Id
+            };
             if (token == null)
             {
                 return BadRequest("Wrong user or password");
             } else
-                return Ok(token);
+                return Ok(response);
        
         }
         [HttpGet("Get-Current-User"), Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetCurrentUser()
-        {
-            var currentUser = await _authService.GetMe();
-            return Ok(currentUser);
-        }
-        [HttpGet("Get-User")]
-        public async Task<IActionResult> GetUser()
         {
             var currentUser = await _authService.GetMe();
             return Ok(currentUser);
@@ -85,7 +86,13 @@ namespace Exoft_BlogWebAPI.Controllers
             var newRefreshToken = _authService.GenerateRefreshToken();
             await _authService.SetRefreshToken(newRefreshToken, user);
 
-            return Ok(token);
+            AuthDTO response = new AuthDTO()
+            {
+                token = token,
+                userId = user.Id
+            };
+
+            return Ok(response);
         }
     }
 }

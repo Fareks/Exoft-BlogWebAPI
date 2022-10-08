@@ -24,5 +24,6 @@ namespace DataLayer
         public DbSet<Comment> Comment { get; set; }
         public DbSet<PostLike> PostLike { get; set; }
         public DbSet<CommentLike> CommentLike { get; set; }
+        public DbSet<Image> Image { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Business_Logic.Enums
 {
     public enum Roles
     {
-        User = 1,
+        User = 0,
         Admin = 2
     }
 }

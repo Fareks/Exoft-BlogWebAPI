@@ -16,6 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 //todo: add autorize and rules for put\delete to all models-controllers!
 //like snapshot in post and comment
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+    name: "AllowOrigin",
+    builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:4200") ;
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -90,7 +101,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
+app.UseCors("AllowOrigin");
 app.MapControllers();
 
 app.Run();
