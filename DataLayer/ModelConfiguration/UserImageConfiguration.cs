@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataLayer.ModelConfiguration
 {
-    public class ImageConfiguration : IEntityTypeConfiguration<UserImage>
+    public class UserImageConfiguration : IEntityTypeConfiguration<UserImage>
     {
 
         public void Configure(EntityTypeBuilder<UserImage> builder)

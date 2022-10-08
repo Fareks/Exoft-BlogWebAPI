@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.Services.ImageServices
 {
-    public interface IUserImageService
+    public interface IPostImageService
     {
-        public Task<UserImage> UploadImage(IFormFile file, Guid userId);
-        public Task<UserImage> GetImage(Guid userId);
-        public Task DeleteImage(Guid userId);
+        public Task<PostImage> UploadImage(IFormFile file, Guid userId);
+        public Task<PostImage> GetImage(Guid userId);
+        public Task DeleteImage(Guid postId);
     }
 }

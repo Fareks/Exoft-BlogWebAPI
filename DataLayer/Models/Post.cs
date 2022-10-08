@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace DataLayer.Models
 {
@@ -13,6 +14,8 @@ namespace DataLayer.Models
 
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<PostLike>? PostLikes { get; set; }
+        [JsonIgnore]
+        public PostImage PostImage { get; set; }
 
     }
 }

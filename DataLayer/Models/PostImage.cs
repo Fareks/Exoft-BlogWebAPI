@@ -12,5 +12,6 @@ namespace DataLayer.Models
         public string ImagePath { get; set; }
         public DateTime UploadDate { get; set; }
         public Guid PostId { get; set; }
+        public Post Post { get; set; }
     }
 }

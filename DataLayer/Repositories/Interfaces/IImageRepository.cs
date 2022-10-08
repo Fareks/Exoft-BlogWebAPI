@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories.Interfaces
 {
-    public interface IUserImageRepository
+    public interface IImageRepository<T>
     {
-        public Task UploadImage(UserImage image);
-        public Task<UserImage> GetImage(Guid UserId);
+        public Task UploadImage(T image);
+        public Task<T> GetImage(Guid UserId);
+        public Task DeleteImage(T image);
     }
 }

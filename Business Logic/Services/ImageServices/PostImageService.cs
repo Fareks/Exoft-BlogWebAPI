@@ -10,51 +10,50 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.Services.ImageServices
 {
-    public class UserImageService : IUserImageService
+    public class PostImageService : IPostImageService
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IImageRepository<UserImage> _imageRepository;
+        private readonly IImageRepository<PostImage> _postImageRepository;
 
-        public UserImageService(IWebHostEnvironment hostingEnvironment, IImageRepository<UserImage> imageRepository)
+        public PostImageService(IWebHostEnvironment hostingEnvironment, IImageRepository<PostImage> imageRepository)
         {
             _hostingEnvironment = hostingEnvironment;
-            _imageRepository = imageRepository;
+            _postImageRepository = imageRepository;
         }
 
-        
-
-        public async Task<UserImage> GetImage(Guid userId)
+        public async Task<PostImage> GetImage(Guid userId)
         {
-            return await _imageRepository.GetImage(userId);
+            return await _postImageRepository.GetImage(userId);
         }
 
-        public  async Task<UserImage> UploadImage(IFormFile file, Guid userId)
+        public async Task<PostImage> UploadImage(IFormFile file, Guid postId)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
-            var newFilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + Guid.NewGuid()+ fileInfo.Extension ;
+            var newFilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + Guid.NewGuid() + fileInfo.Extension;
             var path = Path.Combine("", _hostingEnvironment.WebRootPath + @"Images\" + newFilename);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 file.CopyTo(stream);
             }
-            UserImage image = new UserImage();
+            PostImage image = new PostImage();
             image.ImagePath = path;
             image.UploadDate = DateTime.Now;
-            image.UserId = userId;
+            image.PostId = postId;
 
-            var oldImage = await _imageRepository.GetImage(userId);
+            var oldImage = await _postImageRepository.GetImage(postId);
             if (oldImage != null)
             {
-               await _imageRepository.DeleteImage(oldImage);
+                await _postImageRepository.DeleteImage(oldImage);
                 File.Delete(oldImage.ImagePath);
             }
-            await _imageRepository.UploadImage(image);
+            await _postImageRepository.UploadImage(image);
             return (image);
         }
-        public async Task DeleteImage(Guid userId)
+
+        public async Task DeleteImage(Guid postId)
         {
-            var image = await _imageRepository.GetImage(userId);
-            await _imageRepository.DeleteImage(image);
+            var image = await _postImageRepository.GetImage(postId);
+            await _postImageRepository.DeleteImage(image);
             File.Delete(image.ImagePath);
         }
     }

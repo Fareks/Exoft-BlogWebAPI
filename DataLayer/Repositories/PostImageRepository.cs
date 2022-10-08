@@ -9,31 +9,30 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class UserImageRepository : IImageRepository<UserImage>   
+    public class PostImageRepository : IImageRepository<PostImage>
     {
         private readonly AppDbContext _dbcontext;
 
-        public UserImageRepository(AppDbContext dbcontext)
+        public PostImageRepository(AppDbContext dbcontext)
         {
             _dbcontext = dbcontext;
         }
 
-        
-
-        public async Task<UserImage> GetImage(Guid UserId)
+        public async Task<PostImage> GetImage(Guid PostId)
         {
-            var result = await _dbcontext.UserImages.SingleOrDefaultAsync(i => i.UserId == UserId);
+            var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.PostId == PostId);
             return result;
         }
 
-        public async Task UploadImage(UserImage image)
+        public async Task UploadImage(PostImage image)
         {
-            await _dbcontext.UserImages.AddAsync(image);
+            await _dbcontext.PostImages.AddAsync(image);
             await _dbcontext.SaveChangesAsync();
+
         }
-        public async Task DeleteImage(UserImage image)
+        public async Task DeleteImage(PostImage image)
         {
-            _dbcontext.UserImages.Remove(image);
+            _dbcontext.PostImages.Remove(image);
             await _dbcontext.SaveChangesAsync();
         }
     }

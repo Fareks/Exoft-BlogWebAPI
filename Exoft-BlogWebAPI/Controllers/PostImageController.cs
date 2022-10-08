@@ -8,53 +8,55 @@ namespace Exoft_BlogWebAPI.Controllers
     [AllowAnonymous]
     [ApiController]
     [Route("/api/[controller]")]
-    public class UserImageController : ControllerBase
+    public class PostImageController : ControllerBase
     {
         //public IWebHostEnvironment _hostingEnvironment;
-        private readonly IUserImageService _imageService;
+        private readonly IPostImageService _postImageService;
 
-        public UserImageController(IUserImageService imageService)
+        public PostImageController(IPostImageService imageService)
         {
-            _imageService = imageService;
+            _postImageService = imageService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage (IFormFile file, Guid userId )
+        public async Task<IActionResult> UploadImage(IFormFile file, Guid postId)
         {
             try
             {
                 //var file = HttpContext.Request.Form.Files[0];
                 if (file != null)
                 {
-                   var result = await _imageService.UploadImage(file, userId);
+                    var result = await _postImageService.UploadImage(file, postId);
                     return Ok(result);
-                } else { return BadRequest("Empty input!"); }
-                
+                }
+                else { return BadRequest("Empty input!"); }
+
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);  
+                return BadRequest(ex);
             }
         }
 
-        [HttpGet("user-image")]
-        public async Task<IActionResult> GetUserImage (Guid userId)
+        [HttpGet("post-image")]
+        public async Task<IActionResult> GetUserImage(Guid userId)
         {
-            var image = await _imageService.GetImage(userId);
-            if(System.IO.File.Exists(image.ImagePath))
+            var image = await _postImageService.GetImage(userId);
+            if (System.IO.File.Exists(image.ImagePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
                 return File(bytes, "image/png");
-            } else
+            }
+            else
             {
                 return NotFound();
             }
         }
 
         [HttpDelete("user-image/delete")]
-        public async Task<IActionResult> DeleteUserImage (Guid userId)
+        public async Task<IActionResult> DeleteUserImage(Guid postId)
         {
-            await _imageService.DeleteImage(userId);
+            await _postImageService.DeleteImage(postId);
             return Ok();
         }
 

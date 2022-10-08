@@ -17,6 +17,8 @@ namespace DataLayer.ModelConfiguration
                    .WithOne(c => c.Post)
                    .HasForeignKey(pl => pl.Post.Id)
                    .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(u => u.PostImage)
+                   .WithOne(i => i.Post);
         }
     }
 }

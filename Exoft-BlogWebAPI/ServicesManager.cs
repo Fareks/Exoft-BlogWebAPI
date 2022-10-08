@@ -20,10 +20,13 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<ICommentService, CommentServices>();
             services.AddTransient<IPostLikeService, PostLikeServices>();
             services.AddTransient<ICommentLikeService, CommentLikeServices>();
-            services.AddTransient<IUserImageService, UserImageService>();
+            
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
+
+            services.AddTransient<IUserImageService, UserImageService>();
+            services.AddTransient<IPostImageService, PostImageService>();
 
         }
         public static void AddRepositories(this IServiceCollection services)
@@ -33,7 +36,8 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<IRepository<PostLike>, PostLikeRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
             services.AddTransient<IRepository<CommentLike>, CommentLikeRepository>();
-            services.AddTransient<IUserImageRepository, UserImageRepository>();
+            services.AddTransient<IImageRepository<UserImage>, UserImageRepository>();
+            services.AddTransient<IImageRepository<PostImage>, PostImageRepository>();
         }
 
 
