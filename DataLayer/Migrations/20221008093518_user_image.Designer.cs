@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221008093518_user_image")]
+    partial class user_image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +90,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment", (string)null);
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("DataLayer.Models.CommentLike", b =>
@@ -121,7 +123,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentLike", (string)null);
+                    b.ToTable("CommentLike");
                 });
 
             modelBuilder.Entity("DataLayer.Models.Post", b =>
@@ -163,7 +165,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("DataLayer.Models.PostImage", b =>
@@ -184,10 +186,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostId")
-                        .IsUnique();
-
-                    b.ToTable("PostImages", (string)null);
+                    b.ToTable("PostImages");
                 });
 
             modelBuilder.Entity("DataLayer.Models.PostLike", b =>
@@ -220,7 +219,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostLike", (string)null);
+                    b.ToTable("PostLike");
                 });
 
             modelBuilder.Entity("DataLayer.Models.User", b =>
@@ -340,7 +339,7 @@ namespace DataLayer.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserImages", (string)null);
+                    b.ToTable("UserImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -495,17 +494,6 @@ namespace DataLayer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataLayer.Models.PostImage", b =>
-                {
-                    b.HasOne("DataLayer.Models.Post", "Post")
-                        .WithOne("PostImage")
-                        .HasForeignKey("DataLayer.Models.PostImage", "PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
             modelBuilder.Entity("DataLayer.Models.PostLike", b =>
                 {
                     b.HasOne("DataLayer.Models.Post", "Post")
@@ -527,13 +515,11 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Models.UserImage", b =>
                 {
-                    b.HasOne("DataLayer.Models.User", "User")
+                    b.HasOne("DataLayer.Models.User", null)
                         .WithOne("UserImage")
                         .HasForeignKey("DataLayer.Models.UserImage", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -590,9 +576,6 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("PostImage")
-                        .IsRequired();
 
                     b.Navigation("PostLikes");
                 });

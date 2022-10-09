@@ -2,7 +2,7 @@
 
 namespace Business_Logic.DTO.PostDTOs
 {
-    public class PostCreateDTO : BaseCreateDTO
+    public class PostCreateDTO 
     {
         public string Title { get; set; }
         public string TextContent { get; set; }

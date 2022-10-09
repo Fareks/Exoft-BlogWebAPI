@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories.Interfaces
 {
-    public interface IPostRepository : IRepository<Post>
+    public interface IPostLikeRepository : IRepository<PostLike>
     {
-        public Task<List<Post>> GetAllByUserId(Guid userId);
-        public Task UpdateLikeSnapshot(Guid id);
+        public Task<List<PostLike>> GetByPostIdAsync(Guid postId);
     }
 }

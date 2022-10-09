@@ -28,7 +28,8 @@ namespace DataLayer.Repositories
             var users = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
                 .Include(u => u.PostLikes)
-                .Include(u => u.Comments).ToListAsync();
+                .Include(u => u.Comments)
+                .Include(u => u.UserImage).ToListAsync();
             return users;
         }
 
@@ -37,7 +38,8 @@ namespace DataLayer.Repositories
             var user = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
                 .Include(u => u.PostLikes)
-                .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Id == id);
+                .Include(u => u.Comments)
+                .Include(u => u.UserImage).SingleOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
@@ -46,7 +48,17 @@ namespace DataLayer.Repositories
             var user = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
                 .Include(u => u.PostLikes)
-                .Include(u => u.Comments).SingleOrDefaultAsync(u => u.Email == email);
+                .Include(u => u.Comments)
+                .Include(u => u.UserImage).SingleOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
+        public async Task<User> GetByEmailUsernameAsync(string email, string username)
+        {
+            var user = await _dbcontext.Users
+                .Include(u => u.CommentLikes)
+                .Include(u => u.PostLikes)
+                .Include(u => u.Comments)
+                .Include(u => u.UserImage).FirstOrDefaultAsync(u => (u.Email == email || u.UserName == username));
             return user;
         }
 

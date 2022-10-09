@@ -19,6 +19,8 @@ namespace DataLayer.ModelConfiguration
             builder.Property(u => u.FirstName).HasMaxLength(30);
             builder.Property(u => u.LastName).HasMaxLength(30);
             builder.Property(u => u.Email).HasMaxLength(40);
+            builder.HasOne(u => u.UserImage)
+                    .WithOne(i => i.User);
         }
     }
 }

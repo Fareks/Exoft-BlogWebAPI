@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repositories
 {
-    public class PostLikeRepository : IRepository<PostLike>
+    public class PostLikeRepository : IPostLikeRepository
     {
         AppDbContext _dbcontext;
 
@@ -32,12 +32,20 @@ namespace DataLayer.Repositories
             var postLike = await _dbcontext.PostLike.ToListAsync();
             return postLike;
         }
+        public async Task<List<PostLike>> GetByPostIdAsync(Guid postId)
+        {
+            var postLikes =  _dbcontext.PostLike
+                .Where(p => p.PostId == postId);
+            return (postLikes.ToList());
+        }
 
         public async Task<PostLike> GetByIdAsync(Guid id)
         {
             var postLike = await _dbcontext.PostLike.SingleOrDefaultAsync(u => u.Id == id);
             return postLike;
         }
+
+        
 
         public async Task Post(PostLike postLike)
         {

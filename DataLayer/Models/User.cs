@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace DataLayer.Models
 {
@@ -24,5 +25,6 @@ namespace DataLayer.Models
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<PostLike>? PostLikes { get; set; }
         public ICollection<CommentLike>? CommentLikes { get; set; }
+        public UserImage? UserImage { get; set; }
     }
 }
