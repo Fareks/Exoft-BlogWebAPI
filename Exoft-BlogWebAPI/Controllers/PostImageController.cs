@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Services.ImageServices;
+using Business_Logic.Services.PostServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,24 +13,27 @@ namespace Exoft_BlogWebAPI.Controllers
     {
         //public IWebHostEnvironment _hostingEnvironment;
         private readonly IPostImageService _postImageService;
+        private readonly IPostService _postService;
 
-        public PostImageController(IPostImageService imageService)
+        public PostImageController(IPostImageService imageService, IPostService postService)
         {
             _postImageService = imageService;
+            _postService = postService;
         }
 
-        [HttpPost]
+        [HttpPost("upload-image/{postId}"), Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> UploadImage(IFormFile file, Guid postId)
         {
             try
             {
-                //var file = HttpContext.Request.Form.Files[0];
-                if (file != null)
+                var post = await _postService.GetById(postId);
+                if (file != null && post != null)
                 {
+                    
                     var result = await _postImageService.UploadImage(file, postId);
                     return Ok(result);
                 }
-                else { return BadRequest("Empty input!"); }
+                else { return BadRequest("Invalid input!"); }
 
             }
             catch (Exception ex)
@@ -38,11 +42,11 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpGet("post-image")]
-        public async Task<IActionResult> GetUserImage(Guid userId)
+        [HttpGet("get-image/{imageId}")]
+        public async Task<IActionResult> GetPostImage(Guid imageId)
         {
-            var image = await _postImageService.GetImage(userId);
-            if (System.IO.File.Exists(image.ImagePath))
+            var image = await _postImageService.GetImage(imageId);
+            if (image != null && System.IO.File.Exists(image.ImagePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
                 return File(bytes, "image/png");
@@ -53,8 +57,8 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpDelete("user-image/delete")]
-        public async Task<IActionResult> DeleteUserImage(Guid postId)
+        [HttpDelete("delete"), Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeletePostImage(Guid postId)
         {
             await _postImageService.DeleteImage(postId);
             return Ok();

@@ -18,9 +18,15 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task<PostImage> GetImage(Guid PostId)
+        public async Task<PostImage> GetImage(Guid imageId)
         {
-            var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.PostId == PostId);
+            var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.Id == imageId);
+            return result;
+        }
+
+        public async Task<PostImage> GetImageByOwnerId(Guid postId)
+        {
+            var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.PostId == postId);
             return result;
         }
 

@@ -30,9 +30,9 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody]UserCreateDTO userDTO)
         {
-            if (await _authService.EmailIsExist(userDTO.Email))
+            if (await _authService.UserIsExist(userDTO.Email, userDTO.UserName))
             {
-                return BadRequest("Email is already registered.");
+                return BadRequest("User is already registered.");
             } else
             {
                 await _authService.RegisterUser(userDTO);

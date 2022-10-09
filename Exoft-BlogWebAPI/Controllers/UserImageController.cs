@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Services.ImageServices;
+using Business_Logic.Services.UserServices;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,23 +13,24 @@ namespace Exoft_BlogWebAPI.Controllers
     {
         //public IWebHostEnvironment _hostingEnvironment;
         private readonly IUserImageService _imageService;
-
-        public UserImageController(IUserImageService imageService)
+        private readonly IUserService _userService;
+        public UserImageController(IUserImageService imageService, IUserService userService)
         {
             _imageService = imageService;
+            _userService = userService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadImage (IFormFile file, Guid userId )
+        [HttpPost("upload-image/{userId}"), Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> UploadImage (IFormFile image, Guid userId )
         {
             try
             {
-                //var file = HttpContext.Request.Form.Files[0];
-                if (file != null)
+                var user = await _userService.GetByIdAsync(userId);
+                if (image != null && user != null)
                 {
-                   var result = await _imageService.UploadImage(file, userId);
+                   var result = await _imageService.UploadImage(image, userId);
                     return Ok(result);
-                } else { return BadRequest("Empty input!"); }
+                } else { return BadRequest("Wrong input!"); }
                 
             }
             catch (Exception ex)
@@ -37,11 +39,12 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpGet("user-image")]
-        public async Task<IActionResult> GetUserImage (Guid userId)
+
+        [HttpGet("get-image/{imageId}")]
+        public async Task<IActionResult> GetUserImage (Guid imageId)
         {
-            var image = await _imageService.GetImage(userId);
-            if(System.IO.File.Exists(image.ImagePath))
+            var image = await _imageService.GetImage(imageId);
+            if (image != null && (System.IO.File.Exists(image.ImagePath)))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
                 return File(bytes, "image/png");
@@ -51,7 +54,7 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpDelete("user-image/delete")]
+        [HttpDelete("delete"), Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteUserImage (Guid userId)
         {
             await _imageService.DeleteImage(userId);

@@ -15,12 +15,12 @@ namespace DataLayer.ModelConfiguration
                    .WithOne(p => p.User)
                    .HasForeignKey(p => p.UserId)
                    .OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(u => u.UserImage)
-                   .WithOne(i => i.User);
             builder.HasIndex(U => U.Email).IsUnique();
             builder.Property(u => u.FirstName).HasMaxLength(30);
             builder.Property(u => u.LastName).HasMaxLength(30);
             builder.Property(u => u.Email).HasMaxLength(40);
+            builder.HasOne(u => u.UserImage)
+                    .WithOne(i => i.User);
         }
     }
 }

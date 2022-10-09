@@ -10,7 +10,7 @@ namespace Business_Logic.Services.UserServices
 {
     public interface IAuthService
     {
-        public Task<bool> EmailIsExist(string email);
+        public Task<bool> UserIsExist(string email, string username);
         public Task RegisterUser(UserCreateDTO userCreateDTO);
         public Task<string> LoginUser(UserLoginDTO userLoginDTO);
         public Task<UserReadDTO> GetMe();

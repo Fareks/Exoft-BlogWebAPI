@@ -10,7 +10,8 @@ namespace DataLayer.Repositories.Interfaces
     public interface IImageRepository<T>
     {
         public Task UploadImage(T image);
-        public Task<T> GetImage(Guid UserId);
+        public Task<T> GetImage(Guid imageId);
         public Task DeleteImage(T image);
+        public Task<T> GetImageByOwnerId(Guid userId);
     }
 }

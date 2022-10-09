@@ -52,6 +52,15 @@ namespace DataLayer.Repositories
                 .Include(u => u.UserImage).SingleOrDefaultAsync(u => u.Email == email);
             return user;
         }
+        public async Task<User> GetByEmailUsernameAsync(string email, string username)
+        {
+            var user = await _dbcontext.Users
+                .Include(u => u.CommentLikes)
+                .Include(u => u.PostLikes)
+                .Include(u => u.Comments)
+                .Include(u => u.UserImage).FirstOrDefaultAsync(u => (u.Email == email || u.UserName == username));
+            return user;
+        }
 
         public async Task Post(User user)
         {

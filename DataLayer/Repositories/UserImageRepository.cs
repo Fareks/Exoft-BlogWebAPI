@@ -20,9 +20,15 @@ namespace DataLayer.Repositories
 
         
 
-        public async Task<UserImage> GetImage(Guid UserId)
+        public async Task<UserImage> GetImage(Guid imageId)
         {
-            var result = await _dbcontext.UserImages.SingleOrDefaultAsync(i => i.UserId == UserId);
+            var result = await _dbcontext.UserImages.SingleOrDefaultAsync(i => i.Id == imageId);
+            return result;
+        }
+
+        public async Task<UserImage> GetImageByOwnerId(Guid userId)
+        {
+            var result = await _dbcontext.UserImages.SingleOrDefaultAsync(i => i.UserId == userId);
             return result;
         }
 

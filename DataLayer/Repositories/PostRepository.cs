@@ -29,19 +29,23 @@ namespace DataLayer.Repositories
 
         public async Task<ICollection<Post>> GetAllAsync()
         {
-            var posts = await _dbcontext.Posts.Include(p => p.PostLikes).Include(p => p.User).ToListAsync();
+            var posts = await _dbcontext.Posts.Include(p => p.PostLikes).Include(p => p.User).Include(u => u.PostImage).ToListAsync(); 
             return posts;
         }
 
         public async Task<Post> GetByIdAsync(Guid id)
         {
             var post = await _dbcontext.Posts
-                .Include(p => p.PostLikes).Include(p => p.User).SingleOrDefaultAsync(u => u.Id == id);
+                .Include(p => p.PostLikes)
+                .Include(p => p.User)
+                .Include(u => u.PostImage)
+                .SingleOrDefaultAsync(u => u.Id == id);
             return post;
         }
         public async Task<List<Post>> GetAllByUserId (Guid userId)
         {
-            var posts = _dbcontext.Posts.Where(p => p.UserId == userId);
+            var posts = _dbcontext.Posts.Include(u => u.PostImage)
+                .Where(p => p.UserId == userId);
             return posts.ToList();
         }
 

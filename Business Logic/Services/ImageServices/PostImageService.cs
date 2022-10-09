@@ -21,9 +21,9 @@ namespace Business_Logic.Services.ImageServices
             _postImageRepository = imageRepository;
         }
 
-        public async Task<PostImage> GetImage(Guid userId)
+        public async Task<PostImage> GetImage(Guid imageId)
         {
-            return await _postImageRepository.GetImage(userId);
+            return await _postImageRepository.GetImage(imageId);
         }
 
         public async Task<PostImage> UploadImage(IFormFile file, Guid postId)
@@ -40,7 +40,7 @@ namespace Business_Logic.Services.ImageServices
             image.UploadDate = DateTime.Now;
             image.PostId = postId;
 
-            var oldImage = await _postImageRepository.GetImage(postId);
+            var oldImage = await _postImageRepository.GetImageByOwnerId(postId);
             if (oldImage != null)
             {
                 await _postImageRepository.DeleteImage(oldImage);

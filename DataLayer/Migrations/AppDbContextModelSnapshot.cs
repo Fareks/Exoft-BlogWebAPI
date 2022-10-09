@@ -88,7 +88,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.CommentLike", b =>
@@ -121,7 +121,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("CommentLike");
+                    b.ToTable("CommentLike", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.Post", b =>
@@ -163,7 +163,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.PostImage", b =>
@@ -187,7 +187,7 @@ namespace DataLayer.Migrations
                     b.HasIndex("PostId")
                         .IsUnique();
 
-                    b.ToTable("PostImages");
+                    b.ToTable("PostImages", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.PostLike", b =>
@@ -220,7 +220,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostLike");
+                    b.ToTable("PostLike", (string)null);
                 });
 
             modelBuilder.Entity("DataLayer.Models.User", b =>
@@ -340,7 +340,7 @@ namespace DataLayer.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserImages");
+                    b.ToTable("UserImages", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

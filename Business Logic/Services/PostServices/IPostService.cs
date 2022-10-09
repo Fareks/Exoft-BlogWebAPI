@@ -16,7 +16,7 @@ namespace Business_Logic.Services.PostServices
 
         //Must accept id, call repository.Delete(repository.GetById)
         public Task DeleteById(Guid id);
-        public Task<PostCreateDTO> Create(PostCreateDTO newItem);
+        public Task<PostReadDTO> Create(PostCreateDTO newItem);
         public Task ValidatePost(Guid postId, bool isValid);
     }
 }

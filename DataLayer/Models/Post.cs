@@ -14,8 +14,7 @@ namespace DataLayer.Models
 
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<PostLike>? PostLikes { get; set; }
-        [JsonIgnore]
-        public PostImage PostImage { get; set; }
+        public PostImage? PostImage { get; set; }
 
     }
 }
