@@ -12,17 +12,20 @@ namespace Business_Logic.Services.PostLikesServices
 {
     public class PostLikeServices : IPostLikeService
     {
-        readonly IRepository<PostLike> _postLikeRepository;
+        readonly IPostLikeRepository _postLikeRepository;
+        readonly IPostRepository _postRepository;
         readonly IMapper _mapper;
 
-        public PostLikeServices(IRepository<PostLike> postLikeRepository, IMapper mapper)
+        public PostLikeServices(IPostLikeRepository postLikeRepository, IMapper mapper, IPostRepository postRepository)
         {
             _mapper = mapper;
             _postLikeRepository = postLikeRepository;
+            _postRepository = postRepository;
         }
         public async Task DeleteById(Guid id)
         {
             await _postLikeRepository.DeleteById(id);
+            await _postRepository.UpdateLikeSnapshot(id);
             await _postLikeRepository.Save();
         }
 
@@ -39,12 +42,22 @@ namespace Business_Logic.Services.PostLikesServices
             return postLikeDTO;
         }
 
+        public async Task<List<PostLikeReadDTO>> GetByPostIdAsync(Guid postId)
+        {
+            var postLikes = await _postLikeRepository.GetByPostIdAsync(postId);
+            var postLikesDTO = _mapper.Map<List<PostLikeReadDTO>>(postLikes);
+            return postLikesDTO;
+        }
+
         public async Task Post(PostLikeCreateDTO newItem)
         {
             newItem.CreatedDate = DateTime.UtcNow;
             var postLike = _mapper.Map<PostLike>(newItem);
             await _postLikeRepository.Post(postLike);
+            await _postRepository.UpdateLikeSnapshot(postLike.PostId);
             await _postLikeRepository.Save();
         }
+
+        
     }
 }

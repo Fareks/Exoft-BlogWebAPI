@@ -33,7 +33,7 @@ namespace Exoft_BlogWebAPI
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPostRepository, PostRepository>();
-            services.AddTransient<IRepository<PostLike>, PostLikeRepository>();
+            services.AddTransient<IPostLikeRepository, PostLikeRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
             services.AddTransient<IRepository<CommentLike>, CommentLikeRepository>();
             services.AddTransient<IImageRepository<UserImage>, UserImageRepository>();

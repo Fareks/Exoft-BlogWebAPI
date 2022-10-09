@@ -47,6 +47,7 @@ namespace Business_Logic.Services.PostServices
         {
             var post = _mapper.Map<Post>(newItem);
             post.UserId = await _authService.GetMyId();
+            post.CreatedDate = DateTime.Now;
             await _postRepository.Post(post);
             await _postRepository.Save();
             var postReadDTO = _mapper.Map<PostReadDTO>(post);
