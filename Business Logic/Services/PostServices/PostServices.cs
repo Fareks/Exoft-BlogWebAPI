@@ -69,5 +69,11 @@ namespace Business_Logic.Services.PostServices
             post.VerifyStatus = isValid;
             await  _postRepository.Save();
         }
+
+        public async Task<List<PostDTO>> GetAllUnverifiedPosts()
+        {
+            var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetAllUnverifiedPosts());
+            return posts;
+        }
     }
 }

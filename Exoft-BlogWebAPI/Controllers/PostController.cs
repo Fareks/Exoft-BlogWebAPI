@@ -27,6 +27,12 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return Ok(await _postService.GetAll());
             }
+
+            [HttpGet("/unverified-posts")]
+            public async Task<IActionResult> GetAllUnverifiedPosts()
+            {
+                return Ok(await _postService.GetAllUnverifiedPosts());
+            }
             [HttpGet("/posts-by-user-id/{userId}")]
             public async Task<IActionResult> GetPostsByUserId(Guid userId)
             {

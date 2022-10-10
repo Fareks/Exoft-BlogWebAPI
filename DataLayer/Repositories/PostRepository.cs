@@ -74,5 +74,12 @@ namespace DataLayer.Repositories
             await _dbcontext.SaveChangesAsync();
             
         }
+
+        public async Task<List<Post>> GetAllUnverifiedPosts()
+        {
+            var posts = _dbcontext.Posts.Include(u => u.PostImage)
+                .Where(p => p.VerifyStatus == false);
+            return posts.ToList();
+        }
     }
 }

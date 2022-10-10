@@ -48,8 +48,8 @@ namespace Business_Logic.Services.UserServices
             User targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
             if (targetUser != null)
             {
-                var result = await _signInManager.CanSignInAsync(targetUser);
-                if (result)
+                var result = await _signInManager.CheckPasswordSignInAsync(targetUser, userLoginDTO.Password, false);
+                if (result.Succeeded)
                 {
                     var token = await _tokenService.CreateToken(_mapper.Map<UserReadDTO>(targetUser));
                     return (token);
