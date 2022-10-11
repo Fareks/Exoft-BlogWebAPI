@@ -1,6 +1,7 @@
 ﻿using Business_Logic.DTO.BaseDTOs;
 using Business_Logic.DTO.CommentDTOs;
 using Business_Logic.DTO.PostLikeDTOs;
+using Business_Logic.DTO.UserDTOs;
 using DataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -24,5 +25,6 @@ namespace Business_Logic.DTO.PostDTOs
         public Guid? PostImageId { get; set; }
         [JsonIgnore]
         public PostImage? PostImage { get; set; }
+        public UserReadDTO? User { get; set; }
     }
 }

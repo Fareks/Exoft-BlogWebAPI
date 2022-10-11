@@ -77,7 +77,7 @@ namespace DataLayer.Repositories
 
         public async Task<List<Post>> GetAllUnverifiedPosts()
         {
-            var posts = _dbcontext.Posts.Include(u => u.PostImage)
+            var posts = _dbcontext.Posts.Include(p => p.PostImage).Include(p => p.User).ThenInclude(u => u.UserImage)
                 .Where(p => p.VerifyStatus == false);
             return posts.ToList();
         }

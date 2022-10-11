@@ -26,7 +26,7 @@ namespace Exoft_BlogWebAPI.Controllers
         {
             try
             {
-                var post = await _postService.GetById(postId);
+                    var post = await _postService.GetById(postId);
                 if (file != null && post != null)
                 {
                     
