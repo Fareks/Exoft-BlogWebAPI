@@ -18,5 +18,6 @@ namespace Business_Logic.DTO.PostDTOs
         public Guid PostImageId { get; set; }
         [JsonIgnore]
         public PostImage? PostImage { get; set; }
+        public Category? Category { get; set; }
     }
 }

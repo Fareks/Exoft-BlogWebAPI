@@ -29,7 +29,11 @@ namespace DataLayer.Repositories
 
         public async Task<ICollection<Post>> GetAllAsync()
         {
-            var posts = await _dbcontext.Posts.Include(p => p.PostLikes).Include(p => p.User).Include(u => u.PostImage).ToListAsync(); 
+            var posts = await _dbcontext.Posts.Include(p => p.PostLikes)
+                .Include(p => p.User)
+                .Include(u => u.PostImage)
+                .Include(p => p.Category)
+                .ToListAsync(); 
             return posts;
         }
 
