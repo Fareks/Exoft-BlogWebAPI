@@ -14,7 +14,7 @@ namespace Exoft_BlogWebAPI.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("/get-all")]
+        [HttpGet("get-all")]
         public async Task<IActionResult> GetCategories()
         {
             try
@@ -27,7 +27,7 @@ namespace Exoft_BlogWebAPI.Controllers
             
         }
 
-        [HttpDelete("/delete-category")]
+        [HttpDelete("delete-category")]
         public async Task<IActionResult> DeleteCategory(Guid categoryId)
         {
             try
@@ -41,7 +41,7 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpPost("/create-category")]
+        [HttpPost("create-category")]
         public async Task<IActionResult> CreateCategory(string categoryName)
         {
             try
