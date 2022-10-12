@@ -12,6 +12,7 @@ namespace DataLayer
         {
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
             base.OnModelCreating(builder);
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -26,5 +27,12 @@ namespace DataLayer
         public DbSet<CommentLike> CommentLike { get; set; }
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<PostImage> PostImages { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<CategoryImage> CategoryImage { get; set; }
+
+        internal Task SingleOrDefaultAsync(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

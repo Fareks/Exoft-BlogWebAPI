@@ -15,6 +15,8 @@ namespace DataLayer.Models
         public ICollection<Comment>? Comments { get; set; }
         public ICollection<PostLike>? PostLikes { get; set; }
         public PostImage? PostImage { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Category? Category { get; set; }
 
     }
 }

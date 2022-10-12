@@ -18,6 +18,7 @@ namespace Business_Logic.Services.PostServices
         public Task DeleteById(Guid id);
         public Task<PostReadDTO> Create(PostCreateDTO newItem);
         public Task ValidatePost(Guid postId, bool isValid);
+        public Task SetCategory(Guid postId, Guid categoryId);
         public Task<List<PostDTO>> GetAllUnverifiedPosts();
     }
 }

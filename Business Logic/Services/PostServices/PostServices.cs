@@ -69,6 +69,12 @@ namespace Business_Logic.Services.PostServices
             post.VerifyStatus = isValid;
             await  _postRepository.Save();
         }
+        public async Task SetCategory(Guid postId, Guid categoryId)
+        {
+            var post = await _postRepository.GetByIdAsync(postId);
+            post.CategoryId = categoryId;
+            await _postRepository.Save();
+        }
 
         public async Task<List<PostDTO>> GetAllUnverifiedPosts()
         {

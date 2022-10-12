@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Services;
+using Business_Logic.Services.CategoryService;
 using Business_Logic.Services.CommentLikeServices;
 using Business_Logic.Services.CommentServices;
 using Business_Logic.Services.ImageServices;
@@ -20,6 +21,7 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<ICommentService, CommentServices>();
             services.AddTransient<IPostLikeService, PostLikeServices>();
             services.AddTransient<ICommentLikeService, CommentLikeServices>();
+            services.AddTransient<ICategoryService, CategoryService>();
             
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAuthService, AuthService>();
@@ -27,6 +29,7 @@ namespace Exoft_BlogWebAPI
 
             services.AddTransient<IUserImageService, UserImageService>();
             services.AddTransient<IPostImageService, PostImageService>();
+            services.AddTransient<ICategoryImageService, CategoryImageService>();
 
         }
         public static void AddRepositories(this IServiceCollection services)
@@ -36,8 +39,12 @@ namespace Exoft_BlogWebAPI
             services.AddTransient<IPostLikeRepository, PostLikeRepository>();
             services.AddTransient<IRepository<Comment>, CommentRepository>();
             services.AddTransient<IRepository<CommentLike>, CommentLikeRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
             services.AddTransient<IImageRepository<UserImage>, UserImageRepository>();
             services.AddTransient<IImageRepository<PostImage>, PostImageRepository>();
+            services.AddTransient<IImageRepository<CategoryImage>, CategoryImageRepository>();
+            
         }
 
 

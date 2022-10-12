@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012134322_category-img")]
+    partial class categoryimg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,6 +58,9 @@ namespace DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CategoryImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -77,6 +82,9 @@ namespace DataLayer.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoryId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,8 +94,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId")
-                        .IsUnique();
+                    b.HasIndex("CategoryId1");
 
                     b.ToTable("CategoryImage");
                 });
@@ -496,8 +503,8 @@ namespace DataLayer.Migrations
             modelBuilder.Entity("DataLayer.Models.CategoryImage", b =>
                 {
                     b.HasOne("DataLayer.Models.Category", "Category")
-                        .WithOne("CategoryImage")
-                        .HasForeignKey("DataLayer.Models.CategoryImage", "CategoryId")
+                        .WithMany()
+                        .HasForeignKey("CategoryId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -653,8 +660,6 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Models.Category", b =>
                 {
-                    b.Navigation("CategoryImage");
-
                     b.Navigation("Posts");
                 });
 

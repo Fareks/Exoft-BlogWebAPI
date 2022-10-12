@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221012081820_category")]
+    partial class category
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,38 +60,11 @@ namespace DataLayer.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
-
-                    b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("DataLayer.Models.CategoryImage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId")
-                        .IsUnique();
-
-                    b.ToTable("CategoryImage");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("DataLayer.Models.Comment", b =>
@@ -493,17 +468,6 @@ namespace DataLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DataLayer.Models.CategoryImage", b =>
-                {
-                    b.HasOne("DataLayer.Models.Category", "Category")
-                        .WithOne("CategoryImage")
-                        .HasForeignKey("DataLayer.Models.CategoryImage", "CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("DataLayer.Models.Comment", b =>
                 {
                     b.HasOne("DataLayer.Models.Post", "Post")
@@ -653,8 +617,6 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Models.Category", b =>
                 {
-                    b.Navigation("CategoryImage");
-
                     b.Navigation("Posts");
                 });
 

@@ -108,5 +108,19 @@ namespace Exoft_BlogWebAPI.Controllers
                 return BadRequest(new { Response = $"Can`t validate post." });
             }
             }
-        }
+
+            [HttpPut("/admin/set-category"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+            public async Task<IActionResult> SetCategory(Guid postId, [FromBody] Guid categoryId)
+            {
+                try
+                {
+                    await _postService.SetCategory(postId, categoryId);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { Response = $"Can`t validate post." });
+                }
+            }
+    }
 }

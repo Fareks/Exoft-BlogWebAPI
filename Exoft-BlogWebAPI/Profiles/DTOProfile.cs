@@ -11,6 +11,7 @@ using Business_Logic.DTO.CommentLikeDTOs;
 using Business_Logic.DTO.PostDTOs;
 using Business_Logic.DTO.PostLikeDTOs;
 using Business_Logic.DTO.UserDTOs;
+using Business_Logic.DTO.CategoryDTOs;
 
 namespace DataLayer.Profiles
 {
@@ -46,6 +47,11 @@ namespace DataLayer.Profiles
             CreateMap<CommentLike,CommentLikeDTO>().ReverseMap();
             CreateMap<CommentLike, CommentLikeCreateDTO>().ReverseMap();
             CreateMap<CommentLike, CommentLikeReadDTO>().ReverseMap();
+
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryCreateDTO>().ReverseMap();
+            
+
         }
     }
 }
