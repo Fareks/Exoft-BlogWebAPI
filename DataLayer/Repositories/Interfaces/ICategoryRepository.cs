@@ -13,5 +13,6 @@ namespace DataLayer.Repositories.Interfaces
         public Task DeleteCategory(Guid categoryId);
         public Task<List<Category>> GetAllCategories();
         public Task<Category> GetByIdAsync(Guid id);
+        public Task<List<Category>> SearchByName(string name);
     }
 }

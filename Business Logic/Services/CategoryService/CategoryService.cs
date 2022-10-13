@@ -48,5 +48,12 @@ namespace Business_Logic.Services.CategoryService
             var categoryDTO = _mapper.Map<CategoryDTO>(category);
             return categoryDTO;
         }
+
+        public async Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName)
+        {
+            var categories = await _categoryRepository.SearchByName(categoryName);
+            var categoriesDTO = _mapper.Map<List<CategoryDTO>>(categories);
+            return categoriesDTO;
+        }
     }
 }

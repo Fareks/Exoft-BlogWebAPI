@@ -14,5 +14,6 @@ namespace Business_Logic.Services.CategoryService
         public Task DeleteCategory(Guid categoryId);
 
         public Task<CategoryDTO> GetCategoryById(Guid categoryId);
+        public Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName);
     }
 }

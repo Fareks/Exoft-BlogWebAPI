@@ -47,5 +47,10 @@ namespace DataLayer.Repositories
             var category = await _appDbContext.Category.SingleOrDefaultAsync(u => u.Id == id);
             return category;
         }
+        public async Task<List<Category>> SearchByName(string name)
+        {
+            var category = await _appDbContext.Category.Where(u => u.CategoryName.Contains(name)).ToListAsync();
+            return category;
+        }
     }
 }
