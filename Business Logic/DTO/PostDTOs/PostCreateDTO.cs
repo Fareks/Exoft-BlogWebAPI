@@ -6,6 +6,8 @@ namespace Business_Logic.DTO.PostDTOs
     {
         public string Title { get; set; }
         public string TextContent { get; set; }
+
+        public string CategoryId { get; set; }
         //public Guid UserId { get; set; }
     }
 }

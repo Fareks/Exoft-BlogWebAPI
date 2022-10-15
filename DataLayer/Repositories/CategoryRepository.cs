@@ -44,7 +44,7 @@ namespace DataLayer.Repositories
         }
         public async Task<Category> GetByIdAsync(Guid id)
         {
-            var category = await _appDbContext.Category.SingleOrDefaultAsync(u => u.Id == id);
+            var category = await _appDbContext.Category.Include(c => c.CategoryImage).SingleOrDefaultAsync(u => u.Id == id);
             return category;
         }
         public async Task<List<Category>> SearchByName(string name)

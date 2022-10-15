@@ -1,4 +1,5 @@
 ﻿using Business_Logic.DTO.BaseDTOs;
+using Business_Logic.DTO.CategoryDTOs;
 using Business_Logic.DTO.CommentDTOs;
 using Business_Logic.DTO.PostLikeDTOs;
 using Business_Logic.DTO.UserDTOs;
@@ -27,5 +28,6 @@ namespace Business_Logic.DTO.PostDTOs
         public PostImage? PostImage { get; set; }
         public UserReadDTO? User { get; set; }
         public Guid? CategoryId { get; set; }
+        public CategoryDTO? Category { get; set; }
     }
 }

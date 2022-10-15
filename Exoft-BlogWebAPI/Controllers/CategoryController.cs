@@ -42,6 +42,21 @@ namespace Exoft_BlogWebAPI.Controllers
 
         }
 
+        [HttpGet("get-by-id")]
+        public async Task<IActionResult> GetCategoryById(Guid categoryId)
+        {
+            try
+            {
+                var response = await _categoryService.GetCategoryById(categoryId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
 
 
         [HttpDelete("delete-category")]

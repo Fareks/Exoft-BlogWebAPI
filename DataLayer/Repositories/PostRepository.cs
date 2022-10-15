@@ -43,12 +43,15 @@ namespace DataLayer.Repositories
                 .Include(p => p.PostLikes)
                 .Include(p => p.User)
                 .Include(u => u.PostImage)
+                .Include(p => p.Category)
                 .SingleOrDefaultAsync(u => u.Id == id);
             return post;
         }
         public async Task<List<Post>> GetAllByUserId (Guid userId)
         {
-            var posts = _dbcontext.Posts.Include(u => u.PostImage)
+            var posts = _dbcontext.Posts
+                .Include(u => u.PostImage)
+                .Include(p => p.Category)
                 .Where(p => p.UserId == userId);
             return posts.ToList();
         }
@@ -81,7 +84,11 @@ namespace DataLayer.Repositories
 
         public async Task<List<Post>> GetAllUnverifiedPosts()
         {
-            var posts = _dbcontext.Posts.Include(p => p.PostImage).Include(p => p.User).ThenInclude(u => u.UserImage)
+            var posts = _dbcontext.Posts
+                .Include(p => p.PostImage)
+                .Include(p => p.User)
+                .ThenInclude(u => u.UserImage)
+                .Include(p => p.Category)
                 .Where(p => p.VerifyStatus == false);
             return posts.ToList();
         }
