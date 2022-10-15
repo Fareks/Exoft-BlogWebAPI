@@ -49,15 +49,24 @@ namespace Business_Logic.Services.PostLikesServices
             return postLikesDTO;
         }
 
-        public async Task Post(PostLikeCreateDTO newItem)
+        //public async Task Post(PostLikeCreateDTO newItem)
+        //{
+        //    var postLike = _mapper.Map<PostLike>(newItem);
+        //    postLike.CreatedDate = DateTime.Now;
+        //    await _postLikeRepository.Post(postLike);
+        //    await _postRepository.UpdateLikeSnapshot(postLike.PostId);
+        //    await _postLikeRepository.Save();
+        //}
+
+        public async Task ToggleLike(PostLikeCreateDTO newItem)
         {
-            newItem.CreatedDate = DateTime.UtcNow;
+
             var postLike = _mapper.Map<PostLike>(newItem);
-            await _postLikeRepository.Post(postLike);
+            postLike.CreatedDate = DateTime.Now;
+            await _postLikeRepository.ToggleLike(postLike);
             await _postRepository.UpdateLikeSnapshot(postLike.PostId);
             await _postLikeRepository.Save();
-        }
 
-        
+        }
     }
 }

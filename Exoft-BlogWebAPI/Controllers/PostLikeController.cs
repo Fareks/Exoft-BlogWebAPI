@@ -42,13 +42,13 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(postLikes);
         }
 
-        [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> AddPostLike(PostLikeCreateDTO postLikeDTO)
-        {
-            //need author validator
-            await _postLikeService.Post(postLikeDTO);
-            return Ok(postLikeDTO);
-        }
+        //[HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
+        //public async Task<IActionResult> AddPostLike(PostLikeCreateDTO postLikeDTO)
+        //{
+        //    //need author validator
+        //    await _postLikeService.Post(postLikeDTO);
+        //    return Ok(postLikeDTO);
+        //}
 
         [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeletePostLike(Guid postLikeId)
@@ -63,6 +63,14 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("toggle-like"), Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> ToggleLike(PostLikeCreateDTO postLikeDTO)
+        {
+            //need author validator
+            await _postLikeService.ToggleLike(postLikeDTO);
+            return Ok(postLikeDTO);
         }
     }
 }

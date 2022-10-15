@@ -20,7 +20,7 @@ namespace DataLayer.Repositories
 
         public async Task DeleteById(Guid id)
         {
-            var postLike = await _dbcontext.PostLike.SingleOrDefaultAsync(u => u.Id == id);
+            var postLike = await _dbcontext.PostLike.FirstOrDefaultAsync(u => u.Id == id);
             if (postLike != null)
             {
                 _dbcontext.PostLike.Remove(postLike);
@@ -46,9 +46,10 @@ namespace DataLayer.Repositories
         }
 
         
-
+        //toogle
         public async Task Post(PostLike postLike)
         {
+
             await _dbcontext.PostLike.AddAsync(postLike);
         }
 
@@ -61,5 +62,22 @@ namespace DataLayer.Repositories
         {
             _dbcontext.PostLike.Update(postLike);
         }
+
+        public async Task ToggleLike(PostLike postLike)
+        {
+            var oldPostLike = await _dbcontext.PostLike.FirstOrDefaultAsync(u => u.PostId == postLike.PostId && u.UserId  == postLike.UserId);
+
+            if (oldPostLike != null)
+            {
+                await DeleteById(oldPostLike.Id);
+
+            }
+            else
+            {
+                await Post(postLike);
+            }
+        }
+
+
     }
 }

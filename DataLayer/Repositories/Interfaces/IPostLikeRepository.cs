@@ -10,5 +10,6 @@ namespace DataLayer.Repositories.Interfaces
     public interface IPostLikeRepository : IRepository<PostLike>
     {
         public Task<List<PostLike>> GetByPostIdAsync(Guid postId);
+        public Task ToggleLike(PostLike postLike);
     }
 }
