@@ -111,6 +111,7 @@ namespace DataLayer.Repositories
                .Include(p => p.User)
                .ThenInclude(u => u.UserImage)
                .Include(p => p.Category)
+               .Where(p => p.VerifyStatus == true)
                .OrderByDescending(p => p.CreatedDate)
                .Skip(skip)
                .Take(take);
