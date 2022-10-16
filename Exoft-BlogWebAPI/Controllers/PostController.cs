@@ -28,16 +28,24 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Ok(await _postService.GetAll());
             }
 
-            [HttpGet("/unverified-posts")]
+            [HttpGet("/get-last-posts")]
+            public async Task<IActionResult> GetLastPosts(int skip, int take)
+            {
+                return Ok(await _postService.GetLastPosts(skip, take));
+            }
+
+        [HttpGet("/unverified-posts")]
             public async Task<IActionResult> GetAllUnverifiedPosts()
             {
                 return Ok(await _postService.GetAllUnverifiedPosts());
             }
+
             [HttpGet("/posts-by-user-id/{userId}")]
             public async Task<IActionResult> GetPostsByUserId(Guid userId)
             {
                 return Ok(await _postService.GetAllPostsByUserId(userId));
             }
+
             [HttpGet("/posts/{id}")]
             public async Task<IActionResult> GetPostById(Guid id)
             {
@@ -121,6 +129,12 @@ namespace Exoft_BlogWebAPI.Controllers
                 {
                     return BadRequest(new { Response = $"Can`t validate post." });
                 }
+            }
+
+            [HttpGet("/post-by-category")]
+            public async Task<IActionResult> GetPostsByCategoryId(Guid categoryId)
+            {
+                return Ok(await _postService.GetPostsByCategoryId(categoryId));
             }
     }
 }

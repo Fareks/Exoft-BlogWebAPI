@@ -81,5 +81,17 @@ namespace Business_Logic.Services.PostServices
             var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetAllUnverifiedPosts());
             return posts;
         }
+
+        public async Task<List<PostDTO>> GetPostsByCategoryId(Guid categoryId)
+        {
+            var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetPostsByCategoryId(categoryId));
+            return posts;
+        }
+
+        public async Task<List<PostDTO>> GetLastPosts(int skip, int take)
+        {
+            var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetLastPosts(skip, take));
+            return posts;
+        }
     }
 }

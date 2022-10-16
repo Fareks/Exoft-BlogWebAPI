@@ -93,5 +93,29 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
 
+        public async Task<List<Post>> GetPostsByCategoryId(Guid categoryId)
+        {
+            var posts = _dbcontext.Posts
+                .Include(p => p.PostImage)
+                .Include(p => p.User)
+                .ThenInclude(u => u.UserImage)
+                .Include(p => p.Category)
+                .Where(p => p.CategoryId == categoryId);
+            return posts.ToList();
+        }
+        
+        public async Task<List<Post>> GetLastPosts(int skip, int take)
+        {
+            var posts = _dbcontext.Posts
+               .Include(p => p.PostImage)
+               .Include(p => p.User)
+               .ThenInclude(u => u.UserImage)
+               .Include(p => p.Category)
+               .OrderByDescending(p => p.CreatedDate)
+               .Skip(skip)
+               .Take(take);
+            return posts.ToList();
+        }
+
     }
 }

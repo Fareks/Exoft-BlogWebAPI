@@ -20,5 +20,7 @@ namespace Business_Logic.Services.PostServices
         public Task ValidatePost(Guid postId, bool isValid);
         public Task SetCategory(Guid postId, Guid categoryId);
         public Task<List<PostDTO>> GetAllUnverifiedPosts();
+        public Task<List<PostDTO>> GetPostsByCategoryId(Guid categoryId);
+        public Task<List<PostDTO>> GetLastPosts(int skip, int take);
     }
 }

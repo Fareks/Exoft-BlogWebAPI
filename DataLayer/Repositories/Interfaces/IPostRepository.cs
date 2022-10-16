@@ -12,5 +12,8 @@ namespace DataLayer.Repositories.Interfaces
         public Task<List<Post>> GetAllByUserId(Guid userId);
         public Task UpdateLikeSnapshot(Guid id);
         public Task<List<Post>> GetAllUnverifiedPosts();
+        public Task<List<Post>> GetPostsByCategoryId(Guid categoryId);
+        public Task<List<Post>> GetLastPosts(int skip, int take);
+
     }
 }
