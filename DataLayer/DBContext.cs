@@ -13,6 +13,7 @@ namespace DataLayer
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new PostConfiguration());
             base.OnModelCreating(builder);
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

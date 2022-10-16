@@ -9,6 +9,8 @@ namespace DataLayer.ModelConfiguration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasIndex(c => c.CategoryName).IsUnique();
+            builder.HasMany(c => c.Posts)
+                .WithOne(p => p.Category);
         }
     }
 }
