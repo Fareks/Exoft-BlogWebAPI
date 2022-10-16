@@ -44,12 +44,15 @@ namespace Exoft_BlogWebAPI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> LoginUser(UserLoginDTO userDTO)
         {
-            var token = await _authService.LoginUser(userDTO);
             var user = await _userService.GetUserByEmailAsync(userDTO.Email);
-            var refreshToken = user?.RefreshToken;
+            var token = await _authService.LoginUser(userDTO);  
+            var refreshToken = _authService.GenerateRefreshToken();
+            await _authService.SetRefreshToken(refreshToken, user);
+
             AuthDTO response = new AuthDTO(){
-                token = token,
-                userId = user?.Id
+                Token = token,
+                UserId = user?.Id,
+                RefreshToken = refreshToken.Token,
             };
             if (token == null)
             {
@@ -65,10 +68,9 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(currentUser);
         }
         [HttpPost("Refresh-token")]
-        public async Task<IActionResult> RefreshToken(Guid id)
+        public async Task<IActionResult> RefreshToken(Guid id, string refreshToken)
         {
             var user = await _userService.GetByIdAsync(id);
-            var refreshToken = Request.Cookies["refreshToken"];
             if(user == null)
             {
                 return BadRequest("Bad Request. User Not Found.");
@@ -88,8 +90,9 @@ namespace Exoft_BlogWebAPI.Controllers
 
             AuthDTO response = new AuthDTO()
             {
-                token = token,
-                userId = user.Id
+                Token = token,
+                UserId = user.Id,
+                RefreshToken = newRefreshToken.Token
             };
 
             return Ok(response);

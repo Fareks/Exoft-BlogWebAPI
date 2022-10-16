@@ -69,8 +69,8 @@ namespace Exoft_BlogWebAPI.Controllers
         public async Task<IActionResult> ToggleLike(PostLikeCreateDTO postLikeDTO)
         {
             //need author validator
-            await _postLikeService.ToggleLike(postLikeDTO);
-            return Ok(postLikeDTO);
+            var likeCount = await _postLikeService.ToggleLike(postLikeDTO);
+            return Ok(likeCount);
         }
     }
 }

@@ -71,14 +71,16 @@ namespace DataLayer.Repositories
             _dbcontext.Posts.Update(post);
         }
 
-        public async Task UpdateLikeSnapshot(Guid id)
+        public async Task<int> UpdateLikeSnapshot(Guid id)
         {
             var post = _dbcontext.Posts.Include( p => p.PostLikes).SingleOrDefault(p => p.Id == id);
             if (post != null)
             {
                post.LikeSnapshot = post.PostLikes.Count;
             }
+            
             await _dbcontext.SaveChangesAsync();
+            return post.LikeSnapshot;
             
         }
 

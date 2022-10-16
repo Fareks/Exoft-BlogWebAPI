@@ -2,7 +2,7 @@
 
 namespace Business_Logic.DTO.PostLikeDTOs
 {
-    public class PostLikeCreateDTO : BaseCreateDTO
+    public class PostLikeCreateDTO
     {
         public Guid PostId { get; set; }
         public Guid UserId { get; set; }

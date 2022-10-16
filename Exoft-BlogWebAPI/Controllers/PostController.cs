@@ -34,7 +34,7 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Ok(await _postService.GetLastPosts(skip, take));
             }
 
-        [HttpGet("/unverified-posts")]
+            [HttpGet("/unverified-posts")]
             public async Task<IActionResult> GetAllUnverifiedPosts()
             {
                 return Ok(await _postService.GetAllUnverifiedPosts());

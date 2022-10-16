@@ -8,7 +8,8 @@ namespace Business_Logic.DTO.AuthDTOs
 {
     public class AuthDTO
     {
-        public string? token { get; set; }
-        public Guid? userId { get; set; }
+        public string? Token { get; set; }
+        public Guid? UserId { get; set; }
+        public string? RefreshToken { get; set; }
     }
 }
