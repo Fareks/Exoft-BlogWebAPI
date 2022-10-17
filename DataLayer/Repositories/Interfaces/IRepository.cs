@@ -10,14 +10,14 @@ namespace DataLayer.Repositories.Interfaces
 {
     public interface IRepository<T>
     {
-        public Task<T> GetByIdAsync(Guid id);
-        public Task<ICollection<T>> GetAllAsync();
-        public Task Post(T item);
-        public Task Update(T item);
+        public Task<T> GetByIdAsync(Guid id, CancellationToken token = default);
+        public Task<ICollection<T>> GetAllAsync(CancellationToken token = default);
+        public Task Post(T item,CancellationToken token = default);
+        public Task Update(T item,CancellationToken token = default);
 
         //Must accept entities!
-        public Task DeleteById(Guid id);
+        public Task DeleteById(Guid id,CancellationToken token = default);
 
-        public Task Save();
+        public Task Save(CancellationToken token = default);
     }
 }

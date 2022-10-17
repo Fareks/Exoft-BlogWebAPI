@@ -21,12 +21,12 @@ namespace Business_Logic.Services.ImageServices
             _imageRepository = imageRepository;
         }
 
-        public async Task<CategoryImage> GetImage(Guid imageId)
+        public async Task<CategoryImage> GetImage(Guid imageId, CancellationToken ctoken = default)
         {
-            return await _imageRepository.GetImage(imageId);
+            return await _imageRepository.GetImage(imageId, ctoken);
         }
 
-        public async Task<CategoryImage> UploadImage(IFormFile file, Guid categoryId)
+        public async Task<CategoryImage> UploadImage(IFormFile file, Guid categoryId, CancellationToken ctoken = default)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             var newFilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + Guid.NewGuid() + fileInfo.Extension;
@@ -40,20 +40,20 @@ namespace Business_Logic.Services.ImageServices
             image.UploadDate = DateTime.Now;
             image.CategoryId = categoryId;
 
-            var oldImage = await _imageRepository.GetImageByOwnerId(categoryId);
+            var oldImage = await _imageRepository.GetImageByOwnerId(categoryId, ctoken);
             if (oldImage != null)
             {
-                await _imageRepository.DeleteImage(oldImage);
+                await _imageRepository.DeleteImage(oldImage, ctoken);
                 File.Delete(oldImage.ImagePath);
             }
-            await _imageRepository.UploadImage(image);
+            await _imageRepository.UploadImage(image, ctoken);
             return (image);
         }
 
-        public async Task DeleteImage(Guid postId)
+        public async Task DeleteImage(Guid postId, CancellationToken ctoken = default)
         {
-            var image = await _imageRepository.GetImage(postId);
-            await _imageRepository.DeleteImage(image);
+            var image = await _imageRepository.GetImage(postId, ctoken);
+            await _imageRepository.DeleteImage(image, ctoken);
             File.Delete(image.ImagePath);
         }
     }

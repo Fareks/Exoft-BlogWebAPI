@@ -23,15 +23,15 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpPost("upload-image/{categoryId}"), Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> UploadImage(IFormFile file, Guid categoryId)
+        public async Task<IActionResult> UploadImage(IFormFile file, Guid categoryId, CancellationToken ctoken = default)
         {
             try
             {
-                var category = await _categoryService.GetCategoryById(categoryId);
+                var category = await _categoryService.GetCategoryById(categoryId, ctoken);
                 if (file != null && category != null)
                 {
 
-                    var result = await _postImageService.UploadImage(file, categoryId);
+                    var result = await _postImageService.UploadImage(file, categoryId, ctoken);
                     return Ok(result);
                 }
                 else { return BadRequest("Invalid input!"); }
@@ -44,9 +44,9 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("get-image/{imageId}")]
-        public async Task<IActionResult> GetPostImage(Guid imageId)
+        public async Task<IActionResult> GetPostImage(Guid imageId, CancellationToken ctoken = default)
         {
-            var image = await _postImageService.GetImage(imageId);
+            var image = await _postImageService.GetImage(imageId, ctoken);
             if (image != null && System.IO.File.Exists(image.ImagePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
@@ -59,9 +59,9 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpDelete("delete"), Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> DeletePostImage(Guid categoryId)
+        public async Task<IActionResult> DeletePostImage(Guid categoryId, CancellationToken ctoken = default)
         {
-            await _postImageService.DeleteImage(categoryId);
+            await _postImageService.DeleteImage(categoryId, ctoken);
             return Ok();
         }
 

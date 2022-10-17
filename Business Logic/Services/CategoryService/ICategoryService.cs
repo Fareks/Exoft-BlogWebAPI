@@ -9,11 +9,10 @@ namespace Business_Logic.Services.CategoryService
 {
     public interface ICategoryService
     {
-        public Task<List<CategoryDTO>> GetAllCategories();
-        public Task<CategoryDTO> CreateCategory(string categoryName);
-        public Task DeleteCategory(Guid categoryId);
-
-        public Task<CategoryDTO> GetCategoryById(Guid categoryId);
-        public Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName);
+        public Task<List<CategoryDTO>> GetAllCategories(CancellationToken token = default);
+        public Task<CategoryDTO> CreateCategory(string categoryName, CancellationToken token = default);
+        public Task DeleteCategory(Guid categoryId,CancellationToken token = default);
+        public Task<CategoryDTO> GetCategoryById(Guid categoryId,CancellationToken token = default);
+        public Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName,CancellationToken token = default);
     }
 }

@@ -9,15 +9,15 @@ namespace Business_Logic.Services.UserServices
 {
     public interface IUserService
     {
-        public Task<bool> BanUserByIdAsync(Guid id);
-        public Task<IEnumerable<UserReadDTO>> GetAllAsync();
-        public Task<UserReadDTO> GetByIdAsync(Guid id);
-        public Task UpdateAsync(UserUpdateDTO item);
+        public Task<bool> BanUserByIdAsync(Guid id,CancellationToken token = default);
+        public Task<IEnumerable<UserReadDTO>> GetAllAsync(CancellationToken token = default);
+        public Task<UserReadDTO> GetByIdAsync(Guid id,CancellationToken token = default);
+        public Task UpdateAsync(UserUpdateDTO item, CancellationToken token = default);
 
         //Must accept id, call repository.Delete(repository.GetById)
-        public Task DeleteByIdAsync(Guid id);
-        public Task PostAsync(UserCreateDTO newItem);
-        public Task<UserReadDTO> GetUserByEmailAsync(string email);
-        public Task ChangeRole(Guid id, int role);
+        public Task DeleteByIdAsync(Guid id,CancellationToken token = default);
+        public Task PostAsync(UserCreateDTO newItem,CancellationToken token = default);
+        public Task<UserReadDTO> GetUserByEmailAsync(string email,CancellationToken token = default);
+        public Task ChangeRole(Guid id, int role,CancellationToken token = default);
     }
 }

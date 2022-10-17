@@ -10,8 +10,8 @@ namespace Business_Logic.Services.ImageServices
 {
     public interface ICategoryImageService
     {
-        public Task<CategoryImage> UploadImage(IFormFile file, Guid categoryId);
-        public Task<CategoryImage> GetImage(Guid categoryId);
-        public Task DeleteImage(Guid categoryId);
+        public Task<CategoryImage> UploadImage(IFormFile file, Guid categoryId, CancellationToken ctoken = default);
+        public Task<CategoryImage> GetImage(Guid categoryId, CancellationToken ctoken = default);
+        public Task DeleteImage(Guid categoryId, CancellationToken ctoken = default);
     }
 }

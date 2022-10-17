@@ -12,8 +12,8 @@ namespace Business_Logic.Services.UserServices
     {
         //public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
         //public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
-        public Task<string> CreateToken(UserReadDTO userDTO);
-        public Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO);
+        public Task<string> CreateToken(UserReadDTO userDTO, CancellationToken token = default);
+        public Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO, CancellationToken token = default);
         public RefreshToken GenerateRefreshToken();
     }
 }

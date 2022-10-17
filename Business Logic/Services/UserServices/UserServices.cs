@@ -18,59 +18,59 @@ namespace Business_Logic.Services.UserServices
             _mapper = mapper;
             _userRepository = repo;
         }
-        public async Task DeleteByIdAsync(Guid id)
+        public async Task DeleteByIdAsync(Guid id, CancellationToken token = default)
         {
             
-            await _userRepository.DeleteById(id);
+            await _userRepository.DeleteById(id, token);
             await _userRepository.Save();
         }
         
-        public async Task<IEnumerable<UserReadDTO>> GetAllAsync()
+        public async Task<IEnumerable<UserReadDTO>> GetAllAsync(CancellationToken token = default)
         {
-            var users = _mapper.Map<List<UserReadDTO>>(await _userRepository.GetAllAsync());
+            var users = _mapper.Map<List<UserReadDTO>>(await _userRepository.GetAllAsync(token));
             return users;
         }
 
-        public async Task<UserReadDTO> GetByIdAsync(Guid id)
+        public async Task<UserReadDTO> GetByIdAsync(Guid id, CancellationToken token = default)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id, token);
             var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
 
-        public async Task PostAsync(UserCreateDTO newItem)
+        public async Task PostAsync(UserCreateDTO newItem, CancellationToken token = default)
         {
             newItem.CreatedDate = DateTime.UtcNow;
             var user = _mapper.Map<User>(newItem);
-            await _userRepository.Post(user);
-            await _userRepository.Save();
+            await _userRepository.Post(user, token);
+            await _userRepository.Save(token);
         }
 
-        public async Task UpdateAsync(UserUpdateDTO userUpdateDTO)
+        public async Task UpdateAsync(UserUpdateDTO userUpdateDTO, CancellationToken token = default)
         {
-            var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id);
+            var user = await _userRepository.GetByIdAsync(userUpdateDTO.Id, token);
             var updatedUser = _mapper.Map(userUpdateDTO, user);
-            await _userRepository.Update(updatedUser);
-            await _userRepository.Save();
+            await _userRepository.Update(updatedUser, token);
+            await _userRepository.Save(token);
         }
-        public async Task<UserReadDTO> GetUserByEmailAsync(string email)
+        public async Task<UserReadDTO> GetUserByEmailAsync(string email, CancellationToken token = default)
         {
-            var user = await _userRepository.GetByEmailAsync(email);
+            var user = await _userRepository.GetByEmailAsync(email, token);
             var userDTO = _mapper.Map<UserReadDTO>(user);
             return userDTO;
         }
-        public async Task<bool> BanUserByIdAsync(Guid id)
+        public async Task<bool> BanUserByIdAsync(Guid id, CancellationToken token = default)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id, token);
             user.IsBanned = true;
-            await _userRepository.Save();
+            await _userRepository.Save(token);
             return user.IsBanned;
         }
-        public async Task ChangeRole(Guid id, int role)
+        public async Task ChangeRole(Guid id, int role, CancellationToken token = default)
         {
-            var user = await _userRepository.GetByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id, token);
             user.Role = (Roles)role;
-            await _userRepository.Save();
+            await _userRepository.Save(token);
         }
 
     }

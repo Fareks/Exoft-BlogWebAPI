@@ -10,8 +10,8 @@ namespace Business_Logic.Services.ImageServices
 {
     public interface IPostImageService
     {
-        public Task<PostImage> UploadImage(IFormFile file, Guid postId);
-        public Task<PostImage> GetImage(Guid postId);
-        public Task DeleteImage(Guid postId);
+        public Task<PostImage> UploadImage(IFormFile file, Guid postId, CancellationToken ctoken = default);
+        public Task<PostImage> GetImage(Guid postId,CancellationToken ctoken = default);
+        public Task DeleteImage(Guid postId,CancellationToken ctoken = default);
     }
 }

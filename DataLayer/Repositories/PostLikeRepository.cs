@@ -18,7 +18,7 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task DeleteById(Guid id)
+        public async Task DeleteById(Guid id, CancellationToken token = default)
         {
             var postLike = await _dbcontext.PostLike.FirstOrDefaultAsync(u => u.Id == id);
             if (postLike != null)
@@ -27,19 +27,19 @@ namespace DataLayer.Repositories
             }
         }
 
-        public async Task<ICollection<PostLike>> GetAllAsync()
+        public async Task<ICollection<PostLike>> GetAllAsync(CancellationToken token = default)
         {
             var postLike = await _dbcontext.PostLike.ToListAsync();
             return postLike;
         }
-        public async Task<List<PostLike>> GetByPostIdAsync(Guid postId)
+        public async Task<List<PostLike>> GetByPostIdAsync(Guid postId, CancellationToken token = default)
         {
             var postLikes =  _dbcontext.PostLike
                 .Where(p => p.PostId == postId);
             return (postLikes.ToList());
         }
 
-        public async Task<PostLike> GetByIdAsync(Guid id)
+        public async Task<PostLike> GetByIdAsync(Guid id, CancellationToken token = default)
         {
             var postLike = await _dbcontext.PostLike.SingleOrDefaultAsync(u => u.Id == id);
             return postLike;
@@ -47,23 +47,23 @@ namespace DataLayer.Repositories
 
         
         //toogle
-        public async Task Post(PostLike postLike)
+        public async Task Post(PostLike postLike, CancellationToken token = default)
         {
 
             await _dbcontext.PostLike.AddAsync(postLike);
         }
 
-        public async Task Save()
+        public async Task Save(CancellationToken token = default)
         {
             await _dbcontext.SaveChangesAsync();
         }
 
-        public async Task Update(PostLike postLike)
+        public async Task Update(PostLike postLike, CancellationToken token = default)
         {
             _dbcontext.PostLike.Update(postLike);
         }
 
-        public async Task ToggleLike(PostLike postLike)
+        public async Task ToggleLike(PostLike postLike, CancellationToken token = default)
         {
             var oldPostLike = await _dbcontext.PostLike.FirstOrDefaultAsync(u => u.PostId == postLike.PostId && u.UserId  == postLike.UserId);
 
@@ -78,7 +78,7 @@ namespace DataLayer.Repositories
             }
         }
 
-        public async Task<List<PostLike>> GetAllPostLikesByUserId(Guid userId)
+        public async Task<List<PostLike>> GetAllPostLikesByUserId(Guid userId, CancellationToken token = default)
         {
             var postLikesWithPosts = _dbcontext.PostLike
                .Include(p => p.Post)

@@ -18,12 +18,12 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task DeleteById(Guid id)
+        public async Task DeleteById(Guid id, CancellationToken token = default)
         {   
                _dbcontext.Users.Remove(await _dbcontext.Users.FindAsync(id));
         }
 
-        public async Task<ICollection<User>> GetAllAsync()
+        public async Task<ICollection<User>> GetAllAsync(CancellationToken token = default)
         {
             var users = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
@@ -33,7 +33,7 @@ namespace DataLayer.Repositories
             return users;
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id, CancellationToken token = default)
         {
             var user = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
@@ -43,7 +43,7 @@ namespace DataLayer.Repositories
             return user;
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email, CancellationToken token = default)
         {
             var user = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
@@ -52,7 +52,7 @@ namespace DataLayer.Repositories
                 .Include(u => u.UserImage).SingleOrDefaultAsync(u => u.Email == email);
             return user;
         }
-        public async Task<User> GetByEmailUsernameAsync(string email, string username)
+        public async Task<User> GetByEmailUsernameAsync(string email, string username, CancellationToken token = default)
         {
             var user = await _dbcontext.Users
                 .Include(u => u.CommentLikes)
@@ -62,17 +62,17 @@ namespace DataLayer.Repositories
             return user;
         }
 
-        public async Task Post(User user)
+        public async Task Post(User user, CancellationToken token = default)
         {
             await _dbcontext.Users.AddAsync(user);
         }
 
-        public async Task Save()
+        public async Task Save(CancellationToken token = default)
         {
            await _dbcontext.SaveChangesAsync();
         }
 
-        public async Task Update(User user)
+        public async Task Update(User user, CancellationToken token = default)
         {
            _dbcontext.Users.Update(user);
         }

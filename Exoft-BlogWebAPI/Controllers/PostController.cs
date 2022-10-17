@@ -23,42 +23,42 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
             [HttpGet("/posts")]
-            public async Task<IActionResult> GetPosts()
+            public async Task<IActionResult> GetPosts(CancellationToken token = default)
             {
-                return Ok(await _postService.GetAll());
+                return Ok(await _postService.GetAll(token));
             }
 
             [HttpGet("/get-last-posts")]
-            public async Task<IActionResult> GetLastPosts(int skip, int take)
+            public async Task<IActionResult> GetLastPosts(int skip, int take, CancellationToken token = default)
             {
-                return Ok(await _postService.GetLastPosts(skip, take));
+                return Ok(await _postService.GetLastPosts(skip, take, token));
             }
 
             [HttpGet("/unverified-posts")]
-            public async Task<IActionResult> GetAllUnverifiedPosts()
+            public async Task<IActionResult> GetAllUnverifiedPosts(CancellationToken token = default)
             {
-                return Ok(await _postService.GetAllUnverifiedPosts());
+                return Ok(await _postService.GetAllUnverifiedPosts(token));
             }
 
             [HttpGet("/posts-by-user-id/{userId}")]
-            public async Task<IActionResult> GetPostsByUserId(Guid userId)
+            public async Task<IActionResult> GetPostsByUserId(Guid userId, CancellationToken token = default)
             {
-                return Ok(await _postService.GetAllPostsByUserId(userId));
+                return Ok(await _postService.GetAllPostsByUserId(userId, token));
             }
 
             [HttpGet("/posts/{id}")]
-            public async Task<IActionResult> GetPostById(Guid id)
+            public async Task<IActionResult> GetPostById(Guid id, CancellationToken token = default)
             {
-                return Ok(await _postService.GetById(id));
+                return Ok(await _postService.GetById(id, token));
             }
 
             [HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
             //required return dto with id. 
-            public async Task<IActionResult> AddPost(PostCreateDTO post)
+            public async Task<IActionResult> AddPost(PostCreateDTO post, CancellationToken token = default)
             {
                 try
                 {
-                    var response = await _postService.Create(post);
+                    var response = await _postService.Create(post, token);
                     return Ok(response);
                 } 
                 catch (Exception ex)
@@ -68,11 +68,11 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpPut, Authorize(AuthenticationSchemes = "Bearer")]
-            public async Task<IActionResult> UpdatePost(PostUpdateDTO post)
+            public async Task<IActionResult> UpdatePost(PostUpdateDTO post, CancellationToken token = default)
             {
-                if (await _authService.IsAuthor(post.UserId))
+                if (await _authService.IsAuthor(post.UserId, token))
                 {
-                    var response = await _postService.Update(post);
+                    var response = await _postService.Update(post, token);
                     return Ok(response);
                 } else
                 {
@@ -82,12 +82,12 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpDelete, Authorize(AuthenticationSchemes = "Bearer")]
-            public async Task<IActionResult> DeletePost(Guid postId)
+            public async Task<IActionResult> DeletePost(Guid postId, CancellationToken token = default)
             {
                 try
                 {
                 //problem:  reach the database too many times
-                var post = await _postService.GetById(postId);
+                var post = await _postService.GetById(postId, token);
                     if(await _authService.IsAuthor(post.UserId))
                         {
                             await _postService.DeleteById(postId);
@@ -105,11 +105,11 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpDelete("/admin/delete-as-admin"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-            public async Task<IActionResult> DeletePostByAdmin(Guid postId)
+            public async Task<IActionResult> DeletePostByAdmin(Guid postId, CancellationToken token = default)
             {
                 try
                 {
-                    await _postService.DeleteById(postId);
+                    await _postService.DeleteById(postId, token);
                     return Ok(new { Status = "Post deleted!", PostId = postId });
                 }
                 catch (Exception ex)
@@ -120,11 +120,11 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
         [HttpPut("/admin/validate-post/{postId}"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-            public async Task<IActionResult> ValidatePost(Guid postId, [FromBody]bool setIsValid)
+            public async Task<IActionResult> ValidatePost(Guid postId, [FromBody]bool setIsValid, CancellationToken token = default)
             {
             try
             {
-                await _postService.ValidatePost(postId, setIsValid);
+                await _postService.ValidatePost(postId, setIsValid, token);
                 return Ok(new { Response = $"Post is validated.Current valid status: {setIsValid}", ValidStatus = setIsValid });
             }
             catch (Exception ex)
@@ -134,11 +134,11 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpPut("/admin/set-category"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-            public async Task<IActionResult> SetCategory(Guid postId, [FromBody] Guid categoryId)
+            public async Task<IActionResult> SetCategory(Guid postId, [FromBody] Guid categoryId,CancellationToken token = default)
             {
                 try
                 {
-                    await _postService.SetCategory(postId, categoryId);
+                    await _postService.SetCategory(postId, categoryId, token);
                     return Ok();
                 }
                 catch (Exception ex)
@@ -148,15 +148,15 @@ namespace Exoft_BlogWebAPI.Controllers
             }
 
             [HttpGet("/post-by-category")]
-            public async Task<IActionResult> GetPostsByCategoryId(Guid categoryId)
+            public async Task<IActionResult> GetPostsByCategoryId(Guid categoryId,CancellationToken token = default)
             {
-                return Ok(await _postService.GetPostsByCategoryId(categoryId));
+                return Ok(await _postService.GetPostsByCategoryId(categoryId, token));
             }
 
         [HttpGet("/search-by-content")]
-        public async Task<IActionResult> SearchByContent(string content)
+        public async Task<IActionResult> SearchByContent(string content,CancellationToken token = default)
         {
-            return Ok(await _postService.SearchByContent(content));
+            return Ok(await _postService.SearchByContent(content, token));
         }
     }
 }

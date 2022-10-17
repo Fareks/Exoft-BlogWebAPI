@@ -18,25 +18,25 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task<PostImage> GetImage(Guid imageId)
+        public async Task<PostImage> GetImage(Guid imageId, CancellationToken token = default)
         {
             var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.Id == imageId);
             return result;
         }
 
-        public async Task<PostImage> GetImageByOwnerId(Guid postId)
+        public async Task<PostImage> GetImageByOwnerId(Guid postId, CancellationToken token = default)
         {
             var result = await _dbcontext.PostImages.SingleOrDefaultAsync(i => i.PostId == postId);
             return result;
         }
 
-        public async Task UploadImage(PostImage image)
+        public async Task UploadImage(PostImage image, CancellationToken token = default)
         {
             await _dbcontext.PostImages.AddAsync(image);
             await _dbcontext.SaveChangesAsync();
 
         }
-        public async Task DeleteImage(PostImage image)
+        public async Task DeleteImage(PostImage image, CancellationToken token = default)
         {
             _dbcontext.PostImages.Remove(image);
             await _dbcontext.SaveChangesAsync();

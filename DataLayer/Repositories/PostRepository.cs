@@ -18,7 +18,7 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task DeleteById(Guid id)
+        public async Task DeleteById(Guid id, CancellationToken token = default)
         {
             var post = await _dbcontext.Posts.SingleOrDefaultAsync(u => u.Id == id);
             if (post != null)
@@ -27,7 +27,7 @@ namespace DataLayer.Repositories
             }
         }
 
-        public async Task<ICollection<Post>> GetAllAsync()
+        public async Task<ICollection<Post>> GetAllAsync(CancellationToken token = default)
         {
             var posts = await _dbcontext.Posts.Include(p => p.PostLikes)
                 .Include(p => p.User)
@@ -37,7 +37,7 @@ namespace DataLayer.Repositories
             return posts;
         }
 
-        public async Task<Post> GetByIdAsync(Guid id)
+        public async Task<Post> GetByIdAsync(Guid id,CancellationToken token = default)
         {
             var post = await _dbcontext.Posts
                 .Include(p => p.PostLikes)
@@ -47,7 +47,7 @@ namespace DataLayer.Repositories
                 .SingleOrDefaultAsync(u => u.Id == id);
             return post;
         }
-        public async Task<List<Post>> GetAllByUserId (Guid userId)
+        public async Task<List<Post>> GetAllByUserId (Guid userId,CancellationToken token = default)
         {
             var posts = _dbcontext.Posts
                 .Include(u => u.PostImage)
@@ -65,22 +65,22 @@ namespace DataLayer.Repositories
         //    return posts.ToList();
         //}
 
-        public async Task Post(Post post)
+        public async Task Post(Post post,CancellationToken token = default)
         {
             await _dbcontext.Posts.AddAsync(post);
         }
 
-        public async Task Save()
+        public async Task Save(CancellationToken token = default)
         {
             await _dbcontext.SaveChangesAsync();
         }
 
-        public async Task Update(Post post)
+        public async Task Update(Post post,CancellationToken token = default)
         {
             _dbcontext.Posts.Update(post);
         }
 
-        public async Task<int> UpdateLikeSnapshot(Guid id)
+        public async Task<int> UpdateLikeSnapshot(Guid id,CancellationToken token = default)
         {
             var post = _dbcontext.Posts.Include( p => p.PostLikes).SingleOrDefault(p => p.Id == id);
             if (post != null)
@@ -93,7 +93,7 @@ namespace DataLayer.Repositories
             
         }
 
-        public async Task<List<Post>> GetAllUnverifiedPosts()
+        public async Task<List<Post>> GetAllUnverifiedPosts(CancellationToken token = default)
         {
             var posts = _dbcontext.Posts
                 .Include(p => p.PostImage)
@@ -104,7 +104,7 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
 
-        public async Task<List<Post>> GetPostsByCategoryId(Guid categoryId)
+        public async Task<List<Post>> GetPostsByCategoryId(Guid categoryId,CancellationToken token = default)
         {
             var posts = _dbcontext.Posts
                 .Include(p => p.PostImage)
@@ -115,7 +115,7 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
         
-        public async Task<List<Post>> GetLastPosts(int skip, int take)
+        public async Task<List<Post>> GetLastPosts(int skip, int take,CancellationToken token = default)
         {
             var posts = _dbcontext.Posts
                .Include(p => p.PostImage)
@@ -129,7 +129,7 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
 
-        public async Task<IEnumerable<Post>> SearchByContent(string content)
+        public async Task<IEnumerable<Post>> SearchByContent(string content,CancellationToken token = default)
         {
             var posts = _dbcontext.Posts
                .Include(p => p.PostImage)

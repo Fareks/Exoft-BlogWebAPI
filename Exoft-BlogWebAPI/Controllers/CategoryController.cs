@@ -1,4 +1,5 @@
 ﻿using Business_Logic.Services.CategoryService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exoft_BlogWebAPI.Controllers
@@ -15,11 +16,11 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategories(CancellationToken token = default)
         {
             try
             {
-                return Ok(await _categoryService.GetAllCategories());
+                return Ok(await _categoryService.GetAllCategories(token));
             } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -28,11 +29,11 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("get-by-name")]
-        public async Task<IActionResult> GetCategoriesByName(string categoryName)
+        public async Task<IActionResult> GetCategoriesByName(string categoryName, CancellationToken token = default)
         {
             try
             {
-                var response = await _categoryService.SearchCategoriesByName(categoryName);
+                var response = await _categoryService.SearchCategoriesByName(categoryName, token);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -43,11 +44,11 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("get-by-id")]
-        public async Task<IActionResult> GetCategoryById(Guid categoryId)
+        public async Task<IActionResult> GetCategoryById(Guid categoryId, CancellationToken token = default)
         {
             try
             {
-                var response = await _categoryService.GetCategoryById(categoryId);
+                var response = await _categoryService.GetCategoryById(categoryId, token);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -59,12 +60,12 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
 
-        [HttpDelete("delete-category")]
-        public async Task<IActionResult> DeleteCategory(Guid categoryId)
+        [HttpDelete("delete-category"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeleteCategory(Guid categoryId, CancellationToken token = default)
         {
             try
             {
-                await _categoryService.DeleteCategory(categoryId);
+                await _categoryService.DeleteCategory(categoryId, token);
                 return Ok();
             }
             catch (Exception ex)
@@ -73,12 +74,12 @@ namespace Exoft_BlogWebAPI.Controllers
             }
         }
 
-        [HttpPost("create-category")]
-        public async Task<IActionResult> CreateCategory(string categoryName)
+        [HttpPost("create-category"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> CreateCategory(string categoryName, CancellationToken token = default)
         {
             try
             { 
-                return Ok(await _categoryService.CreateCategory(categoryName));
+                return Ok(await _categoryService.CreateCategory(categoryName, token));
             }
             catch (Exception ex)
             {

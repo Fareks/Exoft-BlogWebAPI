@@ -15,22 +15,22 @@ namespace Exoft_BlogWebAPI.Controllers
         private readonly IPostImageService _postImageService;
         private readonly IPostService _postService;
 
-        public PostImageController(IPostImageService imageService, IPostService postService)
+        public PostImageController(IPostImageService imageService, IPostService postService, CancellationToken token = default)
         {
             _postImageService = imageService;
             _postService = postService;
         }
 
         [HttpPost("upload-image/{postId}"), Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> UploadImage(IFormFile file, Guid postId)
+        public async Task<IActionResult> UploadImage(IFormFile file, Guid postId, CancellationToken token = default)
         {
             try
             {
-                    var post = await _postService.GetById(postId);
+                    var post = await _postService.GetById(postId, token);
                 if (file != null && post != null)
                 {
                     
-                    var result = await _postImageService.UploadImage(file, postId);
+                    var result = await _postImageService.UploadImage(file, postId, token);
                     return Ok(result);
                 }
                 else { return BadRequest("Invalid input!"); }
@@ -43,9 +43,9 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpGet("get-image/{imageId}")]
-        public async Task<IActionResult> GetPostImage(Guid imageId)
+        public async Task<IActionResult> GetPostImage(Guid imageId, CancellationToken token = default)
         {
-            var image = await _postImageService.GetImage(imageId);
+            var image = await _postImageService.GetImage(imageId, token);
             if (image != null && System.IO.File.Exists(image.ImagePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(image.ImagePath);
@@ -58,9 +58,9 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpDelete("delete"), Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> DeletePostImage(Guid postId)
+        public async Task<IActionResult> DeletePostImage(Guid postId, CancellationToken token = default)
         {
-            await _postImageService.DeleteImage(postId);
+            await _postImageService.DeleteImage(postId, token);
             return Ok();
         }
 

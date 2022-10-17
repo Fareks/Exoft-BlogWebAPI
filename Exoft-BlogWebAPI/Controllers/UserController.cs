@@ -28,26 +28,26 @@ namespace Exoft_BlogWebAPI.Controllers
 
 
         [HttpGet("users")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(CancellationToken token = default)
         {
-            var users = await _userService.GetAllAsync();
+            var users = await _userService.GetAllAsync(token);
             return Ok(users);
         }
 
         [HttpGet("/users/{id}")]
-        public async Task<IActionResult> GetUser(Guid id)
+        public async Task<IActionResult> GetUser(Guid id, CancellationToken token = default)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id, token);
             return Ok(user);
         }
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateUser(UserUpdateDTO user)
+        public async Task<IActionResult> UpdateUser(UserUpdateDTO user, CancellationToken token = default)
         {
             if (await _authService.GetMyId() == user.Id || user.Role.ToString() == "Admin")
             {
-                await _userService.UpdateAsync(user);
+                await _userService.UpdateAsync(user, token);
                 return Ok();
             } else
             {
@@ -58,11 +58,11 @@ namespace Exoft_BlogWebAPI.Controllers
 
         [HttpDelete("/admin/delete-user")]
         [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> DeleteUser(Guid userId)
+        public async Task<IActionResult> DeleteUser(Guid userId, CancellationToken token = default)
         {
             try
             {
-                await _userService.DeleteByIdAsync(userId);
+                await _userService.DeleteByIdAsync(userId, token);
                 return Ok();
             } 
             catch (Exception ex)
@@ -73,12 +73,12 @@ namespace Exoft_BlogWebAPI.Controllers
 
         [HttpPut("/admin/ban-user")]
         [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> BanUser(Guid id)
+        public async Task<IActionResult> BanUser(Guid id, CancellationToken token = default)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id, token);
             if (user.Role == Roles.Admin)
             {
-                await _userService.BanUserByIdAsync(id);
+                await _userService.BanUserByIdAsync(id, token);
                 return Ok("User is deleted.");
             }
             else
@@ -89,9 +89,9 @@ namespace Exoft_BlogWebAPI.Controllers
 
         [HttpPut("admin/change-role")]
         [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> ChangeRole(Guid id, int role)
+        public async Task<IActionResult> ChangeRole(Guid id, int role, CancellationToken token = default)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id, token);
             var currentUser = User.Claims;
             if (Enum.IsDefined(typeof(Roles), role))
             {

@@ -34,7 +34,7 @@ namespace Business_Logic.Services.UserServices
             _mapper = mapper;
         }
 
-        public async Task RegisterUser (UserCreateDTO userCreateDTO)
+        public async Task RegisterUser (UserCreateDTO userCreateDTO, CancellationToken ctoken = default)
         {
 
             var newUser = _mapper.Map<User>(userCreateDTO);
@@ -43,9 +43,9 @@ namespace Business_Logic.Services.UserServices
             await _userRepository.Save();
 
         }
-        public async Task<string> LoginUser(UserLoginDTO userLoginDTO)
+        public async Task<string> LoginUser(UserLoginDTO userLoginDTO, CancellationToken ctoken = default)
         {
-            User targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email);
+            User targetUser = await _userRepository.GetByEmailAsync(userLoginDTO.Email, ctoken);
             if (targetUser != null)
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(targetUser, userLoginDTO.Password, false);
@@ -58,46 +58,46 @@ namespace Business_Logic.Services.UserServices
             }
             else return null;   
         }
-        public async Task<UserReadDTO> GetMe()
+        public async Task<UserReadDTO> GetMe(CancellationToken ctoken = default)
         {
             if (_contextAccessor != null)
             {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail, ctoken));
                 return user;
             }
             else return null;
         }
-        public async Task<Guid> GetMyId()
+        public async Task<Guid> GetMyId(CancellationToken ctoken = default)
         {
                 var userEmail = _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail));
+                var user = _mapper.Map<UserReadDTO>(await _userRepository.GetByEmailAsync(userEmail, ctoken));
                 return user.Id;
         }
-        public async Task<bool> IsAuthor(Guid authorId)
+        public async Task<bool> IsAuthor(Guid authorId, CancellationToken ctoken = default)
         {
-            return (await GetMyId() ==  authorId);
+            return (await GetMyId(ctoken) ==  authorId);
         }
         
-        public async Task<bool> UserIsExist(string email, string username)
+        public async Task<bool> UserIsExist(string email, string username, CancellationToken ctoken = default)
         {
-            var user = await _userRepository.GetByEmailUsernameAsync(email, username);
+            var user = await _userRepository.GetByEmailUsernameAsync(email, username, ctoken);
             return (user != null);
         }
 
 
-        public async Task<string> CreateToken(UserReadDTO userDTO)
+        public async Task<string> CreateToken(UserReadDTO userDTO, CancellationToken ctoken = default)
         {
-            var result = await _tokenService.CreateToken(userDTO);
+            var result = await _tokenService.CreateToken(userDTO, ctoken);
             return result;
         }
         public RefreshToken GenerateRefreshToken()
         {
             return _tokenService.GenerateRefreshToken();
         }
-        public async Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO)
+        public async Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO, CancellationToken ctoken = default)
         {
-            await _tokenService.SetRefreshToken(newRefreshToken, userDTO);
+            await _tokenService.SetRefreshToken(newRefreshToken, userDTO, ctoken);
         }
     }
 }

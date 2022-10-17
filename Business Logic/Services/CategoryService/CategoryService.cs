@@ -21,37 +21,37 @@ namespace Business_Logic.Services.CategoryService
             _mapper = mapper;
         }
 
-        public async Task<CategoryDTO> CreateCategory(string categoryName)
+        public async Task<CategoryDTO> CreateCategory(string categoryName, CancellationToken token = default)
         {
             CategoryCreateDTO categoryDTO = new CategoryCreateDTO();
             categoryDTO.CategoryName = categoryName;
             var category = _mapper.Map<Category>(categoryDTO);
-            var response = await _categoryRepository.CreateCategory(category);
+            var response = await _categoryRepository.CreateCategory(category, token);
             return _mapper.Map<CategoryDTO>(response);
         }
 
-        public async Task<List<CategoryDTO>> GetAllCategories()
+        public async Task<List<CategoryDTO>> GetAllCategories(CancellationToken token = default)
         {
-            var response = await _categoryRepository.GetAllCategories();
+            var response = await _categoryRepository.GetAllCategories(token);
             var categories = _mapper.Map<List<CategoryDTO>>(response);
             return categories;
         }
 
-        public async Task DeleteCategory(Guid categoryId)
+        public async Task DeleteCategory(Guid categoryId, CancellationToken token = default)
         {
-            await _categoryRepository.DeleteCategory(categoryId);
+            await _categoryRepository.DeleteCategory(categoryId, token);
         }
 
-        public async Task<CategoryDTO> GetCategoryById(Guid categoryId)
+        public async Task<CategoryDTO> GetCategoryById(Guid categoryId, CancellationToken token = default)
         {
-            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            var category = await _categoryRepository.GetByIdAsync(categoryId, token);
             var categoryDTO = _mapper.Map<CategoryDTO>(category);
             return categoryDTO;
         }
 
-        public async Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName)
+        public async Task<List<CategoryDTO>> SearchCategoriesByName(string categoryName, CancellationToken token = default)
         {
-            var categories = await _categoryRepository.SearchByName(categoryName);
+            var categories = await _categoryRepository.SearchByName(categoryName, token);
             var categoriesDTO = _mapper.Map<List<CategoryDTO>>(categories);
             return categoriesDTO;
         }

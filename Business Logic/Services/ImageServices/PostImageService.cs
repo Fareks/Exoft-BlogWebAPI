@@ -21,12 +21,12 @@ namespace Business_Logic.Services.ImageServices
             _postImageRepository = imageRepository;
         }
 
-        public async Task<PostImage> GetImage(Guid imageId)
+        public async Task<PostImage> GetImage(Guid imageId, CancellationToken ctoken = default)
         {
-            return await _postImageRepository.GetImage(imageId);
+            return await _postImageRepository.GetImage(imageId, ctoken);
         }
 
-        public async Task<PostImage> UploadImage(IFormFile file, Guid postId)
+        public async Task<PostImage> UploadImage(IFormFile file, Guid postId, CancellationToken ctoken = default)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             var newFilename = "Image_" + DateTime.Now.TimeOfDay.Milliseconds + Guid.NewGuid() + fileInfo.Extension;
@@ -40,20 +40,20 @@ namespace Business_Logic.Services.ImageServices
             image.UploadDate = DateTime.Now;
             image.PostId = postId;
 
-            var oldImage = await _postImageRepository.GetImageByOwnerId(postId);
+            var oldImage = await _postImageRepository.GetImageByOwnerId(postId, ctoken);
             if (oldImage != null)
             {
-                await _postImageRepository.DeleteImage(oldImage);
+                await _postImageRepository.DeleteImage(oldImage, ctoken);
                 File.Delete(oldImage.ImagePath);
             }
-            await _postImageRepository.UploadImage(image);
+            await _postImageRepository.UploadImage(image, ctoken);
             return (image);
         }
 
-        public async Task DeleteImage(Guid postId)
+        public async Task DeleteImage(Guid postId, CancellationToken ctoken = default)
         {
-            var image = await _postImageRepository.GetImage(postId);
-            await _postImageRepository.DeleteImage(image);
+            var image = await _postImageRepository.GetImage(postId, ctoken);
+            await _postImageRepository.DeleteImage(image, ctoken);
             File.Delete(image.ImagePath);
         }
     }

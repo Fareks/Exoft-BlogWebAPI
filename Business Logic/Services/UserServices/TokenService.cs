@@ -27,10 +27,10 @@ namespace Business_Logic.Services.UserServices
             _contextAccessor = contextAccessor;
             _userRepository = userRepository;
         }
-        public async Task<string> CreateToken(UserReadDTO userDTO)
+        public async Task<string> CreateToken(UserReadDTO userDTO, CancellationToken ctoken = default)
         {
 
-            var user = await _userRepository.GetByIdAsync(userDTO.Id);
+            var user = await _userRepository.GetByIdAsync(userDTO.Id, ctoken);
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
@@ -80,9 +80,9 @@ namespace Business_Logic.Services.UserServices
             };
             return refreshToken;
         }
-        public async Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO)
+        public async Task SetRefreshToken(RefreshToken newRefreshToken, UserReadDTO userDTO, CancellationToken ctoken = default)
         {
-            var user = await _userRepository.GetByIdAsync(userDTO.Id);
+            var user = await _userRepository.GetByIdAsync(userDTO.Id, ctoken);
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
@@ -92,7 +92,7 @@ namespace Business_Logic.Services.UserServices
             user.RefreshToken = newRefreshToken.Token;
             user.TokenCreated = newRefreshToken.Created;
             user.TokenExpires = newRefreshToken.Expires;
-            await _userRepository.Save();
+            await _userRepository.Save(ctoken);
         }
     }
 }

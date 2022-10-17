@@ -28,26 +28,26 @@ namespace Exoft_BlogWebAPI.Controllers
             _authService = authService;
         }
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody]UserCreateDTO userDTO)
+        public async Task<IActionResult> RegisterUser([FromBody]UserCreateDTO userDTO, CancellationToken ctoken = default)
         {
-            if (await _authService.UserIsExist(userDTO.Email, userDTO.UserName))
+            if (await _authService.UserIsExist(userDTO.Email, userDTO.UserName, ctoken))
             {
                 return BadRequest("User is already registered.");
             } else
             {
-                await _authService.RegisterUser(userDTO);
+                await _authService.RegisterUser(userDTO, ctoken);
                 return Ok(userDTO);
             }
                 
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser(UserLoginDTO userDTO)
+        public async Task<IActionResult> LoginUser(UserLoginDTO userDTO, CancellationToken ctoken = default)
         {
-            var user = await _userService.GetUserByEmailAsync(userDTO.Email);
-            var token = await _authService.LoginUser(userDTO);  
+            var user = await _userService.GetUserByEmailAsync(userDTO.Email, ctoken);
+            var token = await _authService.LoginUser(userDTO, ctoken);  
             var refreshToken = _authService.GenerateRefreshToken();
-            await _authService.SetRefreshToken(refreshToken, user);
+            await _authService.SetRefreshToken(refreshToken, user, ctoken);
 
             AuthDTO response = new AuthDTO(){
                 Token = token,
@@ -62,15 +62,15 @@ namespace Exoft_BlogWebAPI.Controllers
        
         }
         [HttpGet("Get-Current-User"), Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetCurrentUser()
+        public async Task<IActionResult> GetCurrentUser(CancellationToken ctoken = default)
         {
-            var currentUser = await _authService.GetMe();
+            var currentUser = await _authService.GetMe(ctoken);
             return Ok(currentUser);
         }
         [HttpPost("Refresh-token")]
-        public async Task<IActionResult> RefreshToken(Guid userId, string refreshToken)
+        public async Task<IActionResult> RefreshToken(Guid userId, string refreshToken, CancellationToken ctoken = default)
         {
-            var user = await _userService.GetByIdAsync(userId);
+            var user = await _userService.GetByIdAsync(userId, ctoken);
             if(user == null)
             {
                 return BadRequest("Bad Request. User Not Found.");
@@ -84,9 +84,9 @@ namespace Exoft_BlogWebAPI.Controllers
                 return Unauthorized("Token expired.");
             }
 
-            string token = await _authService.CreateToken(user);
+            string token = await _authService.CreateToken(user, ctoken);
             var newRefreshToken = _authService.GenerateRefreshToken();
-            await _authService.SetRefreshToken(newRefreshToken, user);
+            await _authService.SetRefreshToken(newRefreshToken, user, ctoken);
 
             AuthDTO response = new AuthDTO()
             {

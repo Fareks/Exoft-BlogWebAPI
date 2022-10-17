@@ -9,10 +9,10 @@ namespace DataLayer.Repositories.Interfaces
 {
     public interface ICategoryRepository
     {
-        public Task<Category> CreateCategory(Category category);
-        public Task DeleteCategory(Guid categoryId);
-        public Task<List<Category>> GetAllCategories();
-        public Task<Category> GetByIdAsync(Guid id);
-        public Task<List<Category>> SearchByName(string name);
+        public Task<Category> CreateCategory(Category category,CancellationToken token = default);
+        public Task DeleteCategory(Guid categoryId,CancellationToken token = default);
+        public Task<List<Category>> GetAllCategories(CancellationToken token = default);
+        public Task<Category> GetByIdAsync(Guid id,CancellationToken token = default);
+        public Task<List<Category>> SearchByName(string name, CancellationToken token = default);
     }
 }

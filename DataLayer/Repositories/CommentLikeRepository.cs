@@ -18,7 +18,7 @@ namespace DataLayer.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task DeleteById(Guid id)
+        public async Task DeleteById(Guid id, CancellationToken token = default)
         {
             var commLike = await _dbcontext.CommentLike.SingleOrDefaultAsync(u => u.Id == id);
             if (commLike != null)
@@ -27,29 +27,29 @@ namespace DataLayer.Repositories
             }
         }
 
-        public async Task<ICollection<CommentLike>> GetAllAsync()
+        public async Task<ICollection<CommentLike>> GetAllAsync(CancellationToken token = default)
         {
             var commLike = await _dbcontext.CommentLike.ToListAsync();
             return commLike;
         }
 
-        public async Task<CommentLike> GetByIdAsync(Guid id)
+        public async Task<CommentLike> GetByIdAsync(Guid id, CancellationToken token = default)
         {
             var commLike = await _dbcontext.CommentLike.SingleOrDefaultAsync(u => u.Id == id);
             return commLike;
         }
 
-        public async Task Post(CommentLike commLike)
+        public async Task Post(CommentLike commLike, CancellationToken token = default)
         {
             await _dbcontext.CommentLike.AddAsync(commLike);
         }
 
-        public async Task Save()
+        public async Task Save(CancellationToken token = default)
         {
             await _dbcontext.SaveChangesAsync();
         }
 
-        public async Task Update(CommentLike commLike)
+        public async Task Update(CommentLike commLike, CancellationToken token = default)
         {
             _dbcontext.CommentLike.Update(commLike);
         }
