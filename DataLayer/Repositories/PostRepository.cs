@@ -56,6 +56,15 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
 
+        //public async Task<List<Post>> GetAllLikedPostsByUserId(Guid userId)
+        //{
+        //    var posts = _dbcontext.Posts
+        //        .Include(u => u.PostImage)
+        //        .Include(p => p.Category)
+        //        .Include(p => p.PostLikes)
+        //    return posts.ToList();
+        //}
+
         public async Task Post(Post post)
         {
             await _dbcontext.Posts.AddAsync(post);

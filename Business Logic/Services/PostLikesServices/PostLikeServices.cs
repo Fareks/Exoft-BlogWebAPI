@@ -69,5 +69,12 @@ namespace Business_Logic.Services.PostLikesServices
             return likeCount;
 
         }
+
+        public async Task<List<PostLikeWithPostDTO>> GetAllPostLikesByUserId(Guid userId)
+        {
+            var postLikeWithPosts = await _postLikeRepository.GetAllPostLikesByUserId(userId);
+            var postLikeDTO = _mapper.Map<List<PostLikeWithPostDTO>>(postLikeWithPosts);
+            return postLikeDTO;
+        }
     }
 }

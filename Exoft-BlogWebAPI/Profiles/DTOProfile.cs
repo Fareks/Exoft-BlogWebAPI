@@ -43,6 +43,7 @@ namespace DataLayer.Profiles
             CreateMap<PostLike,PostLikeDTO>().ReverseMap();
             CreateMap<PostLike, PostLikeReadDTO>().ReverseMap();
             CreateMap<PostLike, PostLikeCreateDTO>().ReverseMap();
+            CreateMap<PostLike, PostLikeWithPostDTO>().ReverseMap();
 
             CreateMap<CommentLike,CommentLikeDTO>().ReverseMap();
             CreateMap<CommentLike, CommentLikeCreateDTO>().ReverseMap();

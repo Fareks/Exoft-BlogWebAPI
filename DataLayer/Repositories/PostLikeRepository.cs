@@ -78,6 +78,14 @@ namespace DataLayer.Repositories
             }
         }
 
+        public async Task<List<PostLike>> GetAllPostLikesByUserId(Guid userId)
+        {
+            var postLikesWithPosts = _dbcontext.PostLike
+               .Include(p => p.Post)
+               .Where(p => p.UserId == userId);
+            return (postLikesWithPosts.ToList());
+        }
+
 
     }
 }

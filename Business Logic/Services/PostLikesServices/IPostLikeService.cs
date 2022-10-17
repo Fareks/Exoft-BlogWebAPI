@@ -17,6 +17,6 @@ namespace Business_Logic.Services.PostLikesServices
         //public Task Post(PostLikeCreateDTO newItem);
         public Task<List<PostLikeReadDTO>> GetByPostIdAsync(Guid PostId);
         public Task<int> ToggleLike(PostLikeCreateDTO newItem);
-
+        public Task<List<PostLikeWithPostDTO>> GetAllPostLikesByUserId(Guid userId);
     }
 }

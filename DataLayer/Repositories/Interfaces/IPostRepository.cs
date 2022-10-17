@@ -14,7 +14,7 @@ namespace DataLayer.Repositories.Interfaces
         public Task<List<Post>> GetAllUnverifiedPosts();
         public Task<List<Post>> GetPostsByCategoryId(Guid categoryId);
         public Task<List<Post>> GetLastPosts(int skip, int take);
-
+        //public Task<IEnumerable<Post>> GetAllLikedPostsByUserId(Guid userId);
 
     }
 }

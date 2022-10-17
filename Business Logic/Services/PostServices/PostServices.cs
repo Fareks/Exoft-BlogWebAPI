@@ -43,6 +43,13 @@ namespace Business_Logic.Services.PostServices
             var posts = await _postRepository.GetAllByUserId(userId);
             return (_mapper.Map<List<PostDTO>>(posts));
         }
+
+        //public async Task<IEnumerable<PostDTO>> GetAllLikedPostsByUserId(Guid userId)
+        //{
+        //    var posts = await _postRepository.GetAllLikedPostsByUserId(userId);
+        //    return (_mapper.Map<List<PostDTO>>(posts));
+        //}
+
         public async Task<PostReadDTO> Create(PostCreateDTO newItem)
         {
             var post = _mapper.Map<Post>(newItem);

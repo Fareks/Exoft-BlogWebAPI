@@ -42,6 +42,13 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(postLikes);
         }
 
+        [HttpGet("/post-likes-by-user/{userId}")]
+        public async Task<IActionResult> GetPostLikeByUserId(Guid userId)
+        {
+            var postLikes = await _postLikeService.GetAllPostLikesByUserId(userId);
+            return Ok(postLikes);
+        }
+
         //[HttpPost, Authorize(AuthenticationSchemes = "Bearer")]
         //public async Task<IActionResult> AddPostLike(PostLikeCreateDTO postLikeDTO)
         //{
