@@ -68,9 +68,9 @@ namespace Exoft_BlogWebAPI.Controllers
             return Ok(currentUser);
         }
         [HttpPost("Refresh-token")]
-        public async Task<IActionResult> RefreshToken(Guid id, string refreshToken)
+        public async Task<IActionResult> RefreshToken(Guid userId, string refreshToken)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(userId);
             if(user == null)
             {
                 return BadRequest("Bad Request. User Not Found.");
