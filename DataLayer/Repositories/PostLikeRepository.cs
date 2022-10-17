@@ -82,6 +82,7 @@ namespace DataLayer.Repositories
         {
             var postLikesWithPosts = _dbcontext.PostLike
                .Include(p => p.Post)
+               .ThenInclude(p => p.Category)
                .Where(p => p.UserId == userId);
             return (postLikesWithPosts.ToList());
         }

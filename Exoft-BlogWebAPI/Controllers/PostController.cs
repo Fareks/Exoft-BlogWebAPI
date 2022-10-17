@@ -103,6 +103,8 @@ namespace Exoft_BlogWebAPI.Controllers
                     return BadRequest(ex.Message);
                 }
             }
+
+            
            [HttpPut("/admin/validate-post/{postId}"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> ValidatePost(Guid postId, [FromBody]bool setIsValid)
             {
