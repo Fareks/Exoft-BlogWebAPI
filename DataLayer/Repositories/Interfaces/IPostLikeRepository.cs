@@ -11,6 +11,6 @@ namespace DataLayer.Repositories.Interfaces
     {
         public Task<List<PostLike>> GetByPostIdAsync(Guid postId);
         public Task ToggleLike(PostLike postLike);
-        public Task<List<PostLike>> GetAllPostLikesByUserId(Guid userId)
+        public Task<List<PostLike>> GetAllPostLikesByUserId(Guid userId);
     }
 }
