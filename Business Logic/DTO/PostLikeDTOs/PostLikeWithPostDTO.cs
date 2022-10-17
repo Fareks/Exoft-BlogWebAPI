@@ -10,11 +10,9 @@ using System.Threading.Tasks;
 
 namespace Business_Logic.DTO.PostLikeDTOs
 {
-    public class PostLikeWithPostDTO : BaseDTO
+    public class PostLikeWithPostDTO
     {
         //should to replace all ref to likeReadDTO
-        public Guid PostId { get; set; }
         public PostDTO Post { get; set; }
-        public Guid UserId { get; set; }
     }
 }
