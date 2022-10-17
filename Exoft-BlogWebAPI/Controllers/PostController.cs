@@ -104,8 +104,22 @@ namespace Exoft_BlogWebAPI.Controllers
                 }
             }
 
-            
-           [HttpPut("/admin/validate-post/{postId}"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+            [HttpDelete("/admin/delete-as-admin"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
+            public async Task<IActionResult> DeletePostByAdmin(Guid postId)
+            {
+                try
+                {
+                    await _postService.DeleteById(postId);
+                    return Ok(new { Status = "Post deleted!", PostId = postId });
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+
+
+        [HttpPut("/admin/validate-post/{postId}"), Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
             public async Task<IActionResult> ValidatePost(Guid postId, [FromBody]bool setIsValid)
             {
             try
@@ -138,5 +152,11 @@ namespace Exoft_BlogWebAPI.Controllers
             {
                 return Ok(await _postService.GetPostsByCategoryId(categoryId));
             }
+
+        [HttpGet("/search-by-content")]
+        public async Task<IActionResult> SearchByContent(string content)
+        {
+            return Ok(await _postService.SearchByContent(content));
+        }
     }
 }

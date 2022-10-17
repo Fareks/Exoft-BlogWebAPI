@@ -129,5 +129,17 @@ namespace DataLayer.Repositories
             return posts.ToList();
         }
 
+        public async Task<IEnumerable<Post>> SearchByContent(string content)
+        {
+            var posts = _dbcontext.Posts
+               .Include(p => p.PostImage)
+               .Include(p => p.User)
+               .ThenInclude(u => u.UserImage)
+               .Include(p => p.Category)
+               .Where(p => p.VerifyStatus == true)
+               .Where(p => p.TextContent.Contains(content) || p.Title.Contains(content))
+               .OrderByDescending(p => p.CreatedDate);
+            return posts.ToList();
+        }
     }
 }

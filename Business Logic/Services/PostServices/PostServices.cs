@@ -100,5 +100,11 @@ namespace Business_Logic.Services.PostServices
             var posts = _mapper.Map<List<PostDTO>>(await _postRepository.GetLastPosts(skip, take));
             return posts;
         }
+
+        public async Task<IEnumerable<PostDTO>> SearchByContent(string content)
+        {
+            var posts = _mapper.Map<List<PostDTO>>(await _postRepository.SearchByContent(content));
+            return posts;
+        }
     }
 }

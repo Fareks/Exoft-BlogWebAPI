@@ -57,7 +57,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpDelete("/admin/delete-user")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
             try
@@ -72,7 +72,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpPut("/admin/ban-user")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> BanUser(Guid id)
         {
             var user = await _userService.GetByIdAsync(id);
@@ -88,7 +88,7 @@ namespace Exoft_BlogWebAPI.Controllers
         }
 
         [HttpPut("admin/change-role")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin", AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> ChangeRole(Guid id, int role)
         {
             var user = await _userService.GetByIdAsync(id);
